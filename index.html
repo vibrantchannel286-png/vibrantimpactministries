@@ -3,144 +3,143 @@
  <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vibrant Impact Ministries - Akure, Nigeria</title>
-  <script src="/_sdk/element_sdk.js"></script>
-  <script src="/_sdk/data_sdk.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
+  <title>Vibrant Impact Ministries</title>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
   <style>
-    body {
-      box-sizing: border-box;
-    }
-    
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
-    :root {
-      --primary-green: #10B981;
-      --dark-green: #059669;
-      --light-green: #34D399;
-      --accent-blue: #3B82F6;
-      --light-blue: #60A5FA;
-      --dark-blue: #2563EB;
-      --ash: #9CA3AF;
-      --light-ash: #E5E7EB;
-      --dark-ash: #6B7280;
-      --white: #FFFFFF;
-    }
-
-    html, body {
-      width: 100%;
-      height: 100%;
-      font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-      background: var(--light-ash);
-      color: #1F2937;
-    }
-
-    .site-wrapper {
-      width: 100%;
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       min-height: 100%;
+      color: #333;
     }
 
-    .gradient-green {
-      background: linear-gradient(135deg, var(--primary-green) 0%, var(--light-green) 100%);
+    html {
+      height: 100%;
     }
 
-    .gradient-blue {
-      background: linear-gradient(135deg, var(--accent-blue) 0%, var(--light-blue) 100%);
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
     }
 
-    .hero-gradient {
-      background: linear-gradient(135deg, rgba(16, 185, 129, 0.95) 0%, rgba(5, 150, 105, 0.95) 100%);
-    }
-
-    .btn-primary {
-      background: var(--accent-blue);
-      color: white;
-      font-weight: 700;
-      padding: 14px 32px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      border: none;
-      cursor: pointer;
-      display: inline-block;
-      text-decoration: none;
+    header {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px 20px;
+      border-radius: 15px;
       text-align: center;
-    }
-
-    .btn-primary:hover {
-      background: var(--dark-blue);
-      transform: translateY(-2px);
-      box-shadow: 0 10px 25px rgba(59, 130, 246, 0.3);
-    }
-
-    .btn-secondary {
-      background: white;
-      color: var(--primary-green);
-      font-weight: 600;
-      padding: 14px 32px;
-      border-radius: 10px;
-      transition: all 0.3s ease;
-      border: 2px solid var(--accent-blue);
-      cursor: pointer;
-      display: inline-block;
-      text-decoration: none;
-      text-align: center;
-    }
-
-    .btn-secondary:hover {
-      background: var(--accent-blue);
-      color: white;
-      transform: translateY(-2px);
-    }
-
-    .card {
-      transition: all 0.3s ease;
-      cursor: pointer;
-    }
-
-    .card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 40px rgba(59, 130, 246, 0.2);
-    }
-
-    .fire-icon {
-      animation: flicker 2s infinite;
-    }
-
-    @keyframes flicker {
-      0%, 100% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.8; transform: scale(1.05); }
-    }
-
-    .nav-link {
+      margin-bottom: 30px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
       position: relative;
-      transition: color 0.3s ease;
-      cursor: pointer;
-      padding: 8px 16px;
-      border-radius: 6px;
     }
 
-    .nav-link:hover {
-      background: rgba(59, 130, 246, 0.1);
-      color: var(--accent-blue);
+    h1 {
+      color: #667eea;
+      font-size: 2.5em;
+      margin-bottom: 10px;
     }
 
-    .nav-link.active {
-      background: rgba(59, 130, 246, 0.2);
-      color: var(--accent-blue);
+    .tagline {
+      color: #666;
+      font-size: 1.2em;
+      font-style: italic;
+    }
+
+    .user-info {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      padding: 10px 20px;
+      border-radius: 25px;
+      font-size: 0.9em;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .user-info .badge {
+      background: rgba(255, 255, 255, 0.3);
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85em;
       font-weight: 600;
     }
 
-    .page-section {
-      display: none;
-      animation: fadeIn 0.5s ease;
+    .logout-btn {
+      background: rgba(255, 255, 255, 0.2);
+      border: 1px solid white;
+      color: white;
+      padding: 6px 15px;
+      border-radius: 15px;
+      cursor: pointer;
+      font-size: 0.9em;
+      transition: background 0.3s;
     }
 
-    .page-section.active {
+    .logout-btn:hover {
+      background: rgba(255, 255, 255, 0.3);
+    }
+
+    nav {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 15px;
+      border-radius: 10px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    nav button {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    nav button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    nav button.active {
+      background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    .section {
+      display: none;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 30px;
+      border-radius: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    }
+
+    .section.active {
       display: block;
+      animation: fadeIn 0.5s;
     }
 
     @keyframes fadeIn {
@@ -148,199 +147,72 @@
       to { opacity: 1; transform: translateY(0); }
     }
 
-    .service-card {
-      cursor: pointer;
-      transition: all 0.3s ease;
+    h2 {
+      color: #667eea;
+      margin-bottom: 20px;
+      font-size: 2em;
+      border-bottom: 3px solid #764ba2;
+      padding-bottom: 10px;
     }
 
-    .service-card:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 15px 35px rgba(16, 185, 129, 0.2);
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+      margin-top: 30px;
     }
 
-    .service-details {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height 0.4s ease;
-    }
-
-    .service-details.expanded {
-      max-height: 500px;
-    }
-
-    .social-icon {
-      transition: all 0.3s ease;
-    }
-
-    .social-icon:hover {
-      transform: scale(1.2) rotate(5deg);
-    }
-
-    .section-title {
-      position: relative;
-      display: inline-block;
-      padding-bottom: 15px;
-    }
-
-    .section-title::after {
-      content: '';
-      position: absolute;
-      bottom: 0;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80px;
-      height: 4px;
-      background: var(--accent-blue);
-      border-radius: 2px;
-    }
-
-    .mobile-nav {
-      display: none;
-    }
-
-    @media (max-width: 768px) {
-      .desktop-nav {
-        display: none;
-      }
-      
-      .mobile-nav {
-        display: block;
-      }
-
-      .btn-primary, .btn-secondary {
-        padding: 12px 24px;
-        font-size: 14px;
-      }
-    }
-
-    .payment-button {
-      background: linear-gradient(135deg, var(--primary-green) 0%, var(--dark-green) 100%);
-      color: white;
-      font-weight: 700;
-      padding: 16px 40px;
-      border-radius: 12px;
-      border: none;
-      cursor: pointer;
-      font-size: 18px;
-      transition: all 0.3s ease;
-      display: inline-block;
-      text-decoration: none;
-      box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-    }
-
-    .payment-button:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 15px 40px rgba(16, 185, 129, 0.4);
-    }
-
-    .form-input {
-      width: 100%;
-      padding: 12px 16px;
-      border: 2px solid var(--light-ash);
-      border-radius: 8px;
-      font-size: 16px;
-      transition: border-color 0.3s ease;
-      background: white;
-    }
-
-    .form-input:focus {
-      outline: none;
-      border-color: var(--accent-blue);
-    }
-
-    textarea.form-input {
-      min-height: 120px;
-      resize: vertical;
-    }
-
-    .video-card, .photo-card {
+    .gallery-item {
       background: white;
       border-radius: 12px;
       overflow: hidden;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-      transition: all 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s, box-shadow 0.3s;
     }
 
-    .video-card:hover, .photo-card:hover {
+    .gallery-item:hover {
       transform: translateY(-5px);
-      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
     }
 
-    .video-placeholder {
-      width: 100%;
-      height: 200px;
-      background: linear-gradient(135deg, var(--light-ash) 0%, #F3F4F6 100%);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .photo-image {
+    .gallery-item img {
       width: 100%;
       height: 250px;
       object-fit: cover;
-      cursor: pointer;
     }
 
-    .modal {
-      display: none;
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      background: rgba(0,0,0,0.7);
-      z-index: 1000;
-      align-items: center;
-      justify-content: center;
+    .gallery-item-content {
       padding: 20px;
     }
 
-    .modal.active {
-      display: flex;
+    .gallery-item h3 {
+      color: #667eea;
+      margin-bottom: 10px;
+      font-size: 1.3em;
     }
 
-    .modal-content {
-      background: white;
-      border-radius: 16px;
-      padding: 32px;
-      max-width: 600px;
-      width: 100%;
-      max-height: 90%;
-      overflow-y: auto;
+    .gallery-item p {
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 10px;
+    }
+
+    .gallery-item .date {
+      color: #999;
+      font-size: 0.9em;
+      font-style: italic;
+    }
+
+    .video-container {
       position: relative;
-    }
-
-    .close-modal {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      background: none;
-      border: none;
-      font-size: 32px;
-      cursor: pointer;
-      color: var(--dark-ash);
-      line-height: 1;
-      padding: 0;
-      width: 32px;
-      height: 32px;
-    }
-
-    .close-modal:hover {
-      color: var(--primary-green);
-    }
-
-    .video-embed {
-      position: relative;
-      width: 100%;
       padding-bottom: 56.25%;
       height: 0;
       overflow: hidden;
+      border-radius: 12px;
+      margin-bottom: 15px;
     }
 
-    .video-embed iframe,
-    .video-embed video {
+    .video-container iframe {
       position: absolute;
       top: 0;
       left: 0;
@@ -348,1703 +220,996 @@
       height: 100%;
     }
 
-    .loading-spinner {
-      border: 3px solid #f3f3f3;
-      border-top: 3px solid var(--accent-blue);
-      border-radius: 50%;
-      width: 40px;
-      height: 40px;
-      animation: spin 1s linear infinite;
+    .auth-container {
+      max-width: 500px;
       margin: 0 auto;
+      background: rgba(255, 255, 255, 0.95);
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
     }
 
-    @keyframes spin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
+    .auth-tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 30px;
+    }
+
+    .auth-tab {
+      flex: 1;
+      padding: 12px;
+      background: #f0f0f0;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1em;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .auth-tab.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .auth-form {
+      display: none;
+    }
+
+    .auth-form.active {
+      display: block;
+    }
+
+    .upload-form {
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #333;
+      font-weight: 600;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    input[type="date"],
+    textarea,
+    select {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 1em;
+      transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus,
+    input[type="email"]:focus,
+    input[type="password"]:focus,
+    input[type="date"]:focus,
+    textarea:focus,
+    select:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 15px;
+      margin-top: 25px;
+    }
+
+    button[type="submit"] {
+      flex: 1;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1em;
+      font-weight: 600;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+    button[type="submit"]:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    }
+
+    button[type="submit"]:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+
+    .delete-btn {
+      background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.9em;
+      margin-top: 10px;
+      transition: transform 0.2s;
+    }
+
+    .delete-btn:hover {
+      transform: scale(1.05);
     }
 
     .toast {
       position: fixed;
       bottom: 30px;
       right: 30px;
-      background: white;
+      background: #333;
+      color: white;
       padding: 16px 24px;
       border-radius: 8px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-      display: none;
-      z-index: 2000;
-      animation: slideIn 0.3s ease;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+      animation: slideIn 0.3s;
     }
 
-    .toast.active {
-      display: block;
+    .toast.success {
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+    }
+
+    .toast.error {
+      background: linear-gradient(135deg, #eb3349 0%, #f45c43 100%);
     }
 
     @keyframes slideIn {
-      from { transform: translateX(400px); opacity: 0; }
-      to { transform: translateX(0); opacity: 1; }
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
     }
 
-    .delete-btn {
-      background: #EF4444;
-      color: white;
-      padding: 8px 16px;
-      border-radius: 6px;
-      border: none;
-      cursor: pointer;
-      font-size: 14px;
-      transition: all 0.3s ease;
-    }
-
-    .delete-btn:hover {
-      background: #DC2626;
-    }
-
-    .church-image {
-      max-width: 100%;
-      height: auto;
-      border-radius: 12px;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-    }
-
-    .image-preview {
-      max-width: 100%;
-      max-height: 300px;
-      border-radius: 8px;
-      margin-top: 10px;
-    }
-
-    .file-input-wrapper {
-      position: relative;
-      overflow: hidden;
+    .spinner {
       display: inline-block;
-      width: 100%;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 0.8s linear infinite;
+      margin-left: 10px;
     }
 
-    .file-input-wrapper input[type=file] {
-      position: absolute;
-      left: -9999px;
+    @keyframes spin {
+      to { transform: rotate(360deg); }
     }
 
-    .file-input-label {
-      display: block;
-      padding: 12px 16px;
-      background: var(--light-ash);
-      border: 2px dashed var(--accent-blue);
+    .setup-instructions {
+      background: #fff3cd;
+      border: 2px solid #ffc107;
       border-radius: 8px;
-      cursor: pointer;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    .setup-instructions h3 {
+      color: #856404;
+      margin-bottom: 10px;
+    }
+
+    .setup-instructions ol {
+      margin-left: 20px;
+      color: #856404;
+    }
+
+    .setup-instructions li {
+      margin-bottom: 8px;
+      line-height: 1.6;
+    }
+
+    .setup-instructions code {
+      background: #f8f9fa;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+    }
+
+    .access-denied {
       text-align: center;
-      transition: all 0.3s ease;
+      padding: 40px;
+      color: #666;
     }
 
-    .file-input-label:hover {
-      background: var(--accent-blue);
-      color: white;
+    .access-denied h3 {
+      color: #f5576c;
+      margin-bottom: 15px;
     }
 
-    .photo-modal-content {
-      max-width: 90%;
-      max-height: 90%;
-    }
+    @media (max-width: 768px) {
+      h1 {
+        font-size: 2em;
+      }
 
-    .photo-modal-content img {
-      max-width: 100%;
-      max-height: 80vh;
-      border-radius: 12px;
-    }
+      .user-info {
+        position: static;
+        margin-top: 15px;
+        justify-content: center;
+      }
 
-    .tab-button {
-      padding: 12px 24px;
-      background: white;
-      border: 2px solid var(--light-ash);
-      border-radius: 8px 8px 0 0;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      font-weight: 600;
-      color: var(--dark-ash);
-    }
+      .gallery-grid {
+        grid-template-columns: 1fr;
+      }
 
-    .tab-button.active {
-      background: var(--accent-blue);
-      color: white;
-      border-color: var(--accent-blue);
-    }
+      nav ul {
+        flex-direction: column;
+      }
 
-    .tab-button:hover:not(.active) {
-      background: var(--light-ash);
-    }
+      nav button {
+        width: 100%;
+      }
 
-    .gallery-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 24px;
+      .button-group {
+        flex-direction: column;
+      }
+
+      .auth-container {
+        padding: 20px;
+      }
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
+  <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body>
-  <div class="site-wrapper"><!-- Header -->
-   <header class="gradient-green text-white shadow-lg sticky top-0 z-50" style="width: 100%;">
-    <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-     <div class="flex justify-between items-center">
-      <div class="flex items-center space-x-3"><img src="https://drive.google.com/thumbnail?id=1M0z2zIBydMCou4_BNAfMeAPP1wVm-p51&amp;sz=w200" alt="VIM Logo" class="w-14 h-14 object-contain bg-white rounded-lg p-1" onerror="this.style.display='none'; console.log('Logo failed to load');">
-       <svg class="w-14 h-14" fill="none" stroke="currentColor" style="color: white; display: none;" viewbox="0 0 24 24" id="logo-fallback"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-       </svg>
-       <div>
-        <h1 id="header-church-name" class="text-2xl font-bold" style="color: white;">Vibrant Impact Ministries</h1>
-        <p class="text-sm opacity-90">Akure, Nigeria</p>
-       </div>
-      </div>
-      <div class="desktop-nav hidden lg:flex space-x-2"><a class="nav-link active" data-page="home">Home</a> <a class="nav-link" data-page="about">About</a> <a class="nav-link" data-page="services">Services</a> <a class="nav-link" data-page="giving">Giving</a> <a class="nav-link" data-page="gallery">Gallery</a> <a class="nav-link" data-page="prayer">Prayer</a> <a class="nav-link" data-page="contact">Contact</a>
-      </div><button id="mobile-menu-btn" class="lg:hidden text-white">
-       <svg class="w-7 h-7" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-       </svg></button>
+  <div id="authPage" class="container">
+   <div class="auth-container">
+    <h1 style="text-align: center; margin-bottom: 30px;">🙏 Vibrant Impact Ministries</h1>
+    <div class="setup-instructions" id="setupInstructions">
+     <h3>🔥 Firebase Setup Required</h3>
+     <ol>
+      <li>Go to <a href="https://console.firebase.google.com" target="_blank">Firebase Console</a></li>
+      <li>Create a new project</li>
+      <li>Enable <strong>Email/Password</strong> authentication (Authentication → Sign-in method)</li>
+      <li>Enable <strong>Firestore Database</strong> (Start in test mode)</li>
+      <li>Get your web app config and replace in the code</li>
+      <li><strong>IMPORTANT:</strong> Create admin accounts using the Admin Login form below with: <code>eiweh123@gmail.com</code> or <code>vibrantchannel286@gmail.com</code></li>
+     </ol>
+    </div>
+    <div class="auth-tabs"><button class="auth-tab active" onclick="switchAuthTab('member')">👥 Member Sign Up</button> <button class="auth-tab" onclick="switchAuthTab('admin')">🔐 Admin Login</button>
+    </div>
+    <form id="memberSignupForm" class="auth-form active">
+     <h2 style="font-size: 1.5em; margin-bottom: 20px;">Join Our Church Family</h2>
+     <div class="form-group"><label for="memberName">Full Name:</label> <input type="text" id="memberName" required>
      </div>
-     <div id="mobile-nav" class="mobile-nav mt-4 space-y-2 hidden"><a class="nav-link block active" data-page="home">Home</a> <a class="nav-link block" data-page="about">About</a> <a class="nav-link block" data-page="services">Services</a> <a class="nav-link block" data-page="giving">Giving</a> <a class="nav-link block" data-page="gallery">Gallery</a> <a class="nav-link block" data-page="prayer">Prayer</a> <a class="nav-link block" data-page="contact">Contact</a>
+     <div class="form-group"><label for="memberEmail">Email:</label> <input type="email" id="memberEmail" required>
      </div>
-    </nav>
+     <div class="form-group"><label for="memberPassword">Password:</label> <input type="password" id="memberPassword" minlength="6" required>
+     </div><button type="submit">Sign Up as Member</button>
+    </form>
+    <form id="adminLoginForm" class="auth-form">
+     <h2 style="font-size: 1.5em; margin-bottom: 20px;">Admin Access</h2>
+     <div class="form-group"><label for="adminEmail">Admin Email:</label> <input type="email" id="adminEmail" required>
+     </div>
+     <div class="form-group"><label for="adminPassword">Password:</label> <input type="password" id="adminPassword" required>
+     </div><button type="submit">Login as Admin</button>
+     <p style="margin-top: 15px; font-size: 0.9em; color: #666; text-align: center;">First time? Create admin account with:<br><strong>eiweh123@gmail.com</strong> or <strong>vibrantchannel286@gmail.com</strong></p>
+    </form>
+   </div>
+  </div>
+  <div id="mainPage" class="container" style="display: none;">
+   <header>
+    <h1>🙏 Vibrant Impact Ministries</h1>
+    <p class="tagline">Building Faith, Inspiring Lives</p>
+    <div class="user-info" id="userInfo"></div>
    </header>
-   <main style="width: 100%;"><!-- HOME PAGE -->
-    <section id="home-page" class="page-section active" style="width: 100%;"><!-- Hero Section -->
-     <div class="hero-gradient text-white py-20" style="width: 100%;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <div class="mb-8 text-center"><img src="https://drive.google.com/thumbnail?id=1exCpQcpobaYeFM3LJx8EwrdCPYbmy_wy&amp;sz=w1000" alt="Vibrant Impact Ministries" class="church-image mx-auto max-w-3xl" onerror="this.style.display='none'; console.log('Hero image failed');">
-       </div>
-       <div class="text-center">
-        <h2 id="welcome-title" class="text-5xl md:text-6xl font-bold mb-6" style="color: white;">Welcome to Vibrant Impact Ministries</h2>
-        <p id="welcome-message" class="text-xl md:text-2xl mb-4 max-w-3xl mx-auto">Experience the transforming power of God through prophetic teaching, healing, and deliverance.</p>
-        <p id="church-slogan" class="text-lg md:text-xl mb-8 italic opacity-90">"Raising Vibrant Believers for Kingdom Impact"</p>
-        <div class="flex flex-wrap justify-center gap-4 mb-12"><a class="btn-primary nav-trigger" data-page="services">📅 Service Days</a> <a class="btn-primary nav-trigger" data-page="giving">💝 Give Online</a> <a class="btn-secondary nav-trigger" data-page="gallery">📸 View Gallery</a>
-        </div><!-- Bible Verse -->
-        <div class="bg-white bg-opacity-10 backdrop-blur-sm rounded-lg p-6 max-w-2xl mx-auto border-2" style="border-color: var(--accent-blue);">
-         <p class="text-xl italic mb-2">"Not by might, nor by power, but by my Spirit, saith the Lord"</p>
-         <p class="font-semibold mt-2" style="color: var(--accent-blue);">— Zechariah 4:6</p>
-        </div>
-       </div>
-      </div>
-     </div><!-- Upcoming Events -->
-     <div class="py-20 bg-white" style="width: 100%;">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <h2 class="section-title text-4xl font-bold text-center mb-16" style="color: var(--primary-green);">Upcoming Events</h2>
-       <div class="grid grid-cols-1 md:grid-cols-3 gap-8"><!-- Sunday Glory Service -->
-        <div class="card bg-white rounded-xl shadow-xl p-8 border-t-4" style="border-top-color: var(--accent-blue);">
-         <div class="text-center">
-          <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-          </svg>
-          <h3 class="text-2xl font-bold mb-3" style="color: var(--primary-green);">Sunday Glory Service</h3>
-          <p class="text-3xl font-bold mb-2" style="color: var(--accent-blue);">9:00 AM</p>
-          <p class="text-gray-600">Join us for powerful worship and the Word</p>
-         </div>
-        </div><!-- Fire Night -->
-        <div class="card gradient-green rounded-xl shadow-xl p-8 text-white">
-         <div class="text-center">
-          <svg class="w-16 h-16 mx-auto mb-4 fire-icon" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2c-1.1 4.55-4 6.5-4 10 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-2.9-5.45-4-10zm0 16c-1.1 0-2-.9-2-2 0-1.33 1.67-2.67 2-4 .33 1.33 2 2.67 2 4 0 1.1-.9 2-2 2z" />
-          </svg>
-          <h3 class="text-2xl font-bold mb-3">🔥 FIRE NIGHT</h3>
-          <p class="text-3xl font-bold mb-2">10:00 PM</p>
-          <p class="text-sm opacity-90 mb-2">Last Friday of Every Month</p>
-          <p>A night of miracles and breakthrough</p>
-         </div>
-        </div><!-- Glory & Celebration -->
-        <div class="card bg-white rounded-xl shadow-xl p-8 border-t-4" style="border-top-color: var(--accent-blue);">
-         <div class="text-center">
-          <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
-          </svg>
-          <h3 class="text-2xl font-bold mb-3" style="color: var(--primary-green);">Glory &amp; Celebration</h3>
-          <p class="text-3xl font-bold mb-2" style="color: var(--accent-blue);">Special Services</p>
-          <p class="text-gray-600">Join us for special celebration services</p>
-         </div>
-        </div>
-       </div>
-      </div>
-     </div><!-- Quick Info -->
-     <div class="py-20" style="width: 100%; background: var(--light-ash);">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div class="text-center">
-         <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-         </svg>
-         <h3 class="text-xl font-bold mb-2" style="color: var(--primary-green);">Location</h3>
-         <p id="home-address" class="text-gray-700">Ughele Junction, Ado Road<br>
-          Akure, Ondo State</p>
-        </div>
-        <div class="text-center">
-         <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-         </svg>
-         <h3 class="text-xl font-bold mb-2" style="color: var(--primary-green);">Phone</h3>
-         <p id="home-phone" class="text-gray-700">+234 XXX XXX XXXX</p>
-        </div>
-        <div class="text-center">
-         <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-         </svg>
-         <h3 class="text-xl font-bold mb-2" style="color: var(--primary-green);">Email</h3>
-         <p id="home-email" class="text-gray-700">pastorvalentineifedayo@gmail.com</p>
-        </div>
-       </div>
-      </div>
+   <nav>
+    <ul id="navMenu">
+     <li><button class="nav-btn active" data-section="photos">📸 Photo Gallery</button></li>
+     <li><button class="nav-btn" data-section="videos">🎥 Video Gallery</button></li>
+     <li><button class="nav-btn" data-section="partners">🤝 Become a Partner</button></li>
+    </ul>
+   </nav>
+   <section id="photos" class="section active">
+    <h2>📸 Photo Gallery</h2>
+    <div class="gallery-grid" id="photoGallery"><!-- Photos will be loaded here -->
+    </div>
+   </section>
+   <section id="videos" class="section">
+    <h2>🎥 Video Gallery</h2>
+    <div class="gallery-grid" id="videoGallery"><!-- Videos will be loaded here -->
+    </div>
+   </section>
+   <section id="partners" class="section">
+    <h2>🤝 Become a Ministry Partner</h2><!-- WhatsApp Group Section -->
+    <div style="background: linear-gradient(135deg, #25D366 0%, #128C7E 100%); padding: 30px; border-radius: 12px; margin-bottom: 30px; color: white; text-align: center;">
+     <h3 style="font-size: 1.8em; margin-bottom: 15px; color: white;">💬 Join Our WhatsApp Community</h3>
+     <p style="font-size: 1.1em; line-height: 1.6; margin-bottom: 20px; opacity: 0.95;">Stay connected with our church family! Get instant updates on services, events, prayer requests, and daily devotionals.</p><a href="https://chat.whatsapp.com/YOUR_GROUP_INVITE_CODE" target="_blank" rel="noopener noreferrer" style="display: inline-block; background: white; color: #25D366; padding: 15px 40px; border-radius: 50px; text-decoration: none; font-size: 1.2em; font-weight: 700; transition: transform 0.3s, box-shadow 0.3s; box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);" onmouseover="this.style.transform='scale(1.05)'; this.style.boxShadow='0 6px 25px rgba(0, 0, 0, 0.3)'" onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 4px 15px rgba(0, 0, 0, 0.2)'"> 📱 Join WhatsApp Group </a>
+     <p style="font-size: 0.9em; margin-top: 15px; opacity: 0.9;">Click the button above to join our vibrant community of believers</p>
+    </div>
+    <div style="background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%); padding: 30px; border-radius: 12px; margin-bottom: 30px;">
+     <p style="font-size: 1.1em; line-height: 1.8; color: #333; margin-bottom: 20px;">Join us in making a difference! As a ministry partner, you'll support our mission to build faith and inspire lives in our community. Your partnership helps us continue our work in worship services, youth programs, and community outreach.</p>
+     <div style="background: white; padding: 20px; border-radius: 8px; margin-bottom: 25px;">
+      <h3 style="color: #667eea; margin-bottom: 15px;">Partnership Benefits:</h3>
+      <ul style="color: #666; line-height: 2; margin-left: 20px;">
+       <li>Monthly ministry updates and prayer requests</li>
+       <li>Exclusive access to ministry events</li>
+       <li>Recognition in our annual report</li>
+       <li>Be part of transforming lives in our community</li>
+      </ul>
      </div>
-    </section><!-- ABOUT PAGE -->
-    <section id="about-page" class="page-section py-20" style="width: 100%;">
-     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="section-title text-5xl font-bold text-center mb-16" style="color: var(--primary-green);">About Us</h1><!-- Church History -->
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-       <div>
-        <h2 class="text-3xl font-bold mb-6" style="color: var(--primary-green);">Our Story</h2>
-        <p class="text-lg text-gray-700 mb-4 leading-relaxed">Vibrant Impact Ministries (VIM) is a Holy Spirit-filled prophetic and teaching church founded by Prophet Valentine Ifedayo in 2020. What began as a small gathering in Akure, Ondo State, has grown into a vibrant community impacting lives across Nigeria and beyond.</p>
-        <p class="text-lg text-gray-700 mb-4 leading-relaxed">Since our inception, we have witnessed countless testimonies of salvation, healing, deliverance, and supernatural transformation. Through both on-site and online services, we continue to reach souls globally with the message of Christ and the power of the Holy Spirit.</p>
-       </div>
-       <div class="bg-white rounded-xl shadow-2xl p-8">
-        <svg class="w-full h-64" viewbox="0 0 400 300"><rect width="400" height="300" fill="#10B981" opacity="0.1" rx="12" /> <circle cx="200" cy="120" r="50" fill="#3B82F6" opacity="0.3" /> <path d="M200 70 L230 120 L200 170 L170 120 Z" fill="#3B82F6" /> <text x="200" y="220" text-anchor="middle" fill="#10B981" font-size="28" font-weight="bold">
-          Since 2020
-         </text> <text x="200" y="250" text-anchor="middle" fill="#3B82F6" font-size="20">
-          Impacting Lives
-         </text>
-        </svg>
-       </div>
-      </div><!-- Vision & Mission -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-16">
-       <div class="bg-white rounded-xl shadow-lg p-8 border-l-4" style="border-left-color: var(--accent-blue);">
-        <h3 class="text-2xl font-bold mb-4" style="color: var(--accent-blue);">🎯 Our Vision</h3>
-        <p class="text-gray-700 text-lg leading-relaxed">To raise vibrant believers who impact their generation through the power of the Holy Spirit, demonstrating the Kingdom of God through signs, wonders, and transformed lives.</p>
-       </div>
-       <div class="bg-white rounded-xl shadow-lg p-8 border-l-4" style="border-left-color: var(--accent-blue);">
-        <h3 class="text-2xl font-bold mb-4" style="color: var(--accent-blue);">🚀 Our Mission</h3>
-        <p class="text-gray-700 text-lg leading-relaxed">Through prophetic teaching, healing, deliverance, and strategic outreach, we equip believers to live victoriously, fulfill their divine purpose, and effectively spread the Gospel.</p>
-       </div>
-      </div><!-- What We Believe -->
-      <div class="bg-white rounded-xl shadow-lg p-8 mb-16">
-       <h2 class="text-3xl font-bold text-center mb-8" style="color: var(--primary-green);">What We Believe</h2>
-       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="flex items-start space-x-3">
-         <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-         </svg>
-         <p class="text-gray-700">Salvation through Jesus Christ alone</p>
-        </div>
-        <div class="flex items-start space-x-3">
-         <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-         </svg>
-         <p class="text-gray-700">The power and baptism of the Holy Spirit</p>
-        </div>
-        <div class="flex items-start space-x-3">
-         <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-         </svg>
-         <p class="text-gray-700">Divine healing and deliverance</p>
-        </div>
-        <div class="flex items-start space-x-3">
-         <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-         </svg>
-         <p class="text-gray-700">Prophecy and spiritual gifts today</p>
-        </div>
-        <div class="flex items-start space-x-3">
-         <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-         </svg>
-         <p class="text-gray-700">The authority of Scripture</p>
-        </div>
-        <div class="flex items-start space-x-3">
-         <svg class="w-6 h-6 flex-shrink-0 mt-1" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd" />
-         </svg>
-         <p class="text-gray-700">The Great Commission to all believers</p>
-        </div>
-       </div>
-      </div><!-- Pastor Bio -->
-      <div class="gradient-green rounded-xl shadow-2xl p-8 text-white">
-       <h2 class="text-3xl font-bold text-center mb-8" style="color: white;">Our Spiritual Leader</h2>
-       <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-center">
-        <div class="lg:col-span-1 flex justify-center">
-         <div class="bg-white rounded-xl p-4 shadow-2xl"><img src="https://drive.google.com/thumbnail?id=19iPQ2uK4vDTMBCeXxDt03GvMnn2h-C_a&amp;sz=w500" alt="Prophet Valentine Ifedayo" class="w-full h-auto rounded-lg" onerror="this.src='https://drive.google.com/thumbnail?id=1wYyfuB0DgYFH6GLFJX4EHcPIQMD_NKoX&amp;sz=w500'; this.onerror=function(){this.style.display='none';};">
-         </div>
-        </div>
-        <div class="lg:col-span-2">
-         <h3 class="text-4xl font-bold mb-3">Prophet Valentine Ifedayo</h3>
-         <p class="text-xl mb-6 opacity-90">Founder &amp; Senior Prophet</p>
-         <p class="text-lg leading-relaxed mb-4">Prophet Valentine Ifedayo is a Nigerian prophet, teacher, and revivalist known for accurate prophetic declarations, powerful healing and deliverance ministry, and a burning passion for souls.</p>
-         <p class="text-lg leading-relaxed mb-4">His ministry emphasizes faith, restoration, and awakening spiritual gifts in believers. Through the anointing of the Holy Spirit, he has helped countless individuals experience divine transformation, breakthrough, and fulfillment of their God-given destiny.</p>
-         <p class="text-lg leading-relaxed">Prophet Valentine is committed to raising a generation of believers who walk in the supernatural and impact their world for Christ.</p>
-        </div>
-       </div>
+     <form id="partnerForm">
+      <h3 style="margin-bottom: 20px; color: #667eea;">Partner Registration</h3>
+      <div class="form-group"><label for="partnerName">Full Name: *</label> <input type="text" id="partnerName" required>
       </div>
-     </div>
-    </section><!-- SERVICES PAGE -->
-    <section id="services-page" class="page-section py-20" style="width: 100%; background: white;">
-     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="section-title text-5xl font-bold text-center mb-16" style="color: var(--primary-green);">Our Services &amp; Programs</h1>
-      <div class="space-y-6"><!-- Sunday Glory Service -->
-       <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: var(--accent-blue);">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service1')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold" style="color: var(--primary-green);">Sunday Glory Service</h3>
-            <p class="text-xl font-semibold" style="color: var(--accent-blue);">9:00 AM</p>
-           </div>
-          </div>
-          <svg id="service1-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" style="color: var(--ash);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service1" class="service-details">
-         <div class="px-6 pb-6 border-t pt-4">
-          <p class="text-gray-700 text-lg mb-3">Our main weekly service filled with powerful worship, prophetic teaching, and the manifest presence of God.</p>
-          <ul class="space-y-2 text-gray-600">
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Spirit-filled worship and praise</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Prophetic Word and teaching</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Prayer and ministry time</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Fellowship and connection</li>
-          </ul>
-         </div>
-        </div>
-       </div><!-- Tuesday Deliverance & Counselling -->
-       <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: var(--accent-blue);">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service2')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold" style="color: var(--primary-green);">Tuesday Deliverance &amp; Counselling</h3>
-            <p class="text-xl font-semibold" style="color: var(--accent-blue);">9:00 AM</p>
-           </div>
-          </div>
-          <svg id="service2-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" style="color: var(--ash);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service2" class="service-details">
-         <div class="px-6 pb-6 border-t pt-4">
-          <p class="text-gray-700 text-lg mb-3">A dedicated time for personal breakthrough, spiritual counseling, healing, and prophetic direction.</p>
-          <ul class="space-y-2 text-gray-600">
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> One-on-one spiritual counseling</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Deliverance ministry</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Prophetic direction and guidance</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Prayer for specific needs</li>
-          </ul>
-         </div>
-        </div>
-       </div><!-- Tuesday Online Prayer -->
-       <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: var(--accent-blue);">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service3')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold" style="color: var(--primary-green);">Tuesday Online Prayer Service</h3>
-            <p class="text-xl font-semibold" style="color: var(--accent-blue);">6:00 PM</p>
-           </div>
-          </div>
-          <svg id="service3-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" style="color: var(--ash);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service3" class="service-details">
-         <div class="px-6 pb-6 border-t pt-4">
-          <p class="text-gray-700 text-lg mb-3">Join believers worldwide for our virtual prayer meeting streamed live on social platforms.</p>
-          <ul class="space-y-2 text-gray-600">
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Corporate prayer and intercession</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Live on Facebook and YouTube</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Interactive prayer requests</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Spiritual warfare and breakthrough</li>
-          </ul>
-         </div>
-        </div>
-       </div><!-- Friday Youth Fellowship -->
-       <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: var(--accent-blue);">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service4')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold" style="color: var(--primary-green);">Friday Youth Fellowship</h3>
-            <p class="text-xl font-semibold" style="color: var(--accent-blue);">4:00 PM</p>
-           </div>
-          </div>
-          <svg id="service4-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" style="color: var(--ash);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service4" class="service-details">
-         <div class="px-6 pb-6 border-t pt-4">
-          <p class="text-gray-700 text-lg mb-3">Empowering young people to grow in faith, discover their purpose, and impact their generation.</p>
-          <ul class="space-y-2 text-gray-600">
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Youth-focused teaching</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Worship and fellowship</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Mentorship and discipleship</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Fun activities and connection</li>
-          </ul>
-         </div>
-        </div>
-       </div><!-- Friday Bible Study -->
-       <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: var(--accent-blue);">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service5')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold" style="color: var(--primary-green);">Friday Bible Study</h3>
-            <p class="text-xl font-semibold" style="color: var(--accent-blue);">6:00 PM</p>
-           </div>
-          </div>
-          <svg id="service5-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" style="color: var(--ash);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service5" class="service-details">
-         <div class="px-6 pb-6 border-t pt-4">
-          <p class="text-gray-700 text-lg mb-3">Deep study of God's Word for spiritual growth and practical application.</p>
-          <ul class="space-y-2 text-gray-600">
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Verse-by-verse Bible study</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Interactive discussions</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Practical life application</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Prayer and reflection</li>
-          </ul>
-         </div>
-        </div>
-       </div><!-- Fire Night -->
-       <div class="service-card gradient-green rounded-xl shadow-2xl overflow-hidden text-white">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service6')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12 fire-icon" fill="currentColor" viewbox="0 0 24 24"><path d="M12 2c-1.1 4.55-4 6.5-4 10 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-2.9-5.45-4-10zm0 16c-1.1 0-2-.9-2-2 0-1.33 1.67-2.67 2-4 .33 1.33 2 2.67 2 4 0 1.1-.9 2-2 2z" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold">🔥 FIRE NIGHT</h3>
-            <p class="text-xl font-semibold">10:00 PM - Last Friday of Every Month</p>
-           </div>
-          </div>
-          <svg id="service6-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service6" class="service-details">
-         <div class="px-6 pb-6 border-t border-white border-opacity-30 pt-4">
-          <p class="text-lg mb-3">A powerful night of intense prayer, deliverance, miracles, and prophetic encounters.</p>
-          <ul class="space-y-2">
-           <li class="flex items-center"><span class="mr-2">✓</span> Intense spiritual warfare</li>
-           <li class="flex items-center"><span class="mr-2">✓</span> Mass deliverance and healing</li>
-           <li class="flex items-center"><span class="mr-2">✓</span> Prophetic declarations</li>
-           <li class="flex items-center"><span class="mr-2">✓</span> Breakthrough and miracles</li>
-          </ul>
-         </div>
-        </div>
-       </div><!-- Saturday Partners Prayer -->
-       <div class="service-card bg-white rounded-xl shadow-lg overflow-hidden border-l-4" style="border-left-color: var(--accent-blue);">
-        <div class="p-6 cursor-pointer" onclick="toggleService('service7')">
-         <div class="flex items-center justify-between">
-          <div class="flex items-center space-x-4">
-           <svg class="w-12 h-12" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-           </svg>
-           <div>
-            <h3 class="text-2xl font-bold" style="color: var(--primary-green);">Saturday Partners Fasting &amp; Prayer</h3>
-            <p class="text-xl font-semibold" style="color: var(--accent-blue);">6:00 PM</p>
-           </div>
-          </div>
-          <svg id="service7-icon" class="w-6 h-6 transition-transform" fill="none" stroke="currentColor" style="color: var(--ash);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-          </svg>
-         </div>
-        </div>
-        <div id="service7" class="service-details">
-         <div class="px-6 pb-6 border-t pt-4">
-          <p class="text-gray-700 text-lg mb-3">Dedicated prayer time for ministry partners and kingdom advancement.</p>
-          <ul class="space-y-2 text-gray-600">
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Corporate fasting and prayer</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Intercession for partners</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Ministry vision and strategy</li>
-           <li class="flex items-center"><span class="mr-2" style="color: var(--accent-blue);">✓</span> Spiritual breakthrough</li>
-          </ul>
-         </div>
-        </div>
-       </div>
+      <div class="form-group"><label for="partnerEmail">Email Address: *</label> <input type="email" id="partnerEmail" required>
       </div>
-     </div>
-    </section><!-- GIVING PAGE -->
-    <section id="giving-page" class="page-section py-20" style="width: 100%; background: var(--light-ash);">
-     <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="section-title text-5xl font-bold text-center mb-8" style="color: var(--primary-green);">Give &amp; Partner With Us</h1>
-      <p class="text-xl text-gray-700 text-center mb-12 max-w-3xl mx-auto">Your giving helps us spread the Gospel and impact lives through media, missions, outreach, and powerful ministry programs. Partner with us today!</p><!-- Online Payment Options -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8"><!-- PayPal Payment -->
-       <div class="bg-white rounded-xl shadow-2xl p-8 border-t-4" style="border-top-color: var(--accent-blue);">
-        <div class="text-center">
-         <svg class="w-24 h-24 mx-auto mb-4" fill="currentColor" style="color: #0070BA;" viewbox="0 0 24 24"><path d="M7.076 21.337H2.47a.641.641 0 0 1-.633-.74L4.944.901C5.026.382 5.474 0 5.998 0h7.46c2.57 0 4.578.543 5.69 1.81 1.01 1.15 1.304 2.42 1.012 4.287-.023.143-.047.288-.077.437-.983 5.05-4.349 6.797-8.647 6.797h-2.19c-.524 0-.968.382-1.05.9l-1.12 7.106zm14.146-14.42a3.35 3.35 0 0 0-.607-.541c-.013.076-.026.175-.041.254-.93 4.778-4.005 7.201-9.138 7.201h-2.19a.563.563 0 0 0-.556.479l-1.187 7.527h-.506l-.24 1.516a.56.56 0 0 0 .554.647h3.882c.46 0 .85-.334.922-.788.06-.26.76-4.852.76-4.852.072-.455.462-.788.922-.788h.58c3.76 0 6.705-1.528 7.565-5.946.36-1.847.174-3.388-.806-4.461z" />
-         </svg>
-         <h2 class="text-3xl font-bold mb-4" style="color: var(--primary-green);">Give via PayPal</h2>
-         <p class="text-lg text-gray-600 mb-6">Secure international payment via PayPal</p><a href="https://www.paypal.me/Funmzyanie" target="_blank" rel="noopener noreferrer" class="payment-button"> 💙 Give with PayPal </a>
-         <p class="text-sm text-gray-500 mt-4">🔒 Secure payment powered by PayPal</p>
-        </div>
-       </div><!-- Paystack Payment -->
-       <div class="bg-white rounded-xl shadow-2xl p-8 border-t-4" style="border-top-color: var(--accent-blue);">
-        <div class="text-center">
-         <svg class="w-24 h-24 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-         </svg>
-         <h2 class="text-3xl font-bold mb-4" style="color: var(--primary-green);">Give with Card</h2>
-         <p class="text-lg text-gray-600 mb-6">Secure payment via Paystack - Donate with your debit or credit card</p><a href="https://paystack.com/pay/vibrantimpactministries" target="_blank" rel="noopener noreferrer" class="payment-button"> 💳 Give Now with Card </a>
-         <p class="text-sm text-gray-500 mt-4">🔒 Secure payment powered by Paystack</p>
-        </div>
-       </div>
-      </div><!-- Bank Transfer -->
-      <div class="bg-white rounded-xl shadow-2xl p-8 border-t-4" style="border-top-color: var(--accent-blue);">
-       <div class="text-center mb-8">
-        <svg class="w-20 h-20 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 14v3m4-3v3m4-3v3M3 21h18M3 10h18M3 7l9-4 9 4M4 10h16v11H4V10z" />
-        </svg>
-        <h2 class="text-3xl font-bold mb-6" style="color: var(--primary-green);">Bank Transfer Details</h2>
-       </div>
-       <div class="space-y-4 max-w-2xl mx-auto">
-        <div class="bg-gray-50 rounded-lg p-6">
-         <p class="text-sm text-gray-600 mb-2 font-semibold">Bank Name</p>
-         <p class="text-2xl font-bold" style="color: var(--primary-green);">UBA Bank</p>
-        </div>
-        <div class="bg-gray-50 rounded-lg p-6">
-         <p class="text-sm text-gray-600 mb-2 font-semibold">Account Name</p>
-         <p id="account-name" class="text-2xl font-bold" style="color: var(--primary-green);">Valentine Ifedayo Ministries</p>
-        </div>
-        <div class="bg-gray-50 rounded-lg p-6">
-         <p class="text-sm text-gray-600 mb-2 font-semibold">Account Number</p>
-         <p id="account-number" class="text-3xl font-bold tracking-wide" style="color: var(--accent-blue);">1025522432</p>
-        </div>
-       </div>
-       <div class="mt-8 p-6 rounded-lg text-center" style="background: rgba(59, 130, 246, 0.1);">
-        <p class="text-lg text-gray-700 italic">"Give, and it will be given to you. A good measure, pressed down, shaken together and running over, will be poured into your lap."</p>
-        <p class="font-semibold mt-2" style="color: var(--accent-blue);">— Luke 6:38</p>
-       </div>
-      </div><!-- Partnership Opportunities -->
-      <div class="mt-12 gradient-green rounded-xl shadow-2xl p-8 text-white">
-       <h2 class="text-3xl font-bold text-center mb-6">Partnership Opportunities</h2>
-       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="text-center">
-         <svg class="w-12 h-12 mx-auto mb-3" fill="currentColor" viewbox="0 0 20 20"><path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3zM3.31 9.397L5 10.12v4.102a8.969 8.969 0 00-1.05-.174 1 1 0 01-.89-.89 11.115 11.115 0 01.25-3.762zM9.3 16.573A9.026 9.026 0 007 14.935v-3.957l1.818.78a3 3 0 002.364 0l5.508-2.361a11.026 11.026 0 01.25 3.762 1 1 0 01-.89.89 8.968 8.968 0 00-5.35 2.524 1 1 0 01-1.4 0zM6 18a1 1 0 001-1v-2.065a8.935 8.935 0 00-2-.712V17a1 1 0 001 1z" />
-         </svg>
-         <h3 class="text-xl font-bold mb-2">Ministry Partner</h3>
-         <p class="text-sm opacity-90">Support our regular ministry operations</p>
-        </div>
-        <div class="text-center">
-         <svg class="w-12 h-12 mx-auto mb-3" fill="currentColor" viewbox="0 0 20 20"><path d="M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z" />
-         </svg>
-         <h3 class="text-xl font-bold mb-2">Project Partner</h3>
-         <p class="text-sm opacity-90">Fund specific kingdom projects</p>
-        </div>
-        <div class="text-center">
-         <svg class="w-12 h-12 mx-auto mb-3" fill="currentColor" viewbox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
-         </svg>
-         <h3 class="text-xl font-bold mb-2">Missions Partner</h3>
-         <p class="text-sm opacity-90">Support our outreach and missions</p>
-        </div>
-       </div>
-       <div class="text-center mt-8">
-        <p class="text-lg">For partnership inquiries, contact us at:</p>
-        <p id="giving-email" class="text-xl font-bold mt-2">pastorvalentineifedayo@gmail.com</p>
-       </div>
+      <div class="form-group"><label for="partnerPhone">Phone Number:</label> <input type="text" id="partnerPhone" placeholder="(optional)">
       </div>
-      <div class="mt-12 text-center">
-       <p class="text-lg text-gray-700 mb-4">Thank you for your generous support and partnership in advancing God's Kingdom!</p>
-       <p class="text-gray-600">May the Lord bless you abundantly as you give cheerfully to His work.</p>
+      <div class="form-group"><label for="partnerAddress">Address:</label> <input type="text" id="partnerAddress" placeholder="Street Address (optional)">
       </div>
-     </div>
-    </section><!-- GALLERY PAGE (Videos & Photos) -->
-    <section id="gallery-page" class="page-section py-20" style="width: 100%; background: white;">
-     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="section-title text-5xl font-bold text-center mb-8" style="color: var(--primary-green);">Media Gallery</h1>
-      <p class="text-center text-lg text-gray-600 mb-12">Watch our services and browse through our photo memories!</p><!-- Tabs -->
-      <div class="flex justify-center gap-4 mb-12"><button id="tab-videos" class="tab-button active" onclick="switchTab('videos')"> 🎥 Videos </button> <button id="tab-photos" class="tab-button" onclick="switchTab('photos')"> 📸 Photos </button>
-      </div><!-- Videos Tab Content -->
-      <div id="videos-content" class="tab-content">
-       <div class="text-center mb-8"><button id="add-video-btn" class="btn-primary text-lg"> ➕ Add Video Link </button>
-       </div><!-- Video Categories -->
-       <div id="video-container"><!-- Recent Sermons -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">📖 Recent Sermons</h2>
-         <div id="sermons-grid" class="gallery-grid"><!-- Videos will be dynamically loaded here -->
-         </div>
-        </div><!-- Fire Night Highlights -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">🔥 Fire Night Highlights</h2>
-         <div id="firenight-grid" class="gallery-grid"><!-- Videos will be dynamically loaded here -->
-         </div>
-        </div><!-- Youth Fellowship -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">👥 Youth Fellowship</h2>
-         <div id="youth-grid" class="gallery-grid"><!-- Videos will be dynamically loaded here -->
-         </div>
-        </div><!-- Testimonies -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">✨ Testimonies &amp; Miracles</h2>
-         <div id="testimonies-grid" class="gallery-grid"><!-- Videos will be dynamically loaded here -->
-         </div>
-        </div>
-       </div><!-- Social Media Links -->
-       <div class="bg-white rounded-xl shadow-lg p-8 mt-12 border-2" style="border-color: var(--light-ash);">
-        <h2 class="text-3xl font-bold text-center mb-8" style="color: var(--primary-green);">Connect With Us</h2>
-        <div class="flex flex-wrap justify-center gap-6"><a href="https://www.youtube.com/@prophetvalentineifedayo3362/videos" target="_blank" rel="noopener noreferrer" class="social-icon flex flex-col items-center p-6 bg-red-50 rounded-lg hover:bg-red-100 transition-colors">
-          <svg class="w-16 h-16 mb-3" fill="currentColor" style="color: #FF0000;" viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-          </svg><span class="font-bold text-gray-800">YouTube</span> </a> <a href="https://www.facebook.com/Valentineifedayoministries" target="_blank" rel="noopener noreferrer" class="social-icon flex flex-col items-center p-6 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors">
-          <svg class="w-16 h-16 mb-3" fill="currentColor" style="color: #1877F2;" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-          </svg><span class="font-bold text-gray-800">Facebook</span> </a> <a href="https://tiktok.com/@prophet_valentineifedayo" target="_blank" rel="noopener noreferrer" class="social-icon flex flex-col items-center p-6 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors">
-          <svg class="w-16 h-16 mb-3" fill="currentColor" style="color: #000000;" viewbox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-          </svg><span class="font-bold text-gray-800">TikTok</span> </a> <a href="https://twitch.tv/vibrantimpactministries" target="_blank" rel="noopener noreferrer" class="social-icon flex flex-col items-center p-6 bg-purple-50 rounded-lg hover:bg-purple-100 transition-colors">
-          <svg class="w-16 h-16 mb-3" fill="currentColor" style="color: #9146FF;" viewbox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" />
-          </svg><span class="font-bold text-gray-800">Twitch</span> </a>
-        </div>
+      <div class="form-group"><label for="partnerCity">City:</label> <input type="text" id="partnerCity" placeholder="(optional)">
+      </div>
+      <div class="form-group"><label for="partnershipType">Partnership Type: *</label> <select id="partnershipType" required> <option value="">-- Select Partnership Type --</option> <option value="monthly-financial">Monthly Financial Support</option> <option value="one-time-financial">One-Time Financial Gift</option> <option value="prayer-partner">Prayer Partner</option> <option value="volunteer">Volunteer Service</option> <option value="combined">Combined (Financial + Volunteer)</option> </select>
+      </div>
+      <div class="form-group"><label for="partnerMessage">Message / Prayer Requests:</label> <textarea id="partnerMessage" placeholder="Share your heart with us... Why do you want to partner with us? Any specific prayer requests?"></textarea>
+      </div>
+      <div class="form-group"><label style="display: flex; align-items: center; gap: 10px; cursor: pointer;"> <input type="checkbox" id="partnerConsent" required style="width: auto; cursor: pointer;"> <span>I agree to receive ministry updates and communications *</span> </label>
+      </div><button type="submit" id="partnerSubmitBtn"> 🤝 Submit Partnership Application </button>
+      <p style="margin-top: 15px; font-size: 0.9em; color: #666; text-align: center;">After submitting, our team will contact you within 2-3 business days.</p>
+     </form>
+    </div>
+   </section>
+   <section id="upload" class="section">
+    <h2>⬆️ Upload Media</h2>
+    <div id="adminOnly">
+     <div class="upload-form">
+      <h3>Add Photo or Video</h3>
+      <form id="mediaForm">
+       <div class="form-group"><label for="mediaType">Media Type:</label> <select id="mediaType" required> <option value="">-- Select Type --</option> <option value="photo">Photo (Image URL)</option> <option value="video">Video (YouTube/Facebook URL)</option> </select>
        </div>
-      </div><!-- Photos Tab Content -->
-      <div id="photos-content" class="tab-content" style="display: none;">
-       <div class="text-center mb-8"><button id="add-photo-btn" class="btn-primary text-lg"> ➕ Upload Photos </button>
-       </div><!-- Photo Categories -->
-       <div id="photo-container"><!-- Sunday Service Photos -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">☀️ Sunday Service</h2>
-         <div id="sunday-photos-grid" class="gallery-grid"><!-- Photos will be dynamically loaded here -->
-         </div>
-        </div><!-- Fire Night Photos -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">🔥 Fire Night</h2>
-         <div id="firenight-photos-grid" class="gallery-grid"><!-- Photos will be dynamically loaded here -->
-         </div>
-        </div><!-- Youth Fellowship Photos -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">👥 Youth Fellowship</h2>
-         <div id="youth-photos-grid" class="gallery-grid"><!-- Photos will be dynamically loaded here -->
-         </div>
-        </div><!-- Events & Special Occasions -->
-        <div class="mb-16">
-         <h2 class="text-3xl font-bold mb-8" style="color: var(--primary-green);">🎉 Events &amp; Special Occasions</h2>
-         <div id="events-photos-grid" class="gallery-grid"><!-- Photos will be dynamically loaded here -->
-         </div>
-        </div>
+       <div class="form-group"><label for="category">Category:</label> <select id="category" required> <option value="">-- Select Category --</option> <option value="sunday-service">Sunday Service</option> <option value="youth-ministry">Youth Ministry</option> <option value="community-outreach">Community Outreach</option> <option value="special-events">Special Events</option> </select>
        </div>
-      </div>
-     </div>
-    </section><!-- PRAYER PAGE -->
-    <section id="prayer-page" class="page-section py-20" style="width: 100%; background: var(--light-ash);">
-     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="section-title text-5xl font-bold text-center mb-8" style="color: var(--primary-green);">Prayer &amp; Counselling</h1>
-      <p class="text-xl text-gray-700 text-center mb-12">We believe in the power of prayer. Submit your prayer request and our prayer team will stand with you.</p><!-- Prayer Request Form -->
-      <div class="bg-white rounded-xl shadow-2xl p-8 mb-12">
-       <h2 class="text-3xl font-bold mb-6 text-center" style="color: var(--primary-green);">Submit Your Prayer Request</h2>
-       <form id="prayer-form" class="space-y-6">
-        <div><label for="prayer-name" class="block text-sm font-semibold text-gray-700 mb-2">Your Name</label> <input type="text" id="prayer-name" required class="form-input" placeholder="Enter your name">
-        </div>
-        <div><label for="prayer-email" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label> <input type="email" id="prayer-email" required class="form-input" placeholder="your.email@example.com">
-        </div>
-        <div><label for="prayer-phone" class="block text-sm font-semibold text-gray-700 mb-2">Phone Number (Optional)</label> <input type="tel" id="prayer-phone" class="form-input" placeholder="+234 XXX XXX XXXX">
-        </div>
-        <div><label for="prayer-request" class="block text-sm font-semibold text-gray-700 mb-2">Prayer Request</label> <textarea id="prayer-request" required class="form-input" placeholder="Share your prayer request with us..."></textarea>
-        </div><button type="submit" class="btn-primary w-full"> 🙏 Submit Prayer Request </button>
-       </form>
-       <div id="prayer-success" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-        <p class="text-green-800 text-center font-semibold">✓ Your prayer request has been received. Our team will pray for you!</p>
+       <div class="form-group"><label for="mediaUrl">Image URL or Video URL:</label> <input type="text" id="mediaUrl" placeholder="Paste Imgur, ImgBB, YouTube, or Facebook link" required> <small style="color: #666; margin-top: 5px; display: block;"> For photos: Upload to <a href="https://imgur.com" target="_blank">Imgur</a> or <a href="https://imgbb.com" target="_blank">ImgBB</a>, then paste the direct image URL here </small>
        </div>
-      </div><!-- Counselling Services -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-       <div class="bg-white rounded-xl shadow-lg p-8">
-        <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg>
-        <h3 class="text-2xl font-bold text-center mb-4" style="color: var(--primary-green);">Tuesday Counselling</h3>
-        <p class="text-center text-gray-700 mb-4">Personal spiritual counseling and deliverance sessions</p>
-        <p class="text-center font-bold text-xl" style="color: var(--accent-blue);">9:00 AM</p>
-        <p class="text-center text-gray-600 mt-2">Ughele Junction, Akure</p>
+       <div class="form-group"><label for="eventName">Event Name:</label> <input type="text" id="eventName" placeholder="e.g., Sunday Worship Service" required>
        </div>
-       <div class="bg-white rounded-xl shadow-lg p-8">
-        <svg class="w-16 h-16 mx-auto mb-4" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m-9 9a9 9 0 019-9" />
-        </svg>
-        <h3 class="text-2xl font-bold text-center mb-4" style="color: var(--primary-green);">Online Prayer</h3>
-        <p class="text-center text-gray-700 mb-4">Join our virtual prayer meeting every Tuesday</p>
-        <p class="text-center font-bold text-xl" style="color: var(--accent-blue);">6:00 PM</p>
-        <p class="text-center text-gray-600 mt-2">Live on Facebook &amp; YouTube</p>
+       <div class="form-group"><label for="description">Description:</label> <textarea id="description" placeholder="Tell us about this moment..."></textarea>
        </div>
-      </div><!-- Contact Info -->
-      <div class="gradient-green rounded-xl shadow-2xl p-8 text-white text-center">
-       <h2 class="text-3xl font-bold mb-6">Need Urgent Prayer?</h2>
-       <p class="text-lg mb-6">Contact us directly for immediate prayer support</p>
-       <div class="space-y-4">
-        <div>
-         <p class="text-sm opacity-90 mb-1">Email</p>
-         <p id="prayer-email-contact" class="text-xl font-bold">pastorvalentineifedayo@gmail.com</p>
-        </div>
-        <div>
-         <p class="text-sm opacity-90 mb-1">Phone</p>
-         <p id="prayer-phone-contact" class="text-xl font-bold">+234 XXX XXX XXXX</p>
-        </div>
+       <div class="form-group"><label for="eventDate">Event Date:</label> <input type="date" id="eventDate" required>
        </div>
-      </div>
-     </div>
-    </section><!-- CONTACT PAGE -->
-    <section id="contact-page" class="page-section py-20" style="width: 100%; background: white;">
-     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-      <h1 class="section-title text-5xl font-bold text-center mb-16" style="color: var(--primary-green);">Contact Us</h1>
-      <div class="grid grid-cols-1 lg:grid-cols-2 gap-12"><!-- Contact Info -->
-       <div class="space-y-8">
-        <div class="bg-white rounded-xl shadow-lg p-8 border-2" style="border-color: var(--light-ash);">
-         <div class="flex items-start space-x-4">
-          <svg class="w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /> <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-          </svg>
-          <div>
-           <h3 class="text-2xl font-bold mb-3" style="color: var(--primary-green);">Our Location</h3>
-           <p id="contact-address" class="text-lg text-gray-700 leading-relaxed">Ughele Junction, along Ado Road, Akure, Ondo State, Nigeria</p>
-          </div>
-         </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-8 border-2" style="border-color: var(--light-ash);">
-         <div class="flex items-start space-x-4">
-          <svg class="w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-          </svg>
-          <div>
-           <h3 class="text-2xl font-bold mb-3" style="color: var(--primary-green);">Phone</h3>
-           <p id="contact-phone" class="text-lg text-gray-700">+234 XXX XXX XXXX</p>
-          </div>
-         </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-8 border-2" style="border-color: var(--light-ash);">
-         <div class="flex items-start space-x-4">
-          <svg class="w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-          </svg>
-          <div>
-           <h3 class="text-2xl font-bold mb-3" style="color: var(--primary-green);">Email</h3>
-           <p id="contact-email" class="text-lg text-gray-700">pastorvalentineifedayo@gmail.com</p>
-          </div>
-         </div>
-        </div>
-        <div class="bg-white rounded-xl shadow-lg p-8 border-2" style="border-color: var(--light-ash);">
-         <div class="flex items-start space-x-4">
-          <svg class="w-12 h-12 flex-shrink-0" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-          </svg>
-          <div>
-           <h3 class="text-2xl font-bold mb-3" style="color: var(--primary-green);">Service Times</h3>
-           <ul class="text-gray-700 space-y-2">
-            <li><strong>Sunday:</strong> 9:00 AM</li>
-            <li><strong>Tuesday:</strong> 9:00 AM &amp; 6:00 PM</li>
-            <li><strong>Friday:</strong> 4:00 PM &amp; 6:00 PM</li>
-            <li><strong>Saturday:</strong> 6:00 PM</li>
-           </ul>
-          </div>
-         </div>
-        </div>
-       </div><!-- Contact Form -->
-       <div class="bg-white rounded-xl shadow-2xl p-8 border-2" style="border-color: var(--light-ash);">
-        <h2 class="text-3xl font-bold mb-6 text-center" style="color: var(--primary-green);">Send Us a Message</h2>
-        <form id="contact-form" class="space-y-6">
-         <div><label for="contact-name" class="block text-sm font-semibold text-gray-700 mb-2">Full Name</label> <input type="text" id="contact-name" required class="form-input" placeholder="Your name">
-         </div>
-         <div><label for="contact-email-input" class="block text-sm font-semibold text-gray-700 mb-2">Email Address</label> <input type="email" id="contact-email-input" required class="form-input" placeholder="your.email@example.com">
-         </div>
-         <div><label for="contact-subject" class="block text-sm font-semibold text-gray-700 mb-2">Subject</label> <input type="text" id="contact-subject" required class="form-input" placeholder="What is this about?">
-         </div>
-         <div><label for="contact-message" class="block text-sm font-semibold text-gray-700 mb-2">Message</label> <textarea id="contact-message" required class="form-input" placeholder="Your message..."></textarea>
-         </div><button type="submit" class="btn-primary w-full"> ✉️ Send Message </button>
-        </form>
-        <div id="contact-success" class="hidden mt-6 p-4 bg-green-50 border border-green-200 rounded-lg">
-         <p class="text-green-800 text-center font-semibold">✓ Message sent successfully! We'll get back to you soon.</p>
-        </div>
+       <div class="button-group"><button type="submit" id="submitBtn">Upload Media</button>
        </div>
-      </div><!-- Social Media -->
-      <div class="mt-12 gradient-green rounded-xl shadow-2xl p-8 text-white text-center">
-       <h2 class="text-3xl font-bold mb-6">Follow Us on Social Media</h2>
-       <div class="flex flex-wrap justify-center gap-6"><a href="https://www.youtube.com/@prophetvalentineifedayo3362/videos" target="_blank" rel="noopener noreferrer" class="social-icon">
-         <svg class="w-12 h-12" fill="currentColor" viewbox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z" />
-         </svg></a> <a href="https://www.facebook.com/Valentineifedayoministries" target="_blank" rel="noopener noreferrer" class="social-icon">
-         <svg class="w-12 h-12" fill="currentColor" viewbox="0 0 24 24"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z" />
-         </svg></a> <a href="https://tiktok.com/@prophet_valentineifedayo" target="_blank" rel="noopener noreferrer" class="social-icon">
-         <svg class="w-12 h-12" fill="currentColor" viewbox="0 0 24 24"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z" />
-         </svg></a> <a href="https://twitch.tv/vibrantimpactministries" target="_blank" rel="noopener noreferrer" class="social-icon">
-         <svg class="w-12 h-12" fill="currentColor" viewbox="0 0 24 24"><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" />
-         </svg></a>
-       </div>
-      </div>
-     </div>
-    </section>
-   </main><!-- Footer -->
-   <footer class="bg-gray-900 text-white py-12" style="width: 100%;">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-     <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-      <div>
-       <h3 class="text-xl font-bold mb-4" style="color: var(--accent-blue);">Vibrant Impact Ministries</h3>
-       <p class="text-sm opacity-90">Raising vibrant believers who impact their generation through the power of the Holy Spirit.</p>
-      </div>
-      <div>
-       <h3 class="text-xl font-bold mb-4" style="color: var(--accent-blue);">Quick Links</h3>
-       <ul class="space-y-2 text-sm">
-        <li><a href="#" class="nav-trigger hover:text-blue-400" data-page="about">About Us</a></li>
-        <li><a href="#" class="nav-trigger hover:text-blue-400" data-page="services">Services</a></li>
-        <li><a href="#" class="nav-trigger hover:text-blue-400" data-page="giving">Give</a></li>
-        <li><a href="#" class="nav-trigger hover:text-blue-400" data-page="contact">Contact</a></li>
-       </ul>
-      </div>
-      <div>
-       <h3 class="text-xl font-bold mb-4" style="color: var(--accent-blue);">Contact</h3>
-       <ul class="space-y-2 text-sm opacity-90">
-        <li>Ughele Junction, Akure</li>
-        <li id="footer-email">pastorvalentineifedayo@gmail.com</li>
-        <li id="footer-phone">+234 XXX XXX XXXX</li>
-       </ul>
-      </div>
-     </div>
-     <div class="border-t border-gray-700 pt-8 text-center">
-      <p class="text-sm opacity-75">© 2024 Vibrant Impact Ministries. All rights reserved.</p>
-      <div class="mt-6 flex justify-center gap-8 flex-wrap"><img src="https://drive.google.com/thumbnail?id=1NvHVmaJMBA4rucIu6fbE4PIoMLobhmsg&amp;sz=w300" alt="Church" class="h-20 w-auto object-contain rounded-lg shadow-lg" onerror="this.style.display='none'; console.log('Footer image 1 failed');"> <img src="https://drive.google.com/thumbnail?id=18PUaKOEJf7SQvbcDsr8m82l6FxqIcXV_&amp;sz=w300" alt="Church" class="h-20 w-auto object-contain rounded-lg shadow-lg" onerror="this.style.display='none'; console.log('Footer image 2 failed');">
-      </div>
-      <div class="mt-4">
-       <svg class="w-10 h-10 mx-auto fire-icon" fill="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path d="M12 2c-1.1 4.55-4 6.5-4 10 0 2.21 1.79 4 4 4s4-1.79 4-4c0-3.5-2.9-5.45-4-10zm0 16c-1.1 0-2-.9-2-2 0-1.33 1.67-2.67 2-4 .33 1.33 2 2.67 2 4 0 1.1-.9 2-2 2z" />
-       </svg>
-      </div>
+      </form>
      </div>
     </div>
-   </footer>
-  </div><!-- Add Video Modal -->
-  <div id="add-video-modal" class="modal">
-   <div class="modal-content"><button class="close-modal" onclick="closeAddVideoModal()">×</button>
-    <h2 class="text-3xl font-bold mb-6 text-center" style="color: var(--primary-green);">Add New Video</h2>
-    <form id="add-video-form" class="space-y-6">
-     <div><label for="video-category" class="block text-sm font-semibold text-gray-700 mb-2">Video Category</label> <select id="video-category" required class="form-input"> <option value="">Select a category</option> <option value="sermons">Recent Sermons</option> <option value="firenight">Fire Night Highlights</option> <option value="youth">Youth Fellowship</option> <option value="testimonies">Testimonies &amp; Miracles</option> </select>
+    <div id="memberOnly" style="display: none;">
+     <div class="access-denied">
+      <h3>🔒 Admin Access Required</h3>
+      <p>Only administrators can upload media. Please contact your church admin if you need to upload content.</p>
      </div>
-     <div><label for="video-title" class="block text-sm font-semibold text-gray-700 mb-2">Video Title</label> <input type="text" id="video-title" required class="form-input" placeholder="Enter video title">
-     </div>
-     <div><label for="video-description" class="block text-sm font-semibold text-gray-700 mb-2">Description</label> <textarea id="video-description" class="form-input" placeholder="Brief description of the video"></textarea>
-     </div>
-     <div><label for="video-type" class="block text-sm font-semibold text-gray-700 mb-2">Video Type</label> <select id="video-type" required class="form-input"> <option value="">Select video type</option> <option value="youtube">YouTube Video</option> <option value="facebook">Facebook Video</option> <option value="url">Direct Video URL</option> </select>
-     </div>
-     <div id="video-url-field" style="display: none;"><label for="video-url" class="block text-sm font-semibold text-gray-700 mb-2">Video URL</label> <input type="url" id="video-url" class="form-input" placeholder="https://...">
-      <p class="text-sm text-gray-500 mt-2"><strong>YouTube:</strong> Share URL (e.g., https://youtu.be/VIDEO_ID)<br><strong>Facebook:</strong> Video URL from Facebook<br><strong>Direct:</strong> Direct link to .mp4, .webm, or .ogg file</p>
-     </div><button type="submit" class="btn-primary w-full" id="submit-video-btn"> <span id="submit-video-text">➕ Add Video</span>
-      <div id="submit-video-spinner" class="loading-spinner" style="display: none;"></div></button>
-    </form>
-   </div>
-  </div><!-- Add Photo Modal -->
-  <div id="add-photo-modal" class="modal">
-   <div class="modal-content"><button class="close-modal" onclick="closeAddPhotoModal()">×</button>
-    <h2 class="text-3xl font-bold mb-6 text-center" style="color: var(--primary-green);">Upload Photos</h2>
-    <form id="add-photo-form" class="space-y-6">
-     <div><label for="photo-category" class="block text-sm font-semibold text-gray-700 mb-2">Photo Category</label> <select id="photo-category" required class="form-input"> <option value="">Select a category</option> <option value="sunday">Sunday Service</option> <option value="firenight-photos">Fire Night</option> <option value="youth-photos">Youth Fellowship</option> <option value="events">Events &amp; Special Occasions</option> </select>
-     </div>
-     <div><label for="photo-event-name" class="block text-sm font-semibold text-gray-700 mb-2">Event Name (Optional)</label> <input type="text" id="photo-event-name" class="form-input" placeholder="e.g., Sunday Service - Jan 15, 2024">
-     </div>
-     <div><label for="photo-description" class="block text-sm font-semibold text-gray-700 mb-2">Description (Optional)</label> <textarea id="photo-description" class="form-input" placeholder="Brief description..."></textarea>
-     </div><!-- Upload Method Selection -->
-     <div><label class="block text-sm font-semibold text-gray-700 mb-2">Upload Method</label>
-      <div class="flex gap-4"><label class="flex items-center space-x-2 cursor-pointer"> <input type="radio" name="upload-method" value="drive" checked onchange="toggleUploadMethod()"> <span>Google Drive Link</span> </label> <label class="flex items-center space-x-2 cursor-pointer"> <input type="radio" name="upload-method" value="file" onchange="toggleUploadMethod()"> <span>Upload from Computer</span> </label>
-      </div>
-     </div><!-- Google Drive Link Input -->
-     <div id="drive-link-input"><label for="photo-drive-link" class="block text-sm font-semibold text-gray-700 mb-2">Google Drive Photo Link</label> <input type="url" id="photo-drive-link" class="form-input" placeholder="https://drive.google.com/file/d/...">
-      <p class="text-sm text-gray-600 mt-2"><strong>How to get the link:</strong><br>
-        1. Upload photo to Google Drive<br>
-        2. Right-click the photo → Get link<br>
-        3. Change to "Anyone with the link"<br>
-        4. Copy and paste the link here</p>
-     </div><!-- File Upload Input -->
-     <div id="file-upload-input" style="display: none;">
-      <div class="file-input-wrapper"><input type="file" id="photo-file" accept="image/*" multiple onchange="previewPhotos()"> <label for="photo-file" class="file-input-label">
-        <svg class="w-12 h-12 mx-auto mb-2" fill="none" stroke="currentColor" style="color: var(--accent-blue);" viewbox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
-        </svg><p>📸 Click to select photos</p><p class="text-xs mt-1">You can select multiple photos at once</p></label>
-      </div>
-      <div id="photo-preview" class="grid grid-cols-3 gap-2" style="display: none;"></div>
-     </div><button type="submit" class="btn-primary w-full" id="submit-photo-btn"> <span id="submit-photo-text">➕ Upload Photos</span>
-      <div id="submit-photo-spinner" class="loading-spinner" style="display: none;"></div></button>
-    </form>
-   </div>
-  </div><!-- View Photo Modal -->
-  <div id="view-photo-modal" class="modal">
-   <div class="modal-content photo-modal-content"><button class="close-modal" onclick="closeViewPhotoModal()">×</button> <img id="view-photo-image" src="" alt="Photo">
-    <div class="mt-4 text-center">
-     <h3 id="view-photo-title" class="text-2xl font-bold mb-2" style="color: var(--primary-green);"></h3>
-     <p id="view-photo-description" class="text-gray-600 mb-4"></p><button class="delete-btn" onclick="deleteCurrentPhoto()">🗑️ Delete Photo</button>
     </div>
-   </div>
-  </div><!-- Toast Notification -->
-  <div id="toast" class="toast">
-   <p id="toast-message"></p>
+   </section>
+   <section id="partner-list" class="section">
+    <h2>👥 Partnership Applications</h2>
+    <p style="color: #666; margin-bottom: 20px;">Review and manage partnership applications</p>
+    <div id="partnerApplications" class="gallery-grid"><!-- Partner applications will be loaded here -->
+    </div>
+   </section>
   </div>
   <script>
-    const defaultConfig = {
-      church_name: "Vibrant Impact Ministries",
-      church_slogan: "Raising Vibrant Believers for Kingdom Impact",
-      welcome_title: "Welcome to Vibrant Impact Ministries",
-      welcome_message: "Experience the transforming power of God through prophetic teaching, healing, and deliverance.",
-      church_phone: "+2348146310820",
-      church_email: "pastorvalentineifedayo@gmail.com",
-      church_address: "Ughele Junction, along Ado Road, Akure, Ondo State, Nigeria",
-      account_number: "1025522432",
-      account_name: "Valentine Ifedayo Ministries"
+    // ���️ REPLACE WITH YOUR FIREBASE CONFIG
+    const firebaseConfig = {
+      apiKey: "YOUR_API_KEY",
+      authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
+      projectId: "YOUR_PROJECT_ID",
+      storageBucket: "YOUR_PROJECT_ID.appspot.com",
+      messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
+      appId: "YOUR_APP_ID"
     };
 
-    let allMedia = [];
-    let currentPhotoToDelete = null;
-    let currentTab = 'videos';
+    // Initialize Firebase
+    let db;
+    let auth;
+    let isFirebaseConfigured = false;
+    let currentUser = null;
+    let isAdmin = false;
 
-    // Data SDK Handler
-    const dataHandler = {
-      onDataChanged(data) {
-        allMedia = data;
-        if (currentTab === 'videos') {
-          renderVideos();
-        } else {
-          renderPhotos();
-        }
-      }
-    };
+    // Admin emails - only these emails have admin privileges
+    const ADMIN_EMAILS = [
+      "eiweh123@gmail.com",
+      "vibrantchannel286@gmail.com"
+    ];
 
-    // Initialize Data SDK
-    async function initDataSDK() {
-      if (window.dataSdk) {
-        const result = await window.dataSdk.init(dataHandler);
-        if (!result.isOk) {
-          console.error("Failed to initialize Data SDK");
-        }
-      }
-    }
+    try {
+      if (firebaseConfig.apiKey !== "YOUR_API_KEY") {
+        firebase.initializeApp(firebaseConfig);
+        db = firebase.firestore();
+        auth = firebase.auth();
+        isFirebaseConfigured = true;
+        document.getElementById('setupInstructions').style.display = 'none';
 
-    initDataSDK();
-
-    // Element SDK
-    async function onConfigChange(config) {
-      const churchName = config.church_name || defaultConfig.church_name;
-      const churchSlogan = config.church_slogan || defaultConfig.church_slogan;
-      const welcomeTitle = config.welcome_title || defaultConfig.welcome_title;
-      const welcomeMessage = config.welcome_message || defaultConfig.welcome_message;
-      const churchPhone = config.church_phone || defaultConfig.church_phone;
-      const churchEmail = config.church_email || defaultConfig.church_email;
-      const churchAddress = config.church_address || defaultConfig.church_address;
-      const accountNumber = config.account_number || defaultConfig.account_number;
-      const accountName = config.account_name || defaultConfig.account_name;
-
-      document.getElementById('header-church-name').textContent = churchName;
-      document.getElementById('church-slogan').textContent = `"${churchSlogan}"`;
-      document.getElementById('welcome-title').textContent = welcomeTitle;
-      document.getElementById('welcome-message').textContent = welcomeMessage;
-
-      const phoneElements = ['home-phone', 'prayer-phone-contact', 'contact-phone', 'footer-phone'];
-      phoneElements.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = churchPhone;
-      });
-
-      const emailElements = ['home-email', 'giving-email', 'prayer-email-contact', 'contact-email', 'footer-email'];
-      emailElements.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = churchEmail;
-      });
-
-      const addressElements = ['home-address', 'contact-address'];
-      addressElements.forEach(id => {
-        const el = document.getElementById(id);
-        if (el) el.textContent = churchAddress;
-      });
-
-      document.getElementById('account-number').textContent = accountNumber;
-      document.getElementById('account-name').textContent = accountName;
-    }
-
-    function mapToCapabilities(config) {
-      return {
-        recolorables: [],
-        borderables: [],
-        fontEditable: undefined,
-        fontSizeable: undefined
-      };
-    }
-
-    function mapToEditPanelValues(config) {
-      return new Map([
-        ["church_name", config.church_name || defaultConfig.church_name],
-        ["church_slogan", config.church_slogan || defaultConfig.church_slogan],
-        ["welcome_title", config.welcome_title || defaultConfig.welcome_title],
-        ["welcome_message", config.welcome_message || defaultConfig.welcome_message],
-        ["church_phone", config.church_phone || defaultConfig.church_phone],
-        ["church_email", config.church_email || defaultConfig.church_email],
-        ["church_address", config.church_address || defaultConfig.church_address],
-        ["account_number", config.account_number || defaultConfig.account_number],
-        ["account_name", config.account_name || defaultConfig.account_name]
-      ]);
-    }
-
-    if (window.elementSdk) {
-      window.elementSdk.init({
-        defaultConfig,
-        onConfigChange,
-        mapToCapabilities,
-        mapToEditPanelValues
-      });
-    }
-
-    // Navigation
-    function showPage(pageId) {
-      document.querySelectorAll('.page-section').forEach(section => {
-        section.classList.remove('active');
-      });
-      document.getElementById(pageId + '-page').classList.add('active');
-
-      document.querySelectorAll('.nav-link').forEach(link => {
-        link.classList.remove('active');
-      });
-      document.querySelectorAll(`[data-page="${pageId}"]`).forEach(link => {
-        link.classList.add('active');
-      });
-
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-
-      const mobileNav = document.getElementById('mobile-nav');
-      if (window.innerWidth < 1024) {
-        mobileNav.classList.add('hidden');
-      }
-    }
-
-    document.querySelectorAll('.nav-link, .nav-trigger').forEach(link => {
-      link.addEventListener('click', (e) => {
-        e.preventDefault();
-        const page = link.getAttribute('data-page');
-        if (page) {
-          showPage(page);
-        }
-      });
-    });
-
-    document.getElementById('mobile-menu-btn').addEventListener('click', () => {
-      const mobileNav = document.getElementById('mobile-nav');
-      mobileNav.classList.toggle('hidden');
-    });
-
-    // Tab Switching
-    function switchTab(tab) {
-      currentTab = tab;
-      document.getElementById('tab-videos').classList.remove('active');
-      document.getElementById('tab-photos').classList.remove('active');
-      document.getElementById(`tab-${tab}`).classList.add('active');
-
-      document.getElementById('videos-content').style.display = tab === 'videos' ? 'block' : 'none';
-      document.getElementById('photos-content').style.display = tab === 'photos' ? 'block' : 'none';
-
-      if (tab === 'videos') {
-        renderVideos();
-      } else {
-        renderPhotos();
-      }
-    }
-
-    window.switchTab = switchTab;
-
-    // Service accordion
-    function toggleService(serviceId) {
-      const details = document.getElementById(serviceId);
-      const icon = document.getElementById(serviceId + '-icon');
-      
-      if (details.classList.contains('expanded')) {
-        details.classList.remove('expanded');
-        icon.style.transform = 'rotate(0deg)';
-      } else {
-        document.querySelectorAll('.service-details').forEach(d => d.classList.remove('expanded'));
-        document.querySelectorAll('[id$="-icon"]').forEach(i => i.style.transform = 'rotate(0deg)');
-        details.classList.add('expanded');
-        icon.style.transform = 'rotate(180deg)';
-      }
-    }
-
-    window.toggleService = toggleService;
-
-    // Prayer form
-    document.getElementById('prayer-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      document.getElementById('prayer-success').classList.remove('hidden');
-      document.getElementById('prayer-form').reset();
-      setTimeout(() => {
-        document.getElementById('prayer-success').classList.add('hidden');
-      }, 5000);
-    });
-
-    // Contact form
-    document.getElementById('contact-form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      document.getElementById('contact-success').classList.remove('hidden');
-      document.getElementById('contact-form').reset();
-      setTimeout(() => {
-        document.getElementById('contact-success').classList.add('hidden');
-      }, 5000);
-    });
-
-    // VIDEO MANAGEMENT
-    function extractVideoId(url, type) {
-      if (type === 'youtube') {
-        const patterns = [
-          /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
-          /^([a-zA-Z0-9_-]{11})$/
-        ];
-        for (const pattern of patterns) {
-          const match = url.match(pattern);
-          if (match) return match[1];
-        }
-      } else if (type === 'facebook') {
-        return url;
-      }
-      return url;
-    }
-
-    function getEmbedUrl(videoId, type) {
-      if (type === 'youtube') {
-        return `https://www.youtube.com/embed/${videoId}`;
-      } else if (type === 'facebook') {
-        return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(videoId)}`;
-      }
-      return videoId;
-    }
-
-    function createVideoCard(video) {
-      const card = document.createElement('div');
-      card.className = 'video-card';
-      card.dataset.videoId = video.__backendId;
-
-      const embedUrl = getEmbedUrl(video.video_url, video.video_type);
-      
-      let videoContent;
-      if (video.video_type === 'url') {
-        videoContent = `
-          <div class="video-embed">
-            <video controls>
-              <source src="${video.video_url}" type="video/mp4">
-              Your browser does not support the video tag.
-            </video>
-          </div>
-        `;
-      } else {
-        videoContent = `
-          <div class="video-embed">
-            <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
-          </div>
-        `;
-      }
-
-      card.innerHTML = `
-        ${videoContent}
-        <div class="p-6">
-          <h3 class="text-xl font-bold mb-2" style="color: var(--primary-green);">${video.title}</h3>
-          ${video.description ? `<p class="text-gray-600 mb-4">${video.description}</p>` : ''}
-          <div class="flex justify-between items-center">
-            <span class="text-sm text-gray-500">${new Date(video.created_at).toLocaleDateString()}</span>
-            <button class="delete-btn" onclick="deleteVideo('${video.__backendId}')">🗑️ Delete</button>
-          </div>
-        </div>
-      `;
-
-      return card;
-    }
-
-    function renderVideos() {
-      const grids = {
-        sermons: document.getElementById('sermons-grid'),
-        firenight: document.getElementById('firenight-grid'),
-        youth: document.getElementById('youth-grid'),
-        testimonies: document.getElementById('testimonies-grid')
-      };
-
-      Object.values(grids).forEach(grid => {
-        if (grid) grid.innerHTML = '';
-      });
-
-      const videosByCategory = {
-        sermons: [],
-        firenight: [],
-        youth: [],
-        testimonies: []
-      };
-
-      allMedia.filter(item => item.type === 'video').forEach(video => {
-        if (videosByCategory[video.category]) {
-          videosByCategory[video.category].push(video);
-        }
-      });
-
-      Object.keys(videosByCategory).forEach(category => {
-        const videos = videosByCategory[category];
-        const grid = grids[category];
-
-        if (!grid) return;
-
-        if (videos.length === 0) {
-          grid.innerHTML = `
-            <div class="col-span-full text-center py-12">
-              <svg class="w-24 h-24 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" style="color: var(--ash);" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
-              </svg>
-              <p class="text-gray-500 text-lg">No videos yet. Click "Add Video Link" to add content.</p>
-            </div>
-          `;
-        } else {
-          videos.forEach(video => {
-            grid.appendChild(createVideoCard(video));
-          });
-        }
-      });
-    }
-
-    // PHOTO MANAGEMENT
-    function previewPhotos() {
-      const fileInput = document.getElementById('photo-file');
-      const preview = document.getElementById('photo-preview');
-      preview.innerHTML = '';
-      preview.style.display = 'grid';
-
-      if (fileInput.files.length > 0) {
-        Array.from(fileInput.files).slice(0, 9).forEach(file => {
-          const reader = new FileReader();
-          reader.onload = (e) => {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.className = 'image-preview';
-            preview.appendChild(img);
-          };
-          reader.readAsDataURL(file);
+        // Check auth state
+        auth.onAuthStateChanged((user) => {
+          if (user) {
+            currentUser = user;
+            isAdmin = ADMIN_EMAILS.includes(user.email);
+            showMainPage();
+          } else {
+            currentUser = null;
+            isAdmin = false;
+            showAuthPage();
+          }
         });
       }
+    } catch (error) {
+      console.error('Firebase initialization error:', error);
     }
 
-    window.previewPhotos = previewPhotos;
-
-    // Toggle upload method
-    function toggleUploadMethod() {
-      const method = document.querySelector('input[name="upload-method"]:checked').value;
-      const driveInput = document.getElementById('drive-link-input');
-      const fileInput = document.getElementById('file-upload-input');
-      const driveLink = document.getElementById('photo-drive-link');
-      const photoFile = document.getElementById('photo-file');
-
-      if (method === 'drive') {
-        driveInput.style.display = 'block';
-        fileInput.style.display = 'none';
-        driveLink.required = true;
-        photoFile.required = false;
+    // Switch auth tabs
+    function switchAuthTab(type) {
+      const tabs = document.querySelectorAll('.auth-tab');
+      const forms = document.querySelectorAll('.auth-form');
+      
+      tabs.forEach(tab => tab.classList.remove('active'));
+      forms.forEach(form => form.classList.remove('active'));
+      
+      if (type === 'member') {
+        tabs[0].classList.add('active');
+        document.getElementById('memberSignupForm').classList.add('active');
       } else {
-        driveInput.style.display = 'none';
-        fileInput.style.display = 'block';
-        driveLink.required = false;
-        photoFile.required = true;
+        tabs[1].classList.add('active');
+        document.getElementById('adminLoginForm').classList.add('active');
       }
     }
 
-    window.toggleUploadMethod = toggleUploadMethod;
-
-    // Convert Google Drive link to direct image URL
-    function convertDriveLink(driveUrl) {
-      const fileIdMatch = driveUrl.match(/\/d\/([a-zA-Z0-9_-]+)/);
-      if (fileIdMatch) {
-        const fileId = fileIdMatch[1];
-        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
-      }
-      
-      const openMatch = driveUrl.match(/id=([a-zA-Z0-9_-]+)/);
-      if (openMatch) {
-        const fileId = openMatch[1];
-        return `https://drive.google.com/thumbnail?id=${fileId}&sz=w1000`;
-      }
-      
-      return driveUrl;
+    // Show auth page
+    function showAuthPage() {
+      document.getElementById('authPage').style.display = 'block';
+      document.getElementById('mainPage').style.display = 'none';
     }
 
-    function createPhotoCard(photo) {
-      const card = document.createElement('div');
-      card.className = 'photo-card';
-      card.dataset.photoId = photo.__backendId;
-
-      card.innerHTML = `
-        <img src="${photo.image_data}" alt="${photo.event_name || 'Photo'}" class="photo-image" onclick="viewPhoto('${photo.__backendId}')" onerror="this.src='https://via.placeholder.com/400x300?text=Image+Not+Available'; this.style.opacity='0.5';">
-        <div class="p-4">
-          <h3 class="text-lg font-bold mb-1" style="color: var(--primary-green);">${photo.event_name || 'Church Photo'}</h3>
-          ${photo.description ? `<p class="text-gray-600 text-sm mb-3">${photo.description}</p>` : ''}
-          <div class="flex justify-between items-center">
-            <span class="text-xs text-gray-500">${new Date(photo.created_at).toLocaleDateString()}</span>
-            <button class="delete-btn text-xs" onclick="deletePhoto('${photo.__backendId}')">🗑️</button>
-          </div>
-        </div>
+    // Show main page
+    function showMainPage() {
+      document.getElementById('authPage').style.display = 'none';
+      document.getElementById('mainPage').style.display = 'block';
+      
+      // Update user info
+      const userInfo = document.getElementById('userInfo');
+      userInfo.innerHTML = `
+        <span>${currentUser.email}</span>
+        <span class="badge">${isAdmin ? '👑 ADMIN' : '👥 MEMBER'}</span>
+        <button class="logout-btn" onclick="logout()">Logout</button>
       `;
 
-      return card;
-    }
-
-    function renderPhotos() {
-      const grids = {
-        sunday: document.getElementById('sunday-photos-grid'),
-        'firenight-photos': document.getElementById('firenight-photos-grid'),
-        'youth-photos': document.getElementById('youth-photos-grid'),
-        events: document.getElementById('events-photos-grid')
-      };
-
-      Object.values(grids).forEach(grid => {
-        if (grid) grid.innerHTML = '';
-      });
-
-      const photosByCategory = {
-        sunday: [],
-        'firenight-photos': [],
-        'youth-photos': [],
-        events: []
-      };
-
-      allMedia.filter(item => item.type === 'photo').forEach(photo => {
-        if (photosByCategory[photo.category]) {
-          photosByCategory[photo.category].push(photo);
-        }
-      });
-
-      Object.keys(photosByCategory).forEach(category => {
-        const photos = photosByCategory[category];
-        const grid = grids[category];
-
-        if (!grid) return;
-
-        if (photos.length === 0) {
-          grid.innerHTML = `
-            <div class="col-span-full text-center py-12">
-              <svg class="w-24 h-24 mx-auto mb-4 opacity-30" fill="none" stroke="currentColor" style="color: var(--ash);" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
-              </svg>
-              <p class="text-gray-500 text-lg">No photos yet. Click "Upload Photos" to add images.</p>
-            </div>
-          `;
-        } else {
-          photos.forEach(photo => {
-            grid.appendChild(createPhotoCard(photo));
+      // Show/hide upload section based on role
+      const navMenu = document.getElementById('navMenu');
+      const uploadNavItem = navMenu.querySelector('[data-section="upload"]');
+      const partnerListNavItem = navMenu.querySelector('[data-section="partner-list"]');
+      
+      if (isAdmin) {
+        if (!uploadNavItem) {
+          const li = document.createElement('li');
+          li.innerHTML = '<button class="nav-btn" data-section="upload">⬆️ Upload Media</button>';
+          navMenu.appendChild(li);
+          li.querySelector('button').addEventListener('click', function() {
+            switchSection('upload');
           });
         }
-      });
-    }
-
-    // View Photo Modal
-    function viewPhoto(backendId) {
-      const photo = allMedia.find(p => p.__backendId === backendId);
-      if (!photo) return;
-
-      currentPhotoToDelete = photo;
-      document.getElementById('view-photo-image').src = photo.image_data;
-      document.getElementById('view-photo-title').textContent = photo.event_name || 'Church Photo';
-      document.getElementById('view-photo-description').textContent = photo.description || '';
-      document.getElementById('view-photo-modal').classList.add('active');
-    }
-
-    window.viewPhoto = viewPhoto;
-
-    function closeViewPhotoModal() {
-      document.getElementById('view-photo-modal').classList.remove('active');
-      currentPhotoToDelete = null;
-    }
-
-    window.closeViewPhotoModal = closeViewPhotoModal;
-
-    async function deleteCurrentPhoto() {
-      if (!currentPhotoToDelete) return;
-      await deletePhoto(currentPhotoToDelete.__backendId);
-      closeViewPhotoModal();
-    }
-
-    window.deleteCurrentPhoto = deleteCurrentPhoto;
-
-    // Add Video Modal
-    document.getElementById('add-video-btn').addEventListener('click', () => {
-      document.getElementById('add-video-modal').classList.add('active');
-    });
-
-    function closeAddVideoModal() {
-      document.getElementById('add-video-modal').classList.remove('active');
-      document.getElementById('add-video-form').reset();
-      document.getElementById('video-url-field').style.display = 'none';
-    }
-
-    window.closeAddVideoModal = closeAddVideoModal;
-
-    document.getElementById('video-type').addEventListener('change', (e) => {
-      const urlField = document.getElementById('video-url-field');
-      if (e.target.value) {
-        urlField.style.display = 'block';
-        document.getElementById('video-url').required = true;
+        if (!partnerListNavItem) {
+          const li = document.createElement('li');
+          li.innerHTML = '<button class="nav-btn" data-section="partner-list">👥 Partner Applications</button>';
+          navMenu.appendChild(li);
+          li.querySelector('button').addEventListener('click', function() {
+            switchSection('partner-list');
+            loadPartnerApplications();
+          });
+        }
+        document.getElementById('adminOnly').style.display = 'block';
+        document.getElementById('memberOnly').style.display = 'none';
       } else {
-        urlField.style.display = 'none';
-        document.getElementById('video-url').required = false;
+        if (uploadNavItem) {
+          uploadNavItem.remove();
+        }
+        if (partnerListNavItem) {
+          partnerListNavItem.remove();
+        }
       }
-    });
 
-    document.getElementById('add-video-form').addEventListener('submit', async (e) => {
+      loadMedia();
+      setupNavigation();
+    }
+
+    // Member signup
+    document.getElementById('memberSignupForm').addEventListener('submit', async (e) => {
       e.preventDefault();
-
-      if (allMedia.filter(m => m.type === 'video').length >= 999) {
-        showToast('Maximum limit of 999 videos reached. Please delete some videos first.', 'error');
+      
+      if (!isFirebaseConfigured) {
+        showToast('Please configure Firebase first!', 'error');
         return;
       }
 
-      const submitBtn = document.getElementById('submit-video-btn');
-      const submitText = document.getElementById('submit-video-text');
-      const submitSpinner = document.getElementById('submit-video-spinner');
+      const name = document.getElementById('memberName').value;
+      const email = document.getElementById('memberEmail').value;
+      const password = document.getElementById('memberPassword').value;
 
-      submitBtn.disabled = true;
-      submitText.style.display = 'none';
-      submitSpinner.style.display = 'block';
-
-      const category = document.getElementById('video-category').value;
-      const title = document.getElementById('video-title').value;
-      const description = document.getElementById('video-description').value;
-      const videoType = document.getElementById('video-type').value;
-      const videoUrl = document.getElementById('video-url').value;
-
-      const videoId = extractVideoId(videoUrl, videoType);
-
-      const newVideo = {
-        id: Date.now().toString(),
-        type: 'video',
-        category: category,
-        title: title,
-        description: description,
-        video_type: videoType,
-        video_url: videoId,
-        thumbnail_url: '',
-        image_data: '',
-        event_name: '',
-        event_date: '',
-        created_at: new Date().toISOString()
-      };
-
-      if (window.dataSdk) {
-        const result = await window.dataSdk.create(newVideo);
+      try {
+        const userCredential = await auth.createUserWithEmailAndPassword(email, password);
         
-        submitBtn.disabled = false;
-        submitText.style.display = 'inline';
-        submitSpinner.style.display = 'none';
+        // Save member info to Firestore
+        await db.collection('members').doc(userCredential.user.uid).set({
+          name: name,
+          email: email,
+          role: 'member',
+          joinedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
 
-        if (result.isOk) {
-          showToast('Video added successfully!', 'success');
-          closeAddVideoModal();
+        showToast('Welcome to Vibrant Impact Ministries! ��', 'success');
+      } catch (error) {
+        console.error('Signup error:', error);
+        showToast('Signup failed: ' + error.message, 'error');
+      }
+    });
+
+    // Admin login
+    document.getElementById('adminLoginForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      
+      if (!isFirebaseConfigured) {
+        showToast('Please configure Firebase first!', 'error');
+        return;
+      }
+
+      const email = document.getElementById('adminEmail').value;
+      const password = document.getElementById('adminPassword').value;
+
+      try {
+        await auth.createUserWithEmailAndPassword(email, password);
+        showToast('Admin account created! You can now login.', 'success');
+      } catch (error) {
+        if (error.code === 'auth/email-already-in-use') {
+          try {
+            await auth.signInWithEmailAndPassword(email, password);
+            if (ADMIN_EMAILS.includes(email)) {
+              showToast('Welcome back, Admin! 👑', 'success');
+            } else {
+              showToast('This email is not authorized as admin.', 'error');
+              auth.signOut();
+            }
+          } catch (loginError) {
+            showToast('Login failed: ' + loginError.message, 'error');
+          }
         } else {
-          showToast('Failed to add video. Please try again.', 'error');
+          showToast('Error: ' + error.message, 'error');
         }
       }
     });
 
-    // Add Photo Modal
-    document.getElementById('add-photo-btn').addEventListener('click', () => {
-      document.getElementById('add-photo-modal').classList.add('active');
-    });
-
-    function closeAddPhotoModal() {
-      document.getElementById('add-photo-modal').classList.remove('active');
-      document.getElementById('add-photo-form').reset();
-      document.getElementById('photo-preview').style.display = 'none';
-      document.getElementById('photo-preview').innerHTML = '';
+    // Logout
+    async function logout() {
+      try {
+        await auth.signOut();
+        showToast('Logged out successfully', 'success');
+      } catch (error) {
+        showToast('Logout failed: ' + error.message, 'error');
+      }
     }
 
-    window.closeAddPhotoModal = closeAddPhotoModal;
-
-    document.getElementById('add-photo-form').addEventListener('submit', async (e) => {
-      e.preventDefault();
-
-      const uploadMethod = document.querySelector('input[name="upload-method"]:checked').value;
-      const category = document.getElementById('photo-category').value;
-      const eventName = document.getElementById('photo-event-name').value;
-      const description = document.getElementById('photo-description').value;
-
-      const submitBtn = document.getElementById('submit-photo-btn');
-      const submitText = document.getElementById('submit-photo-text');
-      const submitSpinner = document.getElementById('submit-photo-spinner');
-
-      submitBtn.disabled = true;
-      submitText.style.display = 'none';
-      submitSpinner.style.display = 'block';
-
-      let successCount = 0;
-
-      if (uploadMethod === 'drive') {
-        // Handle Google Drive link
-        const driveLink = document.getElementById('photo-drive-link').value;
-        
-        if (!driveLink) {
-          showToast('Please enter a Google Drive link.', 'error');
-          submitBtn.disabled = false;
-          submitText.style.display = 'inline';
-          submitSpinner.style.display = 'none';
-          return;
-        }
-
-        if (allMedia.filter(m => m.type === 'photo').length >= 999) {
-          showToast('Maximum limit of 999 photos reached.', 'error');
-          submitBtn.disabled = false;
-          submitText.style.display = 'inline';
-          submitSpinner.style.display = 'none';
-          return;
-        }
-
-        const directImageUrl = convertDriveLink(driveLink);
-        
-        const newPhoto = {
-          id: Date.now().toString() + Math.random(),
-          type: 'photo',
-          category: category,
-          title: eventName || 'Church Photo',
-          description: description,
-          video_type: '',
-          video_url: '',
-          thumbnail_url: '',
-          image_data: directImageUrl,
-          event_name: eventName || 'Church Photo',
-          event_date: new Date().toISOString(),
-          created_at: new Date().toISOString()
-        };
-
-        if (window.dataSdk) {
-          const result = await window.dataSdk.create(newPhoto);
-          if (result.isOk) {
-            successCount++;
-          }
-        }
-      } else {
-        // Handle file upload
-        const fileInput = document.getElementById('photo-file');
-        
-        if (!fileInput.files.length) {
-          showToast('Please select at least one photo.', 'error');
-          submitBtn.disabled = false;
-          submitText.style.display = 'inline';
-          submitSpinner.style.display = 'none';
-          return;
-        }
-
-        if (allMedia.filter(m => m.type === 'photo').length + fileInput.files.length > 999) {
-          showToast('Maximum limit of 999 photos would be exceeded.', 'error');
-          submitBtn.disabled = false;
-          submitText.style.display = 'inline';
-          submitSpinner.style.display = 'none';
-          return;
-        }
-
-        for (let file of fileInput.files) {
-          try {
-            const base64 = await fileToBase64(file);
-            
-            const newPhoto = {
-              id: Date.now().toString() + Math.random(),
-              type: 'photo',
-              category: category,
-              title: eventName || 'Church Photo',
-              description: description,
-              video_type: '',
-              video_url: '',
-              thumbnail_url: '',
-              image_data: base64,
-              event_name: eventName || 'Church Photo',
-              event_date: new Date().toISOString(),
-              created_at: new Date().toISOString()
-            };
-
-            if (window.dataSdk) {
-              const result = await window.dataSdk.create(newPhoto);
-              if (result.isOk) {
-                successCount++;
-              }
-            }
-          } catch (error) {
-            console.error('Error uploading photo:', error);
-          }
-        }
-      }
-
-      submitBtn.disabled = false;
-      submitText.style.display = 'inline';
-      submitSpinner.style.display = 'none';
-
-      if (successCount > 0) {
-        showToast(`${successCount} photo(s) uploaded successfully!`, 'success');
-        closeAddPhotoModal();
-      } else {
-        showToast('Failed to upload photos. Please try again.', 'error');
-      }
-    });
-
-    function fileToBase64(file) {
-      return new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.onload = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(file);
+    // Navigation
+    function setupNavigation() {
+      const navButtons = document.querySelectorAll('.nav-btn');
+      navButtons.forEach(button => {
+        button.addEventListener('click', () => {
+          switchSection(button.dataset.section);
+        });
       });
     }
 
-    async function deleteVideo(backendId) {
-      const video = allMedia.find(v => v.__backendId === backendId && v.type === 'video');
-      if (!video) return;
-
-      const card = document.querySelector(`[data-video-id="${backendId}"]`);
-      if (card) {
-        card.style.opacity = '0.5';
-        card.style.pointerEvents = 'none';
-      }
-
-      if (window.dataSdk) {
-        const result = await window.dataSdk.delete(video);
-        
-        if (result.isOk) {
-          showToast('Video deleted successfully!', 'success');
-        } else {
-          showToast('Failed to delete video. Please try again.', 'error');
-          if (card) {
-            card.style.opacity = '1';
-            card.style.pointerEvents = 'auto';
-          }
-        }
-      }
-    }
-
-    window.deleteVideo = deleteVideo;
-
-    async function deletePhoto(backendId) {
-      const photo = allMedia.find(p => p.__backendId === backendId && p.type === 'photo');
-      if (!photo) return;
-
-      const card = document.querySelector(`[data-photo-id="${backendId}"]`);
-      if (card) {
-        card.style.opacity = '0.5';
-        card.style.pointerEvents = 'none';
-      }
-
-      if (window.dataSdk) {
-        const result = await window.dataSdk.delete(photo);
-        
-        if (result.isOk) {
-          showToast('Photo deleted successfully!', 'success');
-        } else {
-          showToast('Failed to delete photo. Please try again.', 'error');
-          if (card) {
-            card.style.opacity = '1';
-            card.style.pointerEvents = 'auto';
-          }
-        }
-      }
-    }
-
-    window.deletePhoto = deletePhoto;
-
-    function showToast(message, type) {
-      const toast = document.getElementById('toast');
-      const toastMessage = document.getElementById('toast-message');
+    function switchSection(sectionName) {
+      const navButtons = document.querySelectorAll('.nav-btn');
+      const sections = document.querySelectorAll('.section');
       
-      toastMessage.textContent = message;
-      toast.style.background = type === 'success' ? '#10B981' : '#EF4444';
-      toast.style.color = 'white';
-      toast.classList.add('active');
-
-      setTimeout(() => {
-        toast.classList.remove('active');
-      }, 3000);
+      navButtons.forEach(btn => btn.classList.remove('active'));
+      sections.forEach(section => section.classList.remove('active'));
+      
+      const activeButton = document.querySelector(`[data-section="${sectionName}"]`);
+      if (activeButton) activeButton.classList.add('active');
+      
+      const activeSection = document.getElementById(sectionName);
+      if (activeSection) activeSection.classList.add('active');
     }
 
-    // Close modals when clicking outside
-    document.getElementById('add-video-modal').addEventListener('click', (e) => {
-      if (e.target.id === 'add-video-modal') {
-        closeAddVideoModal();
+    // Toast notification
+    function showToast(message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.remove();
+      }, 4000);
+    }
+
+    // Convert YouTube URL to embed URL
+    function getYouTubeEmbedUrl(url) {
+      const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+      const match = url.match(regExp);
+      return (match && match[2].length === 11) ? `https://www.youtube.com/embed/${match[2]}` : null;
+    }
+
+    // Convert Facebook video URL to embed URL
+    function getFacebookEmbedUrl(url) {
+      return `https://www.facebook.com/plugins/video.php?href=${encodeURIComponent(url)}&show_text=false`;
+    }
+
+    // Load media from Firestore
+    async function loadMedia() {
+      if (!isFirebaseConfigured) return;
+
+      try {
+        // Load photos
+        const photosSnapshot = await db.collection('photos').orderBy('timestamp', 'desc').get();
+        const photoGallery = document.getElementById('photoGallery');
+        photoGallery.innerHTML = '';
+
+        if (photosSnapshot.empty) {
+          photoGallery.innerHTML = '<p style="color: #666; text-align: center; grid-column: 1/-1;">No photos yet. Upload your first photo!</p>';
+        } else {
+          photosSnapshot.forEach(doc => {
+            const data = doc.data();
+            photoGallery.appendChild(createPhotoCard(doc.id, data));
+          });
+        }
+
+        // Load videos
+        const videosSnapshot = await db.collection('videos').orderBy('timestamp', 'desc').get();
+        const videoGallery = document.getElementById('videoGallery');
+        videoGallery.innerHTML = '';
+
+        if (videosSnapshot.empty) {
+          videoGallery.innerHTML = '<p style="color: #666; text-align: center; grid-column: 1/-1;">No videos yet. Upload your first video!</p>';
+        } else {
+          videosSnapshot.forEach(doc => {
+            const data = doc.data();
+            videoGallery.appendChild(createVideoCard(doc.id, data));
+          });
+        }
+      } catch (error) {
+        console.error('Error loading media:', error);
+        showToast('Error loading media: ' + error.message, 'error');
+      }
+    }
+
+    // Create photo card
+    function createPhotoCard(id, data) {
+      const card = document.createElement('div');
+      card.className = 'gallery-item';
+      
+      const deleteButton = isAdmin ? `<button class="delete-btn" onclick="deleteMedia('photos', '${id}')">🗑️ Delete</button>` : '';
+      const downloadButton = `<button class="delete-btn" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);" onclick="downloadImage('${data.url}', '${data.eventName}')">⬇️ Download</button>`;
+      
+      card.innerHTML = `
+        <img src="${data.url}" alt="${data.eventName}" onerror="this.src=''; this.alt='Image failed to load'; this.style.display='none';">
+        <div class="gallery-item-content">
+          <h3>${data.eventName}</h3>
+          <p>${data.description || 'No description'}</p>
+          <p class="date">📅 ${data.eventDate}</p>
+          <p class="date" style="margin-top: 5px;">🏷️ ${data.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+          <div style="display: flex; gap: 10px; margin-top: 10px;">
+            ${downloadButton}
+            ${deleteButton}
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    // Create video card
+    function createVideoCard(id, data) {
+      const card = document.createElement('div');
+      card.className = 'gallery-item';
+      
+      let embedUrl;
+      if (data.url.includes('youtube.com') || data.url.includes('youtu.be')) {
+        embedUrl = getYouTubeEmbedUrl(data.url);
+      } else if (data.url.includes('facebook.com')) {
+        embedUrl = getFacebookEmbedUrl(data.url);
+      }
+      
+      const deleteButton = isAdmin ? `<button class="delete-btn" onclick="deleteMedia('videos', '${id}')">🗑️ Delete</button>` : '';
+      
+      card.innerHTML = `
+        <div class="video-container">
+          <iframe src="${embedUrl}" frameborder="0" allowfullscreen></iframe>
+        </div>
+        <div class="gallery-item-content">
+          <h3>${data.eventName}</h3>
+          <p>${data.description || 'No description'}</p>
+          <p class="date">📅 ${data.eventDate}</p>
+          <p class="date" style="margin-top: 5px;">🏷️ ${data.category.replace('-', ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+          ${deleteButton}
+        </div>
+      `;
+      
+      return card;
+    }
+
+    // Download image function
+    async function downloadImage(url, eventName) {
+      try {
+        showToast('Downloading image...', 'success');
+        
+        // Fetch the image
+        const response = await fetch(url);
+        const blob = await response.blob();
+        
+        // Create download link
+        const downloadUrl = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = downloadUrl;
+        link.download = `${eventName.replace(/[^a-z0-9]/gi, '_')}.jpg`;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        
+        // Clean up
+        window.URL.revokeObjectURL(downloadUrl);
+        showToast('Image downloaded successfully! 📥', 'success');
+      } catch (error) {
+        console.error('Download error:', error);
+        showToast('Download failed. Try right-clicking and "Save image as..."', 'error');
+      }
+    }
+
+    // Delete media (admin only)
+    async function deleteMedia(collection, id) {
+      if (!isAdmin) {
+        showToast('Only admins can delete media', 'error');
+        return;
+      }
+
+      if (!confirm('Are you sure you want to delete this item?')) return;
+
+      try {
+        await db.collection(collection).doc(id).delete();
+        showToast('Media deleted successfully!', 'success');
+        loadMedia();
+      } catch (error) {
+        console.error('Error deleting media:', error);
+        showToast('Error deleting media: ' + error.message, 'error');
+      }
+    }
+
+    // Partner form submission
+    document.getElementById('partnerForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!isFirebaseConfigured) {
+        showToast('Please configure Firebase first!', 'error');
+        return;
+      }
+
+      const submitBtn = document.getElementById('partnerSubmitBtn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Submitting<span class="spinner"></span>';
+
+      try {
+        const partnerData = {
+          name: document.getElementById('partnerName').value,
+          email: document.getElementById('partnerEmail').value,
+          phone: document.getElementById('partnerPhone').value || 'Not provided',
+          address: document.getElementById('partnerAddress').value || 'Not provided',
+          city: document.getElementById('partnerCity').value || 'Not provided',
+          partnershipType: document.getElementById('partnershipType').value,
+          message: document.getElementById('partnerMessage').value || 'No message',
+          consent: document.getElementById('partnerConsent').checked,
+          status: 'pending',
+          submittedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          submittedBy: currentUser ? currentUser.email : 'guest'
+        };
+
+        await db.collection('partners').add(partnerData);
+
+        showToast('🎉 Thank you for your partnership application! We\'ll contact you soon.', 'success');
+        document.getElementById('partnerForm').reset();
+
+        // If admin, reload partner list
+        if (isAdmin) {
+          loadPartnerApplications();
+        }
+
+      } catch (error) {
+        console.error('Partnership submission error:', error);
+        showToast('Submission failed: ' + error.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
       }
     });
 
-    document.getElementById('add-photo-modal').addEventListener('click', (e) => {
-      if (e.target.id === 'add-photo-modal') {
-        closeAddPhotoModal();
-      }
-    });
+    // Load partner applications (admin only)
+    async function loadPartnerApplications() {
+      if (!isFirebaseConfigured || !isAdmin) return;
 
-    document.getElementById('view-photo-modal').addEventListener('click', (e) => {
-      if (e.target.id === 'view-photo-modal') {
-        closeViewPhotoModal();
+      try {
+        const partnersSnapshot = await db.collection('partners').orderBy('submittedAt', 'desc').get();
+        const partnerApplications = document.getElementById('partnerApplications');
+        partnerApplications.innerHTML = '';
+
+        if (partnersSnapshot.empty) {
+          partnerApplications.innerHTML = '<p style="color: #666; text-align: center; grid-column: 1/-1;">No partnership applications yet.</p>';
+        } else {
+          partnersSnapshot.forEach(doc => {
+            const data = doc.data();
+            partnerApplications.appendChild(createPartnerCard(doc.id, data));
+          });
+        }
+      } catch (error) {
+        console.error('Error loading partners:', error);
+        showToast('Error loading applications: ' + error.message, 'error');
+      }
+    }
+
+    // Create partner application card
+    function createPartnerCard(id, data) {
+      const card = document.createElement('div');
+      card.className = 'gallery-item';
+      
+      const statusColor = data.status === 'pending' ? '#ffc107' : data.status === 'approved' ? '#38ef7d' : '#f5576c';
+      const submittedDate = data.submittedAt ? new Date(data.submittedAt.toDate()).toLocaleDateString() : 'Unknown';
+      
+      card.innerHTML = `
+        <div class="gallery-item-content">
+          <h3>${data.name}</h3>
+          <p><strong>📧 Email:</strong> ${data.email}</p>
+          <p><strong>📱 Phone:</strong> ${data.phone}</p>
+          <p><strong>📍 Location:</strong> ${data.city}</p>
+          <p><strong>🤝 Partnership Type:</strong> ${data.partnershipType.replace(/-/g, ' ').replace(/\b\w/g, l => l.toUpperCase())}</p>
+          <p><strong>💬 Message:</strong> ${data.message}</p>
+          <p class="date">📅 Submitted: ${submittedDate}</p>
+          <p class="date" style="margin-top: 5px; color: ${statusColor};">
+            <strong>Status:</strong> ${data.status.toUpperCase()}
+          </p>
+          <div style="display: flex; gap: 10px; margin-top: 15px;">
+            ${data.status === 'pending' ? `
+              <button class="delete-btn" style="background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); flex: 1;" onclick="updatePartnerStatus('${id}', 'approved')">✅ Approve</button>
+              <button class="delete-btn" style="flex: 1;" onclick="updatePartnerStatus('${id}', 'rejected')">❌ Reject</button>
+            ` : ''}
+            <button class="delete-btn" style="flex: 1;" onclick="deletePartner('${id}')">🗑️ Delete</button>
+          </div>
+        </div>
+      `;
+      
+      return card;
+    }
+
+    // Update partner status (admin only)
+    async function updatePartnerStatus(id, status) {
+      if (!isAdmin) {
+        showToast('Only admins can update partner status', 'error');
+        return;
+      }
+
+      try {
+        await db.collection('partners').doc(id).update({
+          status: status,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: currentUser.email
+        });
+
+        showToast(`Partnership application ${status}!`, 'success');
+        loadPartnerApplications();
+      } catch (error) {
+        console.error('Error updating partner status:', error);
+        showToast('Error updating status: ' + error.message, 'error');
+      }
+    }
+
+    // Delete partner application (admin only)
+    async function deletePartner(id) {
+      if (!isAdmin) {
+        showToast('Only admins can delete applications', 'error');
+        return;
+      }
+
+      if (!confirm('Are you sure you want to delete this partnership application?')) return;
+
+      try {
+        await db.collection('partners').doc(id).delete();
+        showToast('Application deleted successfully!', 'success');
+        loadPartnerApplications();
+      } catch (error) {
+        console.error('Error deleting partner:', error);
+        showToast('Error deleting application: ' + error.message, 'error');
+      }
+    }
+
+    // Form submission (admin only)
+    document.getElementById('mediaForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      if (!isAdmin) {
+        showToast('Only admins can upload media', 'error');
+        return;
+      }
+
+      if (!isFirebaseConfigured) {
+        showToast('Please configure Firebase first!', 'error');
+        return;
+      }
+
+      const submitBtn = document.getElementById('submitBtn');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.disabled = true;
+      submitBtn.innerHTML = 'Uploading<span class="spinner"></span>';
+
+      const mediaType = document.getElementById('mediaType').value;
+      const category = document.getElementById('category').value;
+      const mediaUrl = document.getElementById('mediaUrl').value;
+      const eventName = document.getElementById('eventName').value;
+      const description = document.getElementById('description').value;
+      const eventDate = document.getElementById('eventDate').value;
+
+      try {
+        const mediaData = {
+          url: mediaUrl,
+          category: category,
+          eventName: eventName,
+          description: description,
+          eventDate: eventDate,
+          uploadedBy: currentUser.email,
+          timestamp: firebase.firestore.FieldValue.serverTimestamp()
+        };
+
+        if (mediaType === 'photo') {
+          await db.collection('photos').add(mediaData);
+        } else {
+          await db.collection('videos').add(mediaData);
+        }
+
+        showToast(`${mediaType === 'photo' ? 'Photo' : 'Video'} uploaded successfully!`, 'success');
+        document.getElementById('mediaForm').reset();
+        loadMedia();
+
+        // Switch to appropriate gallery
+        switchSection(mediaType === 'photo' ? 'photos' : 'videos');
+
+      } catch (error) {
+        console.error('Upload error:', error);
+        showToast('Upload failed: ' + error.message, 'error');
+      } finally {
+        submitBtn.disabled = false;
+        submitBtn.innerHTML = originalText;
       }
     });
-  </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a51d05cb4c93f1a',t:'MTc2NDI0ODQ4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  </script>// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+const firebaseConfig = {
+  apiKey: "AIzaSyBYwJ4PjGyycAzUS7iyTrTRpIUcKLAvPVE",
+  authDomain: "vim-p-cc4be.firebaseapp.com",
+  projectId: "vim-p-cc4be",
+  storageBucket: "vim-p-cc4be.firebasestorage.app",
+  messagingSenderId: "444991156114",
+  appId: "1:444991156114:web:a6c5425cf3a9aa91369b4b",
+  measurementId: "G-V0BVRB9WRR"
+};
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5318e4a20506cf',t:'MTc2NDI2MTk0MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
