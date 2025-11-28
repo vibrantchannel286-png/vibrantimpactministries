@@ -491,28 +491,30 @@
     }
 
     .account-box h3 {
-      color: #60a5fa;
+      color: #fbbf24;
       font-size: 1.8em;
       margin-bottom: 20px;
       text-align: center;
     }
 
     .account-details {
-      background: rgba(255, 255, 255, 0.1);
-      padding: 20px;
+      background: white;
+      padding: 25px;
       border-radius: 10px;
       margin: 15px 0;
-      backdrop-filter: blur(10px);
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     }
 
     .account-details p {
       font-size: 1.2em;
-      margin: 10px 0;
+      margin: 12px 0;
+      color: #1e293b;
     }
 
     .account-details strong {
-      color: #60a5fa;
+      color: #0f172a;
       font-size: 1.1em;
+      font-weight: 800;
     }
 
     /* Form Styles */
@@ -960,7 +962,7 @@
    </div>
    <nav>
     <div class="nav-container"><button class="menu-toggle" onclick="toggleMenu()"> <span class="hamburger-line"></span> <span class="hamburger-line"></span> <span class="hamburger-line"></span> </button>
-     <div class="dropdown-menu" id="dropdownMenu"><button class="nav-btn active" onclick="showSection('home')">🏠 Home</button> <button class="nav-btn" onclick="showSection('about')">ℹ️ About Us</button> <button class="nav-btn" onclick="showSection('services')">📅 Services</button> <button class="nav-btn" onclick="showSection('giving')">💝 Giving</button> <button class="nav-btn" onclick="showSection('media')">����� Media</button> <button class="nav-btn" onclick="showSection('prayer')">🙏 Prayer</button> <button class="nav-btn" onclick="showSection('partner')">�� Partner With Us</button> <button class="nav-btn" onclick="showSection('contact')">📞 Contact</button> <button class="nav-btn" id="authNavBtn" onclick="openAuthModal()">🔐 Login/Sign Up</button> <button class="nav-btn" onclick="openAdminModal()" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">👑 Admin Login</button> <button class="nav-btn" id="adminSettingsBtn" onclick="handleAdminSettingsClick()" style="display: none; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">⚙️ Admin Settings</button>
+     <div class="dropdown-menu" id="dropdownMenu"><button class="nav-btn active" onclick="showSection('home')">🏠 Home</button> <button class="nav-btn" onclick="showSection('about')">ℹ️ About Us</button> <button class="nav-btn" onclick="showSection('services')">📅 Services</button> <button class="nav-btn" onclick="showSection('giving')">💝 Giving</button> <button class="nav-btn" onclick="showSection('media')">🎥 Media</button> <button class="nav-btn" onclick="showSection('prayer')">🙏 Prayer</button> <button class="nav-btn" onclick="showSection('partner')">🤝 Partner With Us</button> <button class="nav-btn" onclick="showSection('contact')">📞 Contact</button> <button class="nav-btn" id="authNavBtn" onclick="openAuthModal()">🔐 Login/Sign Up</button> <button class="nav-btn" onclick="openAdminModal()" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">👑 Admin Login</button> <button class="nav-btn" id="adminSettingsBtn" onclick="handleAdminSettingsClick()" style="display: none; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">⚙️ Admin Settings</button>
      </div>
     </div>
    </nav>
@@ -975,10 +977,10 @@
      <div class="form-group"><label for="adminPassword">Password: *</label> <input type="password" id="adminPassword" required placeholder="Enter your password">
      </div>
      <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin-bottom: 20px; border-left: 4px solid #f59e0b;">
-      <p style="color: #78350f; font-size: 0.9em; margin: 0;">��� <strong>Authorized Admins Only:</strong><br>
+      <p style="color: #78350f; font-size: 0.9em; margin: 0;">⚠️ <strong>Authorized Admins Only:</strong><br>
         • eiweh123@gmail.com<br>
         • vibrantchannel286@gmail.com</p>
-     </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">�������������� Login as Admin</button>
+     </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">👑 Login as Admin</button>
     </form>
    </div>
   </div><!-- Auth Modal -->
@@ -1003,7 +1005,7 @@
      <div class="form-group"><label for="signupPassword">Password: *</label> <input type="password" id="signupPassword" required minlength="6">
      </div>
      <div class="form-group"><label for="confirmPassword">Confirm Password: *</label> <input type="password" id="confirmPassword" required minlength="6">
-     </div><button type="submit" class="btn" style="width: 100%;">��� Sign Up</button>
+     </div><button type="submit" class="btn" style="width: 100%;">✅ Sign Up</button>
     </form>
    </div>
   </div>
@@ -1017,7 +1019,7 @@
       <div class="bible-verse">
        <p>"Not by might, nor by power, but by my Spirit, says the LORD of hosts."</p><span>- Zechariah 4:6</span>
       </div>
-      <div class="btn-group"><button class="btn" onclick="showSection('services')">📅 Service Days</button> <button class="btn" onclick="showSection('giving')">💝 Give Online</button> <button class="btn" onclick="showSection('media')">🎥 Watch Live</button> <a href="https://chat.whatsapp.com/your-group-link" target="_blank" rel="noopener noreferrer" class="btn" style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);"> ���� Join WhatsApp Group </a>
+      <div class="btn-group"><button class="btn" onclick="showSection('services')">📅 Service Days</button> <button class="btn" onclick="showSection('giving')">💝 Give Online</button> <button class="btn" onclick="showSection('media')">🎥 Watch Live</button> <a href="https://chat.whatsapp.com/your-group-link" target="_blank" rel="noopener noreferrer" class="btn" style="background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);"> 💬 Join WhatsApp Group </a>
       </div>
      </div>
     </div>
@@ -1038,7 +1040,7 @@
       </div>
      </div>
      <div class="event-card">
-      <h3>��� Glory &amp; Celebration Service</h3>
+      <h3>🎉 Glory &amp; Celebration Service</h3>
       <p>Celebrate God's faithfulness with testimonies, praise, and thanksgiving. Come and share your testimony!</p>
       <div class="event-time">
        ⏰ Special Sundays (Check Schedule)
@@ -1114,12 +1116,12 @@
       <div class="service-item">
        <h3>📖 Friday Bible Study</h3>
        <div class="time">
-        �� Fridays at 6:00 PM
+        ⏰ Fridays at 6:00 PM
        </div>
        <p>Deep dive into the Scriptures with systematic Bible teaching, group discussions, and practical application. Grow in your understanding of God's Word and how to apply it to everyday life. All are welcome to join us for this enriching study time.</p>
       </div>
       <div class="service-item">
-       <h3>�� Last Friday Fire Night</h3>
+       <h3>🔥 Last Friday Fire Night</h3>
        <div class="time">
         ⏰ Last Friday of Every Month at 10:00 PM
        </div>
@@ -1144,7 +1146,7 @@
       <p style="text-align: center; margin-bottom: 20px;">Make a secure donation using PayPal, debit or credit card</p>
       <div class="btn-group"><a href="https://www.paypal.me/Funmzyanie" target="_blank" rel="noopener noreferrer" class="btn">💙 Give via PayPal</a> <a href="https://paystack.com" target="_blank" rel="noopener noreferrer" class="btn">Pay with Paystack</a> <a href="https://flutterwave.com" target="_blank" rel="noopener noreferrer" class="btn">Pay with Flutterwave</a>
       </div>
-      <p style="text-align: center; margin-top: 15px; font-size: 0.95em; opacity: 0.9;">⚡ Instant • ��� Secure • ���� Available Worldwide</p>
+      <p style="text-align: center; margin-top: 15px; font-size: 0.95em; opacity: 0.9;">⚡ Instant • 🔒 Secure • 🌍 Available Worldwide</p>
      </div>
      <div class="account-box">
       <h3>🏦 Bank Transfer Details</h3>
@@ -1196,7 +1198,7 @@
       </div>
       <div class="video-card">
        <div class="video-placeholder">
-        �������
+        🎥
        </div>
        <div class="video-content">
         <h3>Teaching Series</h3>
@@ -1268,7 +1270,7 @@
      <div class="video-grid" id="churchPhotosGrid">
       <div class="video-card">
        <div class="video-placeholder">
-        ���
+        📷
        </div>
        <div class="video-content">
         <h3>Church Building</h3>
@@ -1333,7 +1335,7 @@
      <div class="contact-grid" style="margin-top: 40px;">
       <div class="contact-card">
        <div class="icon">
-        ����
+        📧
        </div>
        <h3>Email Us</h3>
        <p><a href="mailto:pastorvalentineifedayo@gmail.com">pastorvalentineifedayo@gmail.com</a></p>
@@ -1391,7 +1393,7 @@
      <h2 style="color: #f59e0b; text-align: center;">⚙️ Admin Settings &amp; Controls</h2>
      <p style="text-align: center; color: #78350f; font-size: 1.1em; margin-bottom: 40px;">👑 Manage all church content, media, and settings from this admin panel</p><!-- Upload Logo Section -->
      <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin: 30px 0; border: 3px solid #f59e0b;">
-      <h3 style="color: #78350f; margin-bottom: 20px;">������️ Update Church Logo</h3>
+      <h3 style="color: #78350f; margin-bottom: 20px;">🖼️ Update Church Logo</h3>
       <form id="logoUploadForm" onsubmit="handleLogoUpload(event)">
        <div class="form-group"><label for="logoFile">Upload Logo from Computer: *</label> <input type="file" id="logoFile" accept="image/*" required style="padding: 10px; border: 2px dashed #f59e0b; background: #fffbeb;"> <small style="display: block; margin-top: 5px; color: #78350f;"> 📁 Select a logo image from your computer (JPG, PNG, GIF) </small>
         <div id="logoPreview" style="margin-top: 15px; display: none;">
@@ -1407,7 +1409,7 @@
         <div id="bannerPreview" style="margin-top: 15px; display: none;">
          <p style="color: #78350f; font-weight: 600; margin-bottom: 10px;">Preview:</p><img id="bannerPreviewImage" style="max-width: 100%; max-height: 200px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
         </div>
-       </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">������� Update Banner</button>
+       </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">📤 Update Banner</button>
       </form>
      </div><!-- Update Prophet Photo Section -->
      <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin: 30px 0; border: 3px solid #f59e0b;">
@@ -1432,7 +1434,7 @@
       </form>
      </div><!-- Update Social Media Links -->
      <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin: 30px 0; border: 3px solid #f59e0b;">
-      <h3 style="color: #78350f; margin-bottom: 20px;">��� Update Social Media Links</h3>
+      <h3 style="color: #78350f; margin-bottom: 20px;">🔗 Update Social Media Links</h3>
       <form id="socialLinksForm" onsubmit="handleSocialLinksUpdate(event)">
        <div class="form-group"><label for="facebookLink">Facebook Page URL:</label> <input type="url" id="facebookLink" placeholder="https://facebook.com/YourChurch">
        </div>
@@ -1557,7 +1559,7 @@
    <p><strong>Vibrant Impact Ministries</strong></p>
    <p>Ughele Junction, Along Ado Road, Akure, Ondo State, Nigeria</p>
    <p>📧 pastorvalentineifedayo@gmail.com | 📱 +234 816 994 8626</p>
-   <p style="margin-top: 20px;">�� 2024 Vibrant Impact Ministries. All Rights Reserved.</p>
+   <p style="margin-top: 20px;">© 2024 Vibrant Impact Ministries. All Rights Reserved.</p>
    <p style="font-size: 0.9em; margin-top: 10px; opacity: 0.8;">Powered by God's Grace</p>
   </footer>
   <script>
@@ -1660,7 +1662,7 @@
         }
       } else {
         userInfoDiv.innerHTML = `
-          <button class="btn" style="padding: 8px 16px; font-size: 0.9em;" onclick="openAuthModal()">��� Login/Sign Up</button>
+          <button class="btn" style="padding: 8px 16px; font-size: 0.9em;" onclick="openAuthModal()">🔐 Login/Sign Up</button>
         `;
         authNavBtn.textContent = '🔐 Login/Sign Up';
         authNavBtn.onclick = openAuthModal;
@@ -1752,7 +1754,7 @@
         }
       } catch (error) {
         console.error('Admin login error:', error);
-        let errorMessage = '��� Invalid admin credentials. Please try again.';
+        let errorMessage = '❌ Invalid admin credentials. Please try again.';
         
         if (error.code === 'auth/user-not-found') {
           errorMessage = '❌ Admin account not found. Please contact the system administrator.';
@@ -1891,7 +1893,7 @@
         showSection('home');
       } catch (error) {
         console.error('Logout error:', error);
-        showToast('�� Failed to logout. Please try again.', 'error');
+        showToast('❌ Failed to logout. Please try again.', 'error');
         document.getElementById('logoutOverlay').remove();
       }
     }
@@ -1957,7 +1959,7 @@
           window.open(whatsappLink, '_blank');
         }, 500);
 
-        showToast('�� Thank you for partnering with us! An admin will contact you soon.', 'success');
+        showToast('🤝 Thank you for partnering with us! An admin will contact you soon.', 'success');
         document.getElementById('partnerForm').reset();
         document.getElementById('customAmountGroup').style.display = 'none';
       } catch (error) {
@@ -2234,7 +2236,7 @@
         showToast(`❌ Update failed: ${error.message}`, 'error');
       } finally {
         submitBtn.disabled = false;
-        submitBtn.textContent = '��� Update Logo';
+        submitBtn.textContent = '📤 Update Logo';
       }
     }
 
@@ -2592,7 +2594,7 @@
       const submitBtn = event.target.querySelector('button[type="submit"]');
 
       submitBtn.disabled = true;
-      submitBtn.textContent = '���� Uploading...';
+      submitBtn.textContent = '🔄 Uploading...';
       
       try {
         const mediaItem = {
@@ -2721,7 +2723,7 @@
       }
       
       const deleteBtn = currentUser && ADMIN_EMAILS.includes(currentUser.email) 
-        ? `<button onclick="deleteMedia(${item.id})" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600;">���️ Delete</button>`
+        ? `<button onclick="deleteMedia(${item.id})" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600;">🗑️ Delete</button>`
         : '';
       
       card.innerHTML = `
@@ -2992,9 +2994,9 @@
 
       window.open(mailtoLink, '_blank');
 
-      showToast('��� Your message has been prepared! Please send the email to complete.', 'success');
+      showToast('📧 Your message has been prepared! Please send the email to complete.', 'success');
       document.getElementById('contactForm').reset();
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5ae6a8d6f2412d',t:'MTc2NDM0Mzc2OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5bb2f8c2763f1a',t:'MTc2NDM1MjEzNy4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
