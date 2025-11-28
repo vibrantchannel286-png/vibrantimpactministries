@@ -132,25 +132,25 @@
       background: linear-gradient(135deg, #60a5fa 0%, #3b82f6 100%);
       color: white;
       border: none;
-      padding: 15px;
-      border-radius: 10px;
+      padding: 8px;
+      border-radius: 6px;
       cursor: pointer;
-      font-size: 1.1em;
+      font-size: 0.9em;
       font-weight: 700;
       transition: all 0.3s;
-      box-shadow: 0 4px 15px rgba(96, 165, 250, 0.3);
+      box-shadow: 0 3px 12px rgba(96, 165, 250, 0.3);
       display: flex;
       flex-direction: column;
-      gap: 5px;
-      width: 50px;
-      height: 50px;
+      gap: 3px;
+      width: 32px;
+      height: 32px;
       align-items: center;
       justify-content: center;
     }
 
     .menu-toggle .hamburger-line {
-      width: 28px;
-      height: 3px;
+      width: 18px;
+      height: 2px;
       background: white;
       border-radius: 2px;
       transition: all 0.3s;
@@ -167,10 +167,10 @@
       top: 100%;
       right: 20px;
       background: white;
-      border-radius: 15px;
-      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.2);
-      min-width: 250px;
-      margin-top: 10px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+      min-width: 200px;
+      margin-top: 8px;
       display: none;
       z-index: 1000;
       overflow: hidden;
@@ -197,10 +197,10 @@
       background: white;
       color: #1e3a8a;
       border: none;
-      padding: 15px 25px;
+      padding: 10px 15px;
       text-align: left;
       cursor: pointer;
-      font-size: 1em;
+      font-size: 0.9em;
       font-weight: 600;
       transition: all 0.3s;
       border-bottom: 1px solid #e5e7eb;
@@ -213,7 +213,7 @@
     .dropdown-menu button:hover {
       background: linear-gradient(135deg, #dbeafe 0%, #bfdbfe 100%);
       color: #1e40af;
-      padding-left: 35px;
+      padding-left: 25px;
     }
 
     .dropdown-menu button.active {
@@ -1003,7 +1003,7 @@
      <div class="form-group"><label for="signupPassword">Password: *</label> <input type="password" id="signupPassword" required minlength="6">
      </div>
      <div class="form-group"><label for="confirmPassword">Confirm Password: *</label> <input type="password" id="confirmPassword" required minlength="6">
-     </div><button type="submit" class="btn" style="width: 100%;">✅ Sign Up</button>
+     </div><button type="submit" class="btn" style="width: 100%;">��� Sign Up</button>
     </form>
    </div>
   </div>
@@ -1196,7 +1196,7 @@
       </div>
       <div class="video-card">
        <div class="video-placeholder">
-        ���
+        �������
        </div>
        <div class="video-content">
         <h3>Teaching Series</h3>
@@ -1407,7 +1407,7 @@
         <div id="bannerPreview" style="margin-top: 15px; display: none;">
          <p style="color: #78350f; font-weight: 600; margin-bottom: 10px;">Preview:</p><img id="bannerPreviewImage" style="max-width: 100%; max-height: 200px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
         </div>
-       </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">📤 Update Banner</button>
+       </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">������� Update Banner</button>
       </form>
      </div><!-- Update Prophet Photo Section -->
      <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin: 30px 0; border: 3px solid #f59e0b;">
@@ -1432,7 +1432,7 @@
       </form>
      </div><!-- Update Social Media Links -->
      <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); padding: 30px; border-radius: 15px; margin: 30px 0; border: 3px solid #f59e0b;">
-      <h3 style="color: #78350f; margin-bottom: 20px;">🔗 Update Social Media Links</h3>
+      <h3 style="color: #78350f; margin-bottom: 20px;">��� Update Social Media Links</h3>
       <form id="socialLinksForm" onsubmit="handleSocialLinksUpdate(event)">
        <div class="form-group"><label for="facebookLink">Facebook Page URL:</label> <input type="url" id="facebookLink" placeholder="https://facebook.com/YourChurch">
        </div>
@@ -1734,7 +1734,7 @@
         }
       } catch (error) {
         console.error('Admin login error:', error);
-        let errorMessage = '❌ Invalid admin credentials. Please try again.';
+        let errorMessage = '��� Invalid admin credentials. Please try again.';
         
         if (error.code === 'auth/user-not-found') {
           errorMessage = '❌ Admin account not found. Please contact the system administrator.';
@@ -2703,7 +2703,7 @@
       }
       
       const deleteBtn = currentUser && ADMIN_EMAILS.includes(currentUser.email) 
-        ? `<button onclick="deleteMedia(${item.id})" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600;">��️ Delete</button>`
+        ? `<button onclick="deleteMedia(${item.id})" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600;">���️ Delete</button>`
         : '';
       
       card.innerHTML = `
@@ -2932,5 +2932,5 @@
       document.getElementById('contactForm').reset();
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5acfc51206edbd',t:'MTc2NDM0MjgzMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5ae2494662412d',t:'MTc2NDM0MzU4OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
