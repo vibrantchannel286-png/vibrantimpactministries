@@ -960,7 +960,7 @@
    </div>
    <nav>
     <div class="nav-container"><button class="menu-toggle" onclick="toggleMenu()"> <span class="hamburger-line"></span> <span class="hamburger-line"></span> <span class="hamburger-line"></span> </button>
-     <div class="dropdown-menu" id="dropdownMenu"><button class="nav-btn active" onclick="showSection('home')">🏠 Home</button> <button class="nav-btn" onclick="showSection('about')">ℹ️ About Us</button> <button class="nav-btn" onclick="showSection('services')">📅 Services</button> <button class="nav-btn" onclick="showSection('giving')">💝 Giving</button> <button class="nav-btn" onclick="showSection('media')">��� Media</button> <button class="nav-btn" onclick="showSection('prayer')">🙏 Prayer</button> <button class="nav-btn" onclick="showSection('partner')">�� Partner With Us</button> <button class="nav-btn" onclick="showSection('contact')">📞 Contact</button> <button class="nav-btn" id="authNavBtn" onclick="openAuthModal()">🔐 Login/Sign Up</button> <button class="nav-btn" onclick="openAdminModal()" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">👑 Admin Login</button> <button class="nav-btn" id="adminSettingsBtn" onclick="handleAdminSettingsClick()" style="display: none; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">⚙️ Admin Settings</button>
+     <div class="dropdown-menu" id="dropdownMenu"><button class="nav-btn active" onclick="showSection('home')">🏠 Home</button> <button class="nav-btn" onclick="showSection('about')">ℹ️ About Us</button> <button class="nav-btn" onclick="showSection('services')">📅 Services</button> <button class="nav-btn" onclick="showSection('giving')">💝 Giving</button> <button class="nav-btn" onclick="showSection('media')">����� Media</button> <button class="nav-btn" onclick="showSection('prayer')">🙏 Prayer</button> <button class="nav-btn" onclick="showSection('partner')">�� Partner With Us</button> <button class="nav-btn" onclick="showSection('contact')">📞 Contact</button> <button class="nav-btn" id="authNavBtn" onclick="openAuthModal()">🔐 Login/Sign Up</button> <button class="nav-btn" onclick="openAdminModal()" style="background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">👑 Admin Login</button> <button class="nav-btn" id="adminSettingsBtn" onclick="handleAdminSettingsClick()" style="display: none; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%); color: #78350f;">⚙️ Admin Settings</button>
      </div>
     </div>
    </nav>
@@ -978,7 +978,7 @@
       <p style="color: #78350f; font-size: 0.9em; margin: 0;">��� <strong>Authorized Admins Only:</strong><br>
         • eiweh123@gmail.com<br>
         • vibrantchannel286@gmail.com</p>
-     </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">������ Login as Admin</button>
+     </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">���������� Login as Admin</button>
     </form>
    </div>
   </div><!-- Auth Modal -->
@@ -1119,7 +1119,7 @@
        <p>Deep dive into the Scriptures with systematic Bible teaching, group discussions, and practical application. Grow in your understanding of God's Word and how to apply it to everyday life. All are welcome to join us for this enriching study time.</p>
       </div>
       <div class="service-item">
-       <h3>🔥 Last Friday Fire Night</h3>
+       <h3>�� Last Friday Fire Night</h3>
        <div class="time">
         ⏰ Last Friday of Every Month at 10:00 PM
        </div>
@@ -1377,10 +1377,6 @@
       </div>
       <div class="form-group"><label for="partnerAddress">Home Address:</label> <input type="text" id="partnerAddress" placeholder="Optional">
       </div>
-      <div class="form-group"><label for="partnerAmount">Monthly Partnership Amount (₦):</label> <select id="partnerAmount" required> <option value="">-- Select Amount --</option> <option value="5000">₦5,000 / month</option> <option value="10000">₦10,000 / month</option> <option value="20000">₦20,000 / month</option> <option value="50000">₦50,000 / month</option> <option value="custom">Custom Amount</option> </select>
-      </div>
-      <div class="form-group" id="customAmountGroup" style="display: none;"><label for="customAmount">Enter Custom Amount (₦): *</label> <input type="number" id="customAmount" min="1000" placeholder="Enter amount">
-      </div>
       <div class="form-group"><label for="partnerMessage">Why do you want to partner with us?</label> <textarea id="partnerMessage" placeholder="Share your heart with us..."></textarea>
       </div><button type="submit" class="btn" style="width: 100%;">🤝 Register as Partner</button>
      </form>
@@ -1437,7 +1433,9 @@
        </div>
        <div class="form-group"><label for="twitchLink">Twitch Channel URL:</label> <input type="url" id="twitchLink" placeholder="https://twitch.tv/yourchannel">
        </div>
-       <div class="form-group"><label for="whatsappLink">WhatsApp Group Link: *</label> <input type="url" id="whatsappLink" placeholder="https://chat.whatsapp.com/xxxxx" required> <small style="display: block; margin-top: 5px; color: #78350f;"> Get your WhatsApp group invite link from Group Info → Invite via link </small>
+       <div class="form-group"><label for="whatsappLink">WhatsApp Group Link (General): *</label> <input type="url" id="whatsappLink" placeholder="https://chat.whatsapp.com/xxxxx" required> <small style="display: block; margin-top: 5px; color: #78350f;"> Get your WhatsApp group invite link from Group Info → Invite via link </small>
+       </div>
+       <div class="form-group"><label for="partnerWhatsappLink">WhatsApp Group Link (Partners Only): *</label> <input type="url" id="partnerWhatsappLink" placeholder="https://chat.whatsapp.com/xxxxx" required> <small style="display: block; margin-top: 5px; color: #78350f;"> 📱 This exclusive link will be sent to partners after they register </small>
        </div><button type="submit" class="btn" style="width: 100%; background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);">💾 Update Social Links</button>
       </form>
      </div><!-- Media Upload Section -->
@@ -1451,7 +1449,10 @@
        </div>
        <div class="form-group" id="adminVideoUrlGroup" style="display: none;"><label for="adminVideoUrl">Video URL: *</label> <input type="text" id="adminVideoUrl" placeholder="Paste YouTube or Facebook video link"> <small style="display: block; margin-top: 5px; color: #1e3a8a;">Example: https://www.youtube.com/watch?v=...</small>
        </div>
-       <div class="form-group" id="adminImageUrlGroup" style="display: none;"><label for="adminImageUrl">Image URL: *</label> <input type="text" id="adminImageUrl" placeholder="Paste image link from Imgur or ImgBB"> <small style="display: block; margin-top: 5px; color: #1e3a8a;">Upload your image to <a href="https://imgur.com" target="_blank" style="color: #60a5fa; font-weight: 600;">Imgur</a> or <a href="https://imgbb.com" target="_blank" style="color: #60a5fa; font-weight: 600;">ImgBB</a> first, then paste the direct image link here</small>
+       <div class="form-group" id="adminImageUrlGroup" style="display: none;"><label for="adminImageFile">Upload Image from Computer: *</label> <input type="file" id="adminImageFile" accept="image/*" style="padding: 10px; border: 2px dashed #60a5fa; background: #f0f9ff;"> <small style="display: block; margin-top: 5px; color: #1e3a8a;">📁 Select an image file from your computer (JPG, PNG, GIF)</small>
+        <div id="imagePreview" style="margin-top: 15px; display: none;">
+         <p style="color: #1e3a8a; font-weight: 600; margin-bottom: 10px;">Preview:</p><img id="previewImage" style="max-width: 300px; max-height: 200px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.2);">
+        </div>
        </div>
        <div class="form-group"><label for="adminMediaTitle">Title: *</label> <input type="text" id="adminMediaTitle" placeholder="e.g., Sunday Service - January 2024" required>
        </div>
@@ -1880,12 +1881,8 @@
       const email = document.getElementById('partnerEmail').value;
       const phone = document.getElementById('partnerPhone').value;
       const address = document.getElementById('partnerAddress').value;
-      const amountSelect = document.getElementById('partnerAmount').value;
-      const customAmount = document.getElementById('customAmount').value;
       const message = document.getElementById('partnerMessage').value;
       const submitBtn = event.target.querySelector('button[type="submit"]');
-
-      const amount = amountSelect === 'custom' ? customAmount : amountSelect;
 
       submitBtn.disabled = true;
       submitBtn.textContent = '🔄 Registering...';
@@ -1896,8 +1893,8 @@
           email: email,
           phone: phone,
           address: address,
-          amount: amount,
           message: message,
+          paymentVerified: false,
           registeredAt: firebase.firestore.FieldValue.serverTimestamp()
         };
 
@@ -1906,10 +1903,32 @@
 
         // Send email notification to admin
         const subject = 'New Partner Registration - Vibrant Impact Ministries';
-        const body = `New Partner Registration Details:%0D%0A%0D%0AName: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0AAddress: ${address || 'Not provided'}%0D%0AMonthly Amount: ₦${amount}%0D%0A%0D%0AMessage:%0D%0A${message || 'No message provided'}%0D%0A%0D%0ARegistered on: ${new Date().toLocaleString()}`;
+        const body = `New Partner Registration Details:%0D%0A%0D%0AName: ${name}%0D%0AEmail: ${email}%0D%0APhone: ${phone}%0D%0AAddress: ${address || 'Not provided'}%0D%0A%0D%0AMessage:%0D%0A${message || 'No message provided'}%0D%0A%0D%0ARegistered on: ${new Date().toLocaleString()}%0D%0A%0D%0A⚠️ Payment Status: PENDING - Partner needs to complete payment before receiving WhatsApp group access.`;
         const mailtoLink = `mailto:eiweh123@gmail.com,vibrantchannel286@gmail.com?subject=${subject}&body=${body}`;
 
         window.open(mailtoLink, '_blank');
+
+        // Get partner WhatsApp group link from localStorage
+        const partnerWhatsAppLink = localStorage.getItem('vimPartnerWhatsAppLink') || 'https://chat.whatsapp.com/partner-group-link';
+
+        // Send WhatsApp message with payment instructions ONLY (no group link yet)
+        const whatsappMessage = `Hello ${name}! 🤝%0D%0A%0D%0AThank you for registering as a partner with Vibrant Impact Ministries!%0D%0A%0D%0A📋 NEXT STEP - Complete Your Partnership Payment:%0D%0A%0D%0A🏦 Bank Details:%0D%0ABank: United Bank for Africa (UBA)%0D%0AAccount Number: 1025522432%0D%0AAccount Name: Valentine Ifedayo Ministries%0D%0A%0D%0A✅ After making your payment, please:%0D%0A1. Take a screenshot of your payment receipt%0D%0A2. Send it to: pastorvalentineifedayo@gmail.com%0D%0A%0D%0A💎 Once your payment is verified, you will receive:%0D%0A✅ Exclusive Partners WhatsApp Group link%0D%0A✅ Monthly prophetic ministry%0D%0A✅ Priority prayer support%0D%0A✅ Partner newsletters and updates%0D%0A✅ Spiritual covering and mentorship%0D%0A%0D%0AWe look forward to partnering with you!%0D%0A%0D%0AGod bless you! 🙏`;
+        
+        // Clean phone number (remove spaces, dashes, and country code variations)
+        let cleanPhone = phone.replace(/[\s\-\(\)]/g, '');
+        if (cleanPhone.startsWith('0')) {
+          cleanPhone = '234' + cleanPhone.substring(1);
+        } else if (!cleanPhone.startsWith('234') && !cleanPhone.startsWith('+')) {
+          cleanPhone = '234' + cleanPhone;
+        }
+        cleanPhone = cleanPhone.replace('+', '');
+
+        const whatsappLink = `https://wa.me/${cleanPhone}?text=${whatsappMessage}`;
+        
+        // Open WhatsApp with pre-filled message
+        setTimeout(() => {
+          window.open(whatsappLink, '_blank');
+        }, 500);
 
         showToast('�� Thank you for partnering with us! An admin will contact you soon.', 'success');
         document.getElementById('partnerForm').reset();
@@ -1936,22 +1955,7 @@
       }
     }
 
-    // Toggle custom amount field
-    document.addEventListener('DOMContentLoaded', function() {
-      const partnerAmount = document.getElementById('partnerAmount');
-      if (partnerAmount) {
-        partnerAmount.addEventListener('change', function() {
-          const customAmountGroup = document.getElementById('customAmountGroup');
-          if (this.value === 'custom') {
-            customAmountGroup.style.display = 'block';
-            document.getElementById('customAmount').required = true;
-          } else {
-            customAmountGroup.style.display = 'none';
-            document.getElementById('customAmount').required = false;
-          }
-        });
-      }
-    });
+
 
     // Load saved logo
     function loadSavedLogo() {
@@ -2050,17 +2054,38 @@
         videoUrlGroup.style.display = 'block';
         imageUrlGroup.style.display = 'none';
         document.getElementById('adminVideoUrl').required = true;
-        document.getElementById('adminImageUrl').required = false;
+        document.getElementById('adminImageFile').required = false;
       } else if (mediaType === 'image') {
         videoUrlGroup.style.display = 'none';
         imageUrlGroup.style.display = 'block';
         document.getElementById('adminVideoUrl').required = false;
-        document.getElementById('adminImageUrl').required = true;
+        document.getElementById('adminImageFile').required = true;
       } else {
         videoUrlGroup.style.display = 'none';
         imageUrlGroup.style.display = 'none';
       }
     }
+
+    // Image file preview
+    document.addEventListener('DOMContentLoaded', function() {
+      const imageFileInput = document.getElementById('adminImageFile');
+      if (imageFileInput) {
+        imageFileInput.addEventListener('change', function(event) {
+          const file = event.target.files[0];
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+              const previewImage = document.getElementById('previewImage');
+              const imagePreview = document.getElementById('imagePreview');
+              
+              previewImage.src = e.target.result;
+              imagePreview.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+          }
+        });
+      }
+    });
 
     // Handle logo upload
     async function handleLogoUpload(event) {
@@ -2329,6 +2354,7 @@
       const tiktok = document.getElementById('tiktokLink').value;
       const twitch = document.getElementById('twitchLink').value;
       const whatsapp = document.getElementById('whatsappLink').value;
+      const partnerWhatsapp = document.getElementById('partnerWhatsappLink').value;
       const submitBtn = event.target.querySelector('button[type="submit"]');
 
       submitBtn.disabled = true;
@@ -2346,6 +2372,7 @@
 
         // Save to localStorage
         localStorage.setItem('vimSocialLinks', JSON.stringify(socialLinks));
+        localStorage.setItem('vimPartnerWhatsAppLink', partnerWhatsapp);
 
         // Update links on the page immediately
         loadSocialLinks();
@@ -2358,6 +2385,7 @@
             tiktok: tiktok,
             twitch: twitch,
             whatsapp: whatsapp,
+            partnerWhatsapp: partnerWhatsapp,
             updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
             updatedBy: currentUser.email
           });
@@ -2366,6 +2394,7 @@
         }
 
         showToast('✅ Social media links updated successfully!', 'success');
+        document.getElementById('socialLinksForm').reset();
       } catch (error) {
         console.error('Social links update error:', error);
         showToast(`❌ Update failed: ${error.message}`, 'error');
@@ -2397,7 +2426,7 @@
               <h4 style="color: #1e3a8a; margin-bottom: 10px;">${partner.name}</h4>
               <p style="color: #4b5563; margin: 5px 0;"><strong>Email:</strong> ${partner.email}</p>
               <p style="color: #4b5563; margin: 5px 0;"><strong>Phone:</strong> ${partner.phone}</p>
-              <p style="color: #4b5563; margin: 5px 0;"><strong>Amount:</strong> ₦${partner.amount}/month</p>
+              ${partner.address ? `<p style="color: #4b5563; margin: 5px 0;"><strong>Address:</strong> ${partner.address}</p>` : ''}
               <p style="color: #4b5563; margin: 5px 0;"><strong>Registered:</strong> ${date}</p>
               ${partner.message ? `<p style="color: #4b5563; margin: 10px 0 0;"><strong>Message:</strong><br>${partner.message}</p>` : ''}
             </div>
@@ -2457,9 +2486,6 @@
       const category = document.getElementById('adminMediaCategory').value;
       const title = document.getElementById('adminMediaTitle').value;
       const description = document.getElementById('adminMediaDescription').value;
-      const url = mediaType === 'video' 
-        ? document.getElementById('adminVideoUrl').value 
-        : document.getElementById('adminImageUrl').value;
       const submitBtn = event.target.querySelector('button[type="submit"]');
 
       submitBtn.disabled = true;
@@ -2486,6 +2512,7 @@
         document.getElementById('adminMediaUploadForm').reset();
         document.getElementById('adminVideoUrlGroup').style.display = 'none';
         document.getElementById('adminImageUrlGroup').style.display = 'none';
+        document.getElementById('imagePreview').style.display = 'none';
       } catch (error) {
         console.error('Media upload error:', error);
         showToast('❌ Failed to upload media. Please try again.', 'error');
@@ -2591,7 +2618,7 @@
       }
       
       const deleteBtn = currentUser && ADMIN_EMAILS.includes(currentUser.email) 
-        ? `<button onclick="deleteMedia(${item.id})" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600;">🗑️ Delete</button>`
+        ? `<button onclick="deleteMedia(${item.id})" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px; font-weight: 600;">��️ Delete</button>`
         : '';
       
       card.innerHTML = `
@@ -2820,5 +2847,5 @@
       document.getElementById('contactForm').reset();
     }
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5a986e558fedbd',t:'MTc2NDM0MDU2NC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a5ac7f777d1edbd',t:'MTc2NDM0MjUxMS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
