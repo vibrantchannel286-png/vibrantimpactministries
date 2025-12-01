@@ -2083,7 +2083,22 @@
       }
       
       // Inline confirmation instead of browser dialog
-      const mediaItem = document.querySelector(`[onclick="deleteMedia('${mediaId}')"]`).closest('.media-item');
+      const deleteButtons = document.querySelectorAll(`[onclick*="deleteMedia('${mediaId}')"]`);
+      let mediaItem = null;
+      
+      for (let btn of deleteButtons) {
+        const item = btn.closest('.media-item');
+        if (item) {
+          mediaItem = item;
+          break;
+        }
+      }
+      
+      if (!mediaItem) {
+        showToast('❌ Could not find media item.', 'error');
+        return;
+      }
+      
       const originalHTML = mediaItem.innerHTML;
       
       mediaItem.innerHTML = `
@@ -2099,19 +2114,27 @@
       try {
         const item = mediaItems.find(m => m.id === mediaId);
         
-        // Delete from Storage if it's an uploaded file
-        if (item && (item.imageUrl.includes('firebasestorage') || item.videoUrl.includes('firebasestorage'))) {
+        // Delete from Storage if it's an uploaded file (not YouTube or external URL)
+        if (item) {
           const url = item.imageUrl || item.videoUrl;
-          const fileRef = storage.refFromURL(url);
-          await fileRef.delete();
+          if (url && url.includes('firebasestorage')) {
+            try {
+              const fileRef = storage.refFromURL(url);
+              await fileRef.delete();
+            } catch (storageError) {
+              console.log('Storage deletion skipped (file may not exist):', storageError);
+            }
+          }
         }
         
-        // Delete from Firestore
+        // Delete from Firestore (this is the main deletion)
         await db.collection('media').doc(mediaId).delete();
         showToast('✅ Media deleted successfully!', 'success');
         loadMediaItems();
       } catch (error) {
+        console.error('Delete error:', error);
         showToast('❌ Delete failed: ' + error.message, 'error');
+        loadMediaItems();
       }
     }
 
@@ -2269,7 +2292,7 @@
             <h3>Our Mission</h3>
             <p>${missionList[0]}</p>
             <ul>
-              ${missionList.slice(1).map(item => `<li>${item.replace('•', '').trim()}</li>`).join('')}
+              ${missionList.slice(1).map(item => `<li>${item.replace('���', '').trim()}</li>`).join('')}
             </ul>
           `;
         }
@@ -2860,6 +2883,6 @@
       setInterval(updateLiveStatusDisplay, 10000);
     });
   </script>
- <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a71c5ad61ca534c',t:'MTc2NDU4MzU5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a71d836f66a534c',t:'MTc2NDU4NDM0OS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
 
