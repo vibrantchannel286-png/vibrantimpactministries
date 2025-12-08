@@ -1094,8 +1094,6 @@
     }
   </style>
   <style>@view-transition { navigation: auto; }</style>
-  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
-  <script src="/_sdk/element_sdk.js" type="text/javascript"></script>
   <script src="https://cdn.tailwindcss.com" type="text/javascript"></script>
  </head>
  <body><!-- Live Alert Banner -->
@@ -1134,7 +1132,7 @@
       </div>
      </div>
      <div class="countdown-container" id="fireNightCountdown">
-      <h3>������ Next Fire Night Countdown</h3>
+      <h3>🔥 Next Fire Night Countdown</h3>
       <div class="countdown-timer">
        <div class="countdown-item"><span class="countdown-value" id="days">00</span> <span class="countdown-label">Days</span>
        </div>
@@ -1144,6 +1142,18 @@
        </div>
        <div class="countdown-item"><span class="countdown-value" id="seconds">00</span> <span class="countdown-label">Seconds</span>
        </div>
+      </div>
+     </div>
+     <div id="gloryServiceVideoSection" class="events-section" style="display: none;">
+      <h3>🌟 Sunday Glory Service</h3>
+      <div style="max-width: 800px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+       <iframe id="gloryServiceVideoFrame" src="" style="width: 100%; aspect-ratio: 16/9; border: none;" allowfullscreen></iframe>
+      </div>
+     </div>
+     <div id="tuesdayCounsellingVideoSection" class="events-section" style="display: none;">
+      <h3>🙏 Tuesday Counselling Service</h3>
+      <div style="max-width: 800px; margin: 0 auto; border-radius: 15px; overflow: hidden; box-shadow: 0 8px 24px rgba(0,0,0,0.2);">
+       <iframe id="tuesdayCounsellingVideoFrame" src="" style="width: 100%; aspect-ratio: 16/9; border: none;" allowfullscreen></iframe>
       </div>
      </div>
      <div class="events-section">
@@ -1456,7 +1466,7 @@
        <h4>📅 Manage Upcoming Services</h4>
        <div style="background: #f9f9f9; padding: 20px; border-radius: 10px; margin: 20px 0;">
         <h5 style="margin-top: 0;">Add New Service/Event</h5>
-        <form id="addEventForm" onsubmit="addUpcomingEvent(event)" style="display: grid; gap: 10px;"><input type="text" id="eventIcon" placeholder="Icon (emoji) *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <input type="text" id="eventTitle" placeholder="Event Title *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <input type="text" id="eventSchedule" placeholder="Schedule (e.g., Every Sunday) *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <input type="text" id="eventTime" placeholder="Time (e.g., 9:00 AM) *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <textarea id="eventDescription" placeholder="Description *" rows="2" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical;"></textarea> <button type="submit" style="background: #1e3c72; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">➕ Add Event</button>
+        <form id="addEventForm" onsubmit="addUpcomingEvent(event)" style="display: grid; gap: 10px;"><input type="url" id="eventImageUrl" placeholder="Event Image URL (optional)" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <input type="text" id="eventTitle" placeholder="Event Title *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <input type="text" id="eventSchedule" placeholder="Schedule (e.g., Every Sunday) *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <input type="text" id="eventTime" placeholder="Time (e.g., 9:00 AM) *" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;"> <textarea id="eventDescription" placeholder="Description *" rows="2" required style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical;"></textarea> <button type="submit" style="background: #1e3c72; color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold;">➕ Add Event</button>
         </form>
        </div>
        <div style="background: #f9f9f9; padding: 20px; border-radius: 10px;">
@@ -1466,12 +1476,75 @@
         </div>
        </div>
       </div>
+      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+      <div>
+       <h4>🔥 Fire Night Countdown Settings</h4>
+       <p style="color: #666; font-size: 14px;">Set a custom date and time for the next Fire Night countdown. Leave empty to use automatic (last Friday of month at 10 PM).</p>
+       <div class="stream-url-inputs">
+        <label>Custom Fire Night Date:</label>
+        <input type="date" id="fireNightDate" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <label>Custom Fire Night Time:</label>
+        <input type="time" id="fireNightTime" value="22:00" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <button onclick="saveFireNightSettings()" style="background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Fire Night Settings</button>
+        <button onclick="clearFireNightSettings()" style="background: #6b7280; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 5px; width: 100%;">🔄 Reset to Automatic</button>
+       </div>
+      </div>
+      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+      <div>
+       <h4>🖼️ Homepage Hero Background Images</h4>
+       <p style="color: #666; font-size: 14px;">Add image URLs that will rotate on the homepage hero section. One URL per line.</p>
+       <div class="stream-url-inputs">
+        <label>Hero Background Image 1:</label>
+        <input type="url" id="heroImage1" placeholder="https://example.com/image1.jpg" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <label>Hero Background Image 2:</label>
+        <input type="url" id="heroImage2" placeholder="https://example.com/image2.jpg" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <label>Hero Background Image 3:</label>
+        <input type="url" id="heroImage3" placeholder="https://example.com/image3.jpg" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <button onclick="saveHeroImages()" style="background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Hero Images</button>
+       </div>
+      </div>
+      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+      <div>
+       <h4>🎬 Glory Service Video</h4>
+       <p style="color: #666; font-size: 14px;">Add a video URL to display on the homepage "Upcoming Services" section for Sunday Glory Service.</p>
+       <div class="stream-url-inputs">
+        <label>Video URL (YouTube, Google Drive, or direct video link):</label>
+        <input type="url" id="gloryServiceVideo" placeholder="https://youtube.com/embed/..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <p style="color: #888; font-size: 12px; margin-top: 5px;">For YouTube: Use embed URL format (https://www.youtube.com/embed/VIDEO_ID)</p>
+        <button onclick="saveGloryServiceVideo()" style="background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Glory Service Video</button>
+       </div>
+      </div>
+      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+      <div>
+       <h4>🙏 Tuesday Counselling Service Video</h4>
+       <p style="color: #666; font-size: 14px;">Add a video URL to display on the homepage for Tuesday Counselling Service.</p>
+       <div class="stream-url-inputs">
+        <label>Video URL (YouTube, Google Drive, or direct video link):</label>
+        <input type="url" id="tuesdayCounsellingVideo" placeholder="https://youtube.com/embed/..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <p style="color: #888; font-size: 12px; margin-top: 5px;">For YouTube: Use embed URL format (https://www.youtube.com/embed/VIDEO_ID)</p>
+        <button onclick="saveTuesdayCounsellingVideo()" style="background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Tuesday Counselling Video</button>
+       </div>
+      </div>
+      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+      <div>
+       <h4>🦶 Footer Images</h4>
+       <p style="color: #666; font-size: 14px;">Add image URLs to display in the website footer.</p>
+       <div class="stream-url-inputs">
+        <label>Footer Image 1:</label>
+        <input type="url" id="footerImage1" placeholder="https://example.com/footer1.jpg" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <label>Footer Image 2:</label>
+        <input type="url" id="footerImage2" placeholder="https://example.com/footer2.jpg" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+        <button onclick="saveFooterImages()" style="background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Footer Images</button>
+       </div>
+      </div>
      </div>
     </div>
    </div>
   </div><!-- Footer -->
   <footer>
-   <div style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap;"><img src="https://lh3.googleusercontent.com/d/1NvHVmaJMBA4rucIu6fbE4PIoMLobhmsg" alt="VIM Ministry" style="height: 280px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none';"> <img src="https://lh3.googleusercontent.com/d/18PUaKOEJf7SQvbcDsr8m82l6FxqIcXV_" alt="VIM Ministry" style="height: 280px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none';">
+   <div id="footerImagesContainer" style="display: flex; gap: 20px; justify-content: center; margin-bottom: 20px; flex-wrap: wrap;">
+    <img id="footerImg1" src="https://lh3.googleusercontent.com/d/1NvHVmaJMBA4rucIu6fbE4PIoMLobhmsg" alt="VIM Ministry" style="height: 280px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none';">
+    <img id="footerImg2" src="https://lh3.googleusercontent.com/d/18PUaKOEJf7SQvbcDsr8m82l6FxqIcXV_" alt="VIM Ministry" style="height: 280px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none';">
    </div>
    <p><strong>Vibrant Impact Ministries (VIM)</strong></p>
    <p>Ughele Junction, Ado Road, Akure, Ondo State, Nigeria</p>
@@ -1597,6 +1670,7 @@
       
       updateAuthUI();
       updateMediaUserSection();
+      updateDepartmentsUserSection();
       updateNavButtons();
       loadMediaItems();
       loadDepartments();
@@ -2389,12 +2463,17 @@
       const pastorWifeImage = document.getElementById('pastorWifeImage');
       const pastorWifeBioDisplay = document.getElementById('pastorWifeBioText');
 
-      if (pastorWifeName && pastorWifeBioText) {
+      // Show section if any content is provided (name, photo, or bio)
+      if (pastorWifeName || pastorWifePhotoUrl || pastorWifeBioText) {
         if (pastorWifeSection) pastorWifeSection.style.display = 'block';
-        if (pastorWifeNameDisplay) pastorWifeNameDisplay.textContent = pastorWifeName;
-        if (pastorWifeImage && pastorWifePhotoUrl) {
-          pastorWifeImage.src = pastorWifePhotoUrl;
-          pastorWifeImage.style.display = 'block';
+        if (pastorWifeNameDisplay) pastorWifeNameDisplay.textContent = pastorWifeName || "Pastor's Wife";
+        if (pastorWifeImage) {
+          if (pastorWifePhotoUrl) {
+            pastorWifeImage.src = pastorWifePhotoUrl;
+            pastorWifeImage.style.display = 'block';
+          } else {
+            pastorWifeImage.style.display = 'none';
+          }
         }
         if (pastorWifeBioDisplay) pastorWifeBioDisplay.textContent = pastorWifeBioText;
       } else {
@@ -2677,10 +2756,13 @@
       departmentsList.innerHTML = `
         <div class="events-grid">
           ${departments.map(dept => `
-            <div class="event-card">
+            <div class="event-card department-card" data-dept-id="${dept.id}">
               <img src="${dept.imageUrl}" alt="${dept.name}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;" onerror="this.style.display='none';">
               <h4 style="color: #1e3c72; margin: 0 0 10px 0;">${dept.name}</h4>
               <p style="color: #555;">${dept.description}</p>
+              ${isAdmin ? `
+                <button onclick="deleteDepartment('${dept.id}')" style="background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%; font-weight: bold;">🗑️ Delete Department</button>
+              ` : ''}
             </div>
           `).join('')}
         </div>
@@ -2690,7 +2772,7 @@
     // Delete department (admin only)
     async function deleteDepartment(deptId) {
       if (!isAdmin) {
-        showToast('��� Only admins can delete departments.', 'error');
+        showToast('❌ Only admins can delete departments.', 'error');
         return;
       }
       
@@ -2719,6 +2801,11 @@
 
     // Fire Night Countdown
     function getNextFireNight() {
+      // Use custom date if set
+      if (customFireNightDate) {
+        return customFireNightDate;
+      }
+      
       const now = new Date();
       const currentMonth = now.getMonth();
       const currentYear = now.getFullYear();
@@ -2771,7 +2858,7 @@
         return;
       }
       
-      const icon = document.getElementById('eventIcon').value;
+      const imageUrl = document.getElementById('eventImageUrl').value.trim();
       const title = document.getElementById('eventTitle').value;
       const schedule = document.getElementById('eventSchedule').value;
       const time = document.getElementById('eventTime').value;
@@ -2779,7 +2866,7 @@
       
       try {
         await db.collection('upcomingEvents').add({
-          icon: icon,
+          imageUrl: imageUrl,
           title: title,
           schedule: schedule,
           time: time,
@@ -2826,14 +2913,14 @@
       // Default Sunday and Tuesday services (always shown)
       const defaultEvents = [
         {
-          icon: '����',
+          imageUrl: '',
           title: 'Sunday Glory Service',
           schedule: 'Every Sunday',
           time: '9:00 AM',
           description: 'Our main worship service featuring powerful praise and worship, life-transforming messages, and prophetic ministry.'
         },
         {
-          icon: '🙏',
+          imageUrl: '',
           title: 'Tuesday Deliverance & Counselling',
           schedule: 'Every Tuesday',
           time: '9:00 AM',
@@ -2846,7 +2933,8 @@
       
       eventsGrid.innerHTML = allEvents.map(event => `
         <div class="event-card">
-          <h4>${event.icon} ${event.title}</h4>
+          ${event.imageUrl ? `<img src="${event.imageUrl}" alt="${event.title}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 10px; margin-bottom: 15px;" onerror="this.style.display='none';">` : ''}
+          <h4>${event.title}</h4>
           <p><strong>${event.schedule}</strong></p>
           <p>⏰ ${event.time}</p>
           <p>${event.description}</p>
@@ -2867,7 +2955,8 @@
       
       currentEventsList.innerHTML = upcomingEvents.map(event => `
         <div style="background: white; padding: 15px; border-radius: 8px; border: 2px solid #ddd;">
-          <h5 style="margin: 0 0 10px 0; color: #1e3c72;">${event.icon} ${event.title}</h5>
+          ${event.imageUrl ? `<img src="${event.imageUrl}" alt="${event.title}" style="width: 100%; height: 100px; object-fit: cover; border-radius: 8px; margin-bottom: 10px;" onerror="this.style.display='none';">` : ''}
+          <h5 style="margin: 0 0 10px 0; color: #1e3c72;">${event.title}</h5>
           <p style="margin: 5px 0; font-size: 14px;"><strong>Schedule:</strong> ${event.schedule}</p>
           <p style="margin: 5px 0; font-size: 14px;"><strong>Time:</strong> ${event.time}</p>
           <p style="margin: 5px 0; font-size: 14px;">${event.description}</p>
@@ -2936,6 +3025,182 @@
       videoElement.style.display = 'none';
     }
 
+    // Save hero images
+    async function saveHeroImages() {
+      if (!isAdmin) { showToast('❌ Admin access required', 'error'); return; }
+      const img1 = document.getElementById('heroImage1').value.trim();
+      const img2 = document.getElementById('heroImage2').value.trim();
+      const img3 = document.getElementById('heroImage3').value.trim();
+      try {
+        await db.collection('settings').doc('heroImages').set({
+          images: [img1, img2, img3].filter(url => url),
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('✅ Hero images saved!', 'success');
+        loadHomepageSettings();
+      } catch (error) { showToast('❌ Failed to save: ' + error.message, 'error'); }
+    }
+
+    // Save Glory Service video
+    async function saveGloryServiceVideo() {
+      if (!isAdmin) { showToast('❌ Admin access required', 'error'); return; }
+      const videoUrl = document.getElementById('gloryServiceVideo').value.trim();
+      try {
+        await db.collection('settings').doc('gloryServiceVideo').set({
+          url: videoUrl,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('✅ Glory Service video saved!', 'success');
+        loadHomepageSettings();
+      } catch (error) { showToast('❌ Failed to save: ' + error.message, 'error'); }
+    }
+
+    // Save footer images
+    async function saveFooterImages() {
+      if (!isAdmin) { showToast('❌ Admin access required', 'error'); return; }
+      const img1 = document.getElementById('footerImage1').value.trim();
+      const img2 = document.getElementById('footerImage2').value.trim();
+      try {
+        await db.collection('settings').doc('footerImages').set({
+          image1: img1,
+          image2: img2,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('✅ Footer images saved!', 'success');
+        loadHomepageSettings();
+      } catch (error) { showToast('❌ Failed to save: ' + error.message, 'error'); }
+    }
+
+    // Save Tuesday Counselling video
+    async function saveTuesdayCounsellingVideo() {
+      if (!isAdmin) { showToast('❌ Admin access required', 'error'); return; }
+      const videoUrl = document.getElementById('tuesdayCounsellingVideo').value.trim();
+      try {
+        await db.collection('settings').doc('tuesdayCounsellingVideo').set({
+          url: videoUrl,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('✅ Tuesday Counselling video saved!', 'success');
+        loadHomepageSettings();
+      } catch (error) { showToast('❌ Failed to save: ' + error.message, 'error'); }
+    }
+
+    // Save Fire Night settings
+    async function saveFireNightSettings() {
+      if (!isAdmin) { showToast('❌ Admin access required', 'error'); return; }
+      const dateVal = document.getElementById('fireNightDate').value;
+      const timeVal = document.getElementById('fireNightTime').value || '22:00';
+      if (!dateVal) {
+        showToast('⚠️ Please select a date for Fire Night', 'error');
+        return;
+      }
+      try {
+        await db.collection('settings').doc('fireNight').set({
+          customDate: dateVal,
+          customTime: timeVal,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+        showToast('✅ Fire Night settings saved!', 'success');
+        loadHomepageSettings();
+      } catch (error) { showToast('❌ Failed to save: ' + error.message, 'error'); }
+    }
+
+    // Clear Fire Night settings (reset to automatic)
+    async function clearFireNightSettings() {
+      if (!isAdmin) { showToast('❌ Admin access required', 'error'); return; }
+      try {
+        await db.collection('settings').doc('fireNight').delete();
+        document.getElementById('fireNightDate').value = '';
+        document.getElementById('fireNightTime').value = '22:00';
+        customFireNightDate = null;
+        showToast('✅ Fire Night reset to automatic (last Friday of month)', 'success');
+        updateCountdown();
+      } catch (error) { showToast('❌ Failed to reset: ' + error.message, 'error'); }
+    }
+
+    // Custom Fire Night date storage
+    let customFireNightDate = null;
+
+    // Load homepage settings (hero, video, footer)
+    async function loadHomepageSettings() {
+      try {
+        // Load hero images
+        const heroDoc = await db.collection('settings').doc('heroImages').get();
+        if (heroDoc.exists && heroDoc.data().images?.length > 0) {
+          heroBackgrounds.length = 0;
+          heroDoc.data().images.forEach(url => { if(url) heroBackgrounds.push(url); });
+          const heroSection = document.getElementById('heroSection');
+          if (heroSection && heroBackgrounds.length > 0) {
+            heroSection.style.backgroundImage = `url('${heroBackgrounds[0]}')`;
+            heroSection.style.backgroundSize = 'cover';
+            heroSection.style.backgroundPosition = 'center';
+          }
+          // Populate admin fields
+          if (document.getElementById('heroImage1')) {
+            document.getElementById('heroImage1').value = heroDoc.data().images[0] || '';
+            document.getElementById('heroImage2').value = heroDoc.data().images[1] || '';
+            document.getElementById('heroImage3').value = heroDoc.data().images[2] || '';
+          }
+        }
+
+        // Load Glory Service video
+        const videoDoc = await db.collection('settings').doc('gloryServiceVideo').get();
+        const videoSection = document.getElementById('gloryServiceVideoSection');
+        const videoFrame = document.getElementById('gloryServiceVideoFrame');
+        if (videoDoc.exists && videoDoc.data().url) {
+          videoFrame.src = videoDoc.data().url;
+          videoSection.style.display = 'block';
+          if (document.getElementById('gloryServiceVideo')) {
+            document.getElementById('gloryServiceVideo').value = videoDoc.data().url;
+          }
+        } else {
+          videoSection.style.display = 'none';
+        }
+
+        // Load Tuesday Counselling video
+        const tuesdayVideoDoc = await db.collection('settings').doc('tuesdayCounsellingVideo').get();
+        const tuesdayVideoSection = document.getElementById('tuesdayCounsellingVideoSection');
+        const tuesdayVideoFrame = document.getElementById('tuesdayCounsellingVideoFrame');
+        if (tuesdayVideoDoc.exists && tuesdayVideoDoc.data().url) {
+          tuesdayVideoFrame.src = tuesdayVideoDoc.data().url;
+          tuesdayVideoSection.style.display = 'block';
+          if (document.getElementById('tuesdayCounsellingVideo')) {
+            document.getElementById('tuesdayCounsellingVideo').value = tuesdayVideoDoc.data().url;
+          }
+        } else {
+          tuesdayVideoSection.style.display = 'none';
+        }
+
+        // Load Fire Night settings
+        const fireNightDoc = await db.collection('settings').doc('fireNight').get();
+        if (fireNightDoc.exists && fireNightDoc.data().customDate) {
+          const data = fireNightDoc.data();
+          const [year, month, day] = data.customDate.split('-').map(Number);
+          const [hours, minutes] = (data.customTime || '22:00').split(':').map(Number);
+          customFireNightDate = new Date(year, month - 1, day, hours, minutes, 0, 0);
+          if (document.getElementById('fireNightDate')) {
+            document.getElementById('fireNightDate').value = data.customDate;
+            document.getElementById('fireNightTime').value = data.customTime || '22:00';
+          }
+          updateCountdown();
+        } else {
+          customFireNightDate = null;
+        }
+
+        // Load footer images
+        const footerDoc = await db.collection('settings').doc('footerImages').get();
+        if (footerDoc.exists) {
+          const data = footerDoc.data();
+          if (data.image1) document.getElementById('footerImg1').src = data.image1;
+          if (data.image2) document.getElementById('footerImg2').src = data.image2;
+          if (document.getElementById('footerImage1')) {
+            document.getElementById('footerImage1').value = data.image1 || '';
+            document.getElementById('footerImage2').value = data.image2 || '';
+          }
+        }
+      } catch (error) { console.error('Error loading homepage settings:', error); }
+    }
+
     // Load live stream URLs and content when page loads
     window.addEventListener('DOMContentLoaded', function() {
       loadSavedLiveStreamUrls();
@@ -2944,6 +3209,7 @@
       updateSocialLinks();
       loadAboutContent();
       loadUpcomingEvents();
+      loadHomepageSettings();
       
       // Set initial hero background
       const heroSection = document.getElementById('heroSection');
@@ -2966,4 +3232,6 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a728c9e06bd534c',t:'MTc2NDU5MTczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+
 
