@@ -1279,19 +1279,19 @@
       </div>
      </div>
     </div><!-- GIVING PAGE -->
-    <div id="giving" class="page">
+     <div id="giving" class="page">
      <h2 class="section-title">Give &amp; Partner With Us</h2>
      <div class="giving-container">
       <div class="content-box">
        <p style="text-align: center; font-size: 18px; line-height: 1.8;">Your giving helps us spread the Gospel, impact lives, and advance the Kingdom of God. Thank you for your partnership in ministry!</p>
-      </div><button class="give-card-btn" onclick="window.open('https://paystack.com/pay/vibrantimpact', '_blank')"> 💳 Give with Card (Paystack) </button> <button class="give-card-btn" onclick="window.open('https://www.paypal.me/Funmzyanie', '_blank')" style="margin-top: 10px;"> 💰 Give with PayPal </button>
+      </div><button class="give-card-btn" id="paystackBtn" onclick="openGiveLink('paystack')"> 💳 Give with Card (Paystack) </button> <button class="give-card-btn" id="paypalBtn" onclick="openGiveLink('paypal')" style="margin-top: 10px;"> 💰 Give with PayPal </button>
       <div class="account-details">
        <h3>Bank Transfer Details</h3>
-       <div class="account-info"><strong>Bank:</strong> UBA (United Bank for Africa)
+       <div class="account-info"><strong>Bank:</strong> <span id="bankNameDisplay">UBA (United Bank for Africa)</span>
        </div>
-       <div class="account-info"><strong>Account Number:</strong> 1025522432
+       <div class="account-info"><strong>Account Number:</strong> <span id="accountNumberDisplay">1025522432</span>
        </div>
-       <div class="account-info"><strong>Account Name:</strong> Valentine Ifedayo Ministries
+       <div class="account-info"><strong>Account Name:</strong> <span id="accountNameDisplay">Valentine Ifedayo Ministries</span>
        </div>
       </div>
       <div class="partnership-form">
@@ -1334,8 +1334,8 @@
       <h3>Counselling &amp; Deliverance Ministry</h3>
       <p><strong>Schedule:</strong> Every Tuesday at 9:00 AM</p>
       <p><strong>Online Prayer:</strong> Every Tuesday at 6:00 PM</p>
-      <p><strong>Email:</strong> pastorvalentineifedayo@gmail.com</p>
-      <p><strong>Phone:</strong> +234 (Contact for appointment)</p>
+      <p><strong>Email:</strong> <span id="prayerEmailDisplay">pastorvalentineifedayo@gmail.com</span></p>
+      <p><strong>Phone:</strong> <span id="prayerPhoneDisplay">+234 (Contact for appointment)</span></p>
       <p>For counselling appointments and deliverance ministry, please contact us via email or phone to schedule a session.</p>
      </div>
     </div><!-- CONTACT PAGE -->
@@ -1343,14 +1343,14 @@
      <h2 class="section-title">Contact Us</h2>
      <div class="content-box">
       <h3>📍 Church Address</h3>
-      <p>Ughele Junction, along Ado Road<br>
+      <p id="contactAddressDisplay">Ughele Junction, along Ado Road<br>
         Akure, Ondo State<br>
         Nigeria</p>
      </div>
      <div class="content-box">
       <h3>📞 Contact Information</h3>
-      <p><strong>Email:</strong> pastorvalentineifedayo@gmail.com</p>
-      <p><strong>Phone:</strong> +234 (Contact for appointment)</p>
+      <p><strong>Email:</strong> <span id="contactEmailDisplay">pastorvalentineifedayo@gmail.com</span></p>
+      <p><strong>Phone:</strong> <span id="contactPhoneDisplay">+234 (Contact for appointment)</span></p>
      </div>
      <div class="content-box">
       <h3>🕐 Service Times</h3>
@@ -1455,6 +1455,36 @@
        <div class="stream-url-inputs"><label>Facebook Page URL:</label> <input type="url" id="facebookPageUrl" placeholder="https://facebook.com/vibrantimpactministries" onchange="saveSocialLink('facebook', this.value)"> <label>YouTube Channel URL:</label> <input type="url" id="youtubeChannelUrl" placeholder="https://youtube.com/@vibrantimpactministries" onchange="saveSocialLink('youtube', this.value)"> <label>TikTok Profile URL:</label> <input type="url" id="tiktokProfileUrl" placeholder="https://tiktok.com/@vibrantimpactministries" onchange="saveSocialLink('tiktok', this.value)"> <label>Twitch Channel URL:</label> <input type="url" id="twitchChannelUrl" placeholder="https://twitch.tv/vibrantimpactministries" onchange="saveSocialLink('twitch', this.value)"> <label>WhatsApp Group Link:</label> <input type="url" id="whatsappGroupUrl" placeholder="https://chat.whatsapp.com/your-group-link" onchange="saveSocialLink('whatsapp', this.value)">
        </div>
       </div>
+     <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+     <div>
+      <h4>💳 Giving &amp; Payment Details</h4>
+      <div class="stream-url-inputs">
+       <label>Paystack Link:</label>
+       <input type="url" id="adminPaystackUrl" placeholder="https://paystack.com/pay/..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <label>PayPal Link:</label>
+       <input type="url" id="adminPaypalUrl" placeholder="https://paypal.me/..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <label>Bank Name:</label>
+       <input type="text" id="adminBankName" placeholder="UBA (United Bank for Africa)" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <label>Account Number:</label>
+       <input type="text" id="adminAccountNumber" placeholder="1025522432" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <label>Account Name:</label>
+       <input type="text" id="adminAccountName" placeholder="Valentine Ifedayo Ministries" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <button onclick="saveGivingSettings()" style="background: #1e3c72; color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Payment Details</button>
+      </div>
+     </div>
+     <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+     <div>
+      <h4>☎️ Contact Information</h4>
+      <div class="stream-url-inputs">
+       <label>Contact Email:</label>
+       <input type="email" id="adminContactEmail" placeholder="pastorvalentineifedayo@gmail.com" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <label>Contact Phone:</label>
+       <input type="text" id="adminContactPhone" placeholder="+234 ..." style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;">
+       <label>Church Address (one item per line):</label>
+       <textarea id="adminContactAddress" rows="3" placeholder="Ughele Junction, along Ado Road&#10;Akure, Ondo State&#10;Nigeria" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; resize: vertical;"></textarea>
+       <button onclick="saveContactInfo()" style="background: #FFD700; color: #1e3c72; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; width: 100%;">💾 Save Contact Info</button>
+      </div>
+     </div>
       <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
       <div>
        <h4>📝 About Us Content</h4>
@@ -1546,10 +1576,10 @@
     <img id="footerImg1" src="https://lh3.googleusercontent.com/d/1NvHVmaJMBA4rucIu6fbE4PIoMLobhmsg" alt="VIM Ministry" style="height: 280px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none';">
     <img id="footerImg2" src="https://lh3.googleusercontent.com/d/18PUaKOEJf7SQvbcDsr8m82l6FxqIcXV_" alt="VIM Ministry" style="height: 280px; object-fit: contain; border-radius: 8px;" onerror="this.style.display='none';">
    </div>
-   <p><strong>Vibrant Impact Ministries (VIM)</strong></p>
-   <p>Ughele Junction, Ado Road, Akure, Ondo State, Nigeria</p>
-   <p>Email: pastorvalentineifedayo@gmail.com | Phone: +234 (Contact for appointment)</p>
-   <p>© 2024 Vibrant Impact Ministries. All Rights Reserved.</p>
+  <p><strong>Vibrant Impact Ministries (VIM)</strong></p>
+  <p>Ughele Junction, Ado Road, Akure, Ondo State, Nigeria</p>
+  <p id="footerContactLine">Email: pastorvalentineifedayo@gmail.com | Phone: +234 (Contact for appointment)</p>
+  <p>© 2024 Vibrant Impact Ministries. All Rights Reserved.</p>
    <p style="margin-top: 15px; font-style: italic;">"Raising Vibrant Believers for Kingdom Impact"</p>
   </footer><!-- Firebase Scripts -->
   <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
@@ -1583,6 +1613,20 @@
     let mediaItems = [];
     let departments = [];
     let upcomingEvents = [];
+    const DEFAULT_GIVING = {
+      paystackUrl: 'https://paystack.com/pay/vibrantimpact',
+      paypalUrl: 'https://www.paypal.me/Funmzyanie',
+      bankName: 'UBA (United Bank for Africa)',
+      accountNumber: '1025522432',
+      accountName: 'Valentine Ifedayo Ministries'
+    };
+    const DEFAULT_CONTACT = {
+      email: 'pastorvalentineifedayo@gmail.com',
+      phone: '+234 (Contact for appointment)',
+      address: 'Ughele Junction, along Ado Road\nAkure, Ondo State\nNigeria'
+    };
+    let givingSettings = { ...DEFAULT_GIVING };
+    let contactSettings = { ...DEFAULT_CONTACT };
 
     // Toggle dropdown menu
     function toggleMenu() {
@@ -1682,6 +1726,8 @@
           adminSettings.classList.add('show');
           loadAboutContent();
           loadSavedSocialLinks();
+          loadGivingSettings();
+          loadContactInfo();
         } else {
           adminSettings.classList.remove('show');
         }
@@ -2366,6 +2412,181 @@
           </a>
         `;
       });
+    }
+
+    // Open giving links with validation
+    function openGiveLink(type) {
+      const url = type === 'paypal' ? givingSettings.paypalUrl : givingSettings.paystackUrl;
+      if (url) {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      } else {
+        showToast('⚠️ No link configured yet. Admins can set one in Settings.', 'error');
+      }
+    }
+
+    // Apply giving settings to UI and admin form
+    function applyGivingSettings() {
+      const bankNameEl = document.getElementById('bankNameDisplay');
+      const accountNumberEl = document.getElementById('accountNumberDisplay');
+      const accountNameEl = document.getElementById('accountNameDisplay');
+      const paystackBtn = document.getElementById('paystackBtn');
+      const paypalBtn = document.getElementById('paypalBtn');
+
+      if (bankNameEl) bankNameEl.textContent = givingSettings.bankName || 'Not set';
+      if (accountNumberEl) accountNumberEl.textContent = givingSettings.accountNumber || 'Not set';
+      if (accountNameEl) accountNameEl.textContent = givingSettings.accountName || 'Not set';
+
+      if (paystackBtn) {
+        paystackBtn.disabled = !givingSettings.paystackUrl;
+        paystackBtn.title = givingSettings.paystackUrl ? 'Open Paystack giving link' : 'Add a Paystack link in Admin settings';
+      }
+      if (paypalBtn) {
+        paypalBtn.disabled = !givingSettings.paypalUrl;
+        paypalBtn.title = givingSettings.paypalUrl ? 'Open PayPal giving link' : 'Add a PayPal link in Admin settings';
+      }
+
+      // Prefill admin form when available
+      if (isAdmin) {
+        const paystackInput = document.getElementById('adminPaystackUrl');
+        const paypalInput = document.getElementById('adminPaypalUrl');
+        const bankNameInput = document.getElementById('adminBankName');
+        const accountNumberInput = document.getElementById('adminAccountNumber');
+        const accountNameInput = document.getElementById('adminAccountName');
+
+        if (paystackInput) paystackInput.value = givingSettings.paystackUrl || '';
+        if (paypalInput) paypalInput.value = givingSettings.paypalUrl || '';
+        if (bankNameInput) bankNameInput.value = givingSettings.bankName || '';
+        if (accountNumberInput) accountNumberInput.value = givingSettings.accountNumber || '';
+        if (accountNameInput) accountNameInput.value = givingSettings.accountName || '';
+      }
+    }
+
+    // Load giving settings from Firestore (with defaults)
+    async function loadGivingSettings() {
+      try {
+        const doc = await db.collection('settings').doc('giving').get();
+        const data = doc.exists ? doc.data() : {};
+        givingSettings = { ...DEFAULT_GIVING, ...data };
+      } catch (error) {
+        console.error('Error loading giving settings:', error);
+        givingSettings = { ...DEFAULT_GIVING };
+      } finally {
+        applyGivingSettings();
+      }
+    }
+
+    // Save giving settings (admin)
+    async function saveGivingSettings() {
+      if (!isAdmin) {
+        showToast('❌ Only admins can update payment details.', 'error');
+        return;
+      }
+
+      const paystackUrl = document.getElementById('adminPaystackUrl').value.trim();
+      const paypalUrl = document.getElementById('adminPaypalUrl').value.trim();
+      const bankName = document.getElementById('adminBankName').value.trim() || DEFAULT_GIVING.bankName;
+      const accountNumber = document.getElementById('adminAccountNumber').value.trim() || DEFAULT_GIVING.accountNumber;
+      const accountName = document.getElementById('adminAccountName').value.trim() || DEFAULT_GIVING.accountName;
+
+      const dataToSave = {
+        paystackUrl: paystackUrl,
+        paypalUrl: paypalUrl,
+        bankName: bankName,
+        accountNumber: accountNumber,
+        accountName: accountName
+      };
+
+      try {
+        await db.collection('settings').doc('giving').set({
+          ...dataToSave,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: currentUser?.email || 'admin'
+        }, { merge: true });
+
+        givingSettings = { ...DEFAULT_GIVING, ...dataToSave };
+        applyGivingSettings();
+        showToast('✅ Payment details saved!', 'success');
+      } catch (error) {
+        showToast('❌ Failed to save payment details: ' + error.message, 'error');
+      }
+    }
+
+    function formatAddressLines(addressText) {
+      return (addressText || '').split('\n').filter(Boolean).join('<br>');
+    }
+
+    // Apply contact info to all visible spots
+    function applyContactInfo() {
+      const email = contactSettings.email || DEFAULT_CONTACT.email;
+      const phone = contactSettings.phone || DEFAULT_CONTACT.phone;
+      const addressRaw = (contactSettings.address || DEFAULT_CONTACT.address).replace(/<br\s*\/?>/gi, '\n');
+      const address = addressRaw || DEFAULT_CONTACT.address;
+
+      const addressDisplay = document.getElementById('contactAddressDisplay');
+      const contactEmailDisplay = document.getElementById('contactEmailDisplay');
+      const contactPhoneDisplay = document.getElementById('contactPhoneDisplay');
+      const prayerEmailDisplay = document.getElementById('prayerEmailDisplay');
+      const prayerPhoneDisplay = document.getElementById('prayerPhoneDisplay');
+      const footerContactLine = document.getElementById('footerContactLine');
+
+      if (addressDisplay) addressDisplay.innerHTML = formatAddressLines(address);
+      if (contactEmailDisplay) contactEmailDisplay.textContent = email;
+      if (contactPhoneDisplay) contactPhoneDisplay.textContent = phone;
+      if (prayerEmailDisplay) prayerEmailDisplay.textContent = email;
+      if (prayerPhoneDisplay) prayerPhoneDisplay.textContent = phone;
+      if (footerContactLine) footerContactLine.textContent = `Email: ${email} | Phone: ${phone}`;
+
+      if (isAdmin) {
+        const emailInput = document.getElementById('adminContactEmail');
+        const phoneInput = document.getElementById('adminContactPhone');
+        const addressInput = document.getElementById('adminContactAddress');
+
+        if (emailInput) emailInput.value = email;
+        if (phoneInput) phoneInput.value = phone;
+        if (addressInput) addressInput.value = address;
+      }
+    }
+
+    // Load contact info from Firestore (with defaults)
+    async function loadContactInfo() {
+      try {
+        const doc = await db.collection('settings').doc('contact').get();
+        const data = doc.exists ? doc.data() : {};
+        contactSettings = { ...DEFAULT_CONTACT, ...data };
+      } catch (error) {
+        console.error('Error loading contact info:', error);
+        contactSettings = { ...DEFAULT_CONTACT };
+      } finally {
+        applyContactInfo();
+      }
+    }
+
+    // Save contact info (admin)
+    async function saveContactInfo() {
+      if (!isAdmin) {
+        showToast('❌ Only admins can update contact info.', 'error');
+        return;
+      }
+
+      const email = document.getElementById('adminContactEmail').value.trim() || DEFAULT_CONTACT.email;
+      const phone = document.getElementById('adminContactPhone').value.trim() || DEFAULT_CONTACT.phone;
+      const address = document.getElementById('adminContactAddress').value.trim() || DEFAULT_CONTACT.address;
+
+      const dataToSave = { email, phone, address };
+
+      try {
+        await db.collection('settings').doc('contact').set({
+          ...dataToSave,
+          updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+          updatedBy: currentUser?.email || 'admin'
+        }, { merge: true });
+
+        contactSettings = { ...DEFAULT_CONTACT, ...dataToSave };
+        applyContactInfo();
+        showToast('✅ Contact info saved!', 'success');
+      } catch (error) {
+        showToast('❌ Failed to save contact info: ' + error.message, 'error');
+      }
     }
 
     // Update about content
@@ -3210,6 +3431,8 @@
       loadAboutContent();
       loadUpcomingEvents();
       loadHomepageSettings();
+      loadGivingSettings();
+      loadContactInfo();
       
       // Set initial hero background
       const heroSection = document.getElementById('heroSection');
