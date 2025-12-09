@@ -1232,8 +1232,8 @@
      <h2 class="section-title">Our Departments</h2><!-- User Info & Admin Controls -->
      <div id="departmentsUserSection"></div><!-- Admin Upload Controls -->
      <div class="media-controls" id="adminDepartmentSection">
-      <h3>Add Department (Admin Only)</h3>
-      <form class="upload-form" id="departmentForm" onsubmit="addDepartment(event)"><input type="text" id="deptName" placeholder="Department Name *" required> <textarea id="deptDescription" placeholder="Department Description *" rows="4" required></textarea> <input type="url" id="deptImageUrl" placeholder="Department Image URL *" required> <button type="submit">Add Department</button>
+      <h3 id="deptFormTitle">Add Department (Admin Only)</h3>
+      <form class="upload-form" id="departmentForm" onsubmit="saveDepartment(event)"><input type="hidden" id="deptId" value=""> <input type="text" id="deptName" placeholder="Department Name *" required> <textarea id="deptDescription" placeholder="Department Description *" rows="4" required></textarea> <input type="url" id="deptImageUrl" placeholder="Department Image URL *" required> <button type="submit" id="deptSubmitBtn">Add Department</button> <button type="button" id="deptCancelBtn" onclick="cancelEditDepartment()" style="display: none; background: #6b7280; color: white; margin-top: 10px;">Cancel Edit</button>
       </form>
      </div>
      <div class="loading-spinner" id="departmentsLoading"></div><!-- Departments Grid -->
@@ -2946,7 +2946,7 @@
         deptUserSection.innerHTML = `
           <div class="user-info">
             <p><strong>Logged in as:</strong> ${currentUser.email}</p>
-            ${isAdmin ? '<p style="color: #FFD700; font-weight: bold;">⭐ ADMIN ACCESS - You can add and delete departments</p>' : '<p>✅ Viewing departments</p>'}
+            ${isAdmin ? '<p style="color: #FFD700; font-weight: bold;">⭐ ADMIN ACCESS - You can add, edit, and delete departments</p>' : '<p>✅ Viewing departments</p>'}
           </div>
         `;
       } else {
@@ -2966,15 +2966,16 @@
       }
     }
 
-    // Add department (admin only)
-    async function addDepartment(event) {
+    // Save department (add or update)
+    async function saveDepartment(event) {
       event.preventDefault();
       
       if (!isAdmin) {
-        showToast('❌ Only admins can add departments.', 'error');
+        showToast('❌ Only admins can manage departments.', 'error');
         return;
       }
       
+      const deptId = document.getElementById('deptId').value;
       const name = document.getElementById('deptName').value;
       const description = document.getElementById('deptDescription').value;
       const imageUrl = document.getElementById('deptImageUrl').value;
@@ -2983,22 +2984,72 @@
       loadingSpinner.classList.add('show');
       
       try {
-        await db.collection('departments').add({
-          name: name,
-          description: description,
-          imageUrl: imageUrl,
-          createdBy: currentUser.email,
-          createdAt: firebase.firestore.FieldValue.serverTimestamp()
-        });
+        if (deptId) {
+          // Update existing department
+          await db.collection('departments').doc(deptId).update({
+            name: name,
+            description: description,
+            imageUrl: imageUrl,
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedBy: currentUser.email
+          });
+          showToast('✅ Department updated successfully!', 'success');
+        } else {
+          // Add new department
+          await db.collection('departments').add({
+            name: name,
+            description: description,
+            imageUrl: imageUrl,
+            createdBy: currentUser.email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          showToast('✅ Department added successfully!', 'success');
+        }
         
-        showToast('✅ Department added successfully!', 'success');
-        document.getElementById('departmentForm').reset();
+        cancelEditDepartment();
         loadDepartments();
       } catch (error) {
-        showToast('❌ Failed to add department: ' + error.message, 'error');
+        showToast('❌ Failed to save department: ' + error.message, 'error');
       } finally {
         loadingSpinner.classList.remove('show');
       }
+    }
+
+    // Edit department (admin only)
+    function editDepartment(deptId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can edit departments.', 'error');
+        return;
+      }
+      
+      const dept = departments.find(d => d.id === deptId);
+      if (!dept) {
+        showToast('❌ Department not found.', 'error');
+        return;
+      }
+      
+      // Pre-fill form with department data
+      document.getElementById('deptId').value = dept.id;
+      document.getElementById('deptName').value = dept.name || '';
+      document.getElementById('deptDescription').value = dept.description || '';
+      document.getElementById('deptImageUrl').value = dept.imageUrl || '';
+      
+      // Update form title and button
+      document.getElementById('deptFormTitle').textContent = 'Edit Department (Admin Only)';
+      document.getElementById('deptSubmitBtn').textContent = 'Update Department';
+      document.getElementById('deptCancelBtn').style.display = 'block';
+      
+      // Scroll to form
+      document.getElementById('adminDepartmentSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Cancel edit and reset form
+    function cancelEditDepartment() {
+      document.getElementById('deptId').value = '';
+      document.getElementById('departmentForm').reset();
+      document.getElementById('deptFormTitle').textContent = 'Add Department (Admin Only)';
+      document.getElementById('deptSubmitBtn').textContent = 'Add Department';
+      document.getElementById('deptCancelBtn').style.display = 'none';
     }
 
     // Load departments
@@ -3042,8 +3093,9 @@
             <h4>${dept.name}</h4>
             <p>${dept.description}</p>
             ${isAdmin ? `
-              <div class="department-actions">
-                <button class="delete-btn" style="background: #dc2626; color: white; width: 100%;" onclick="deleteDepartment('${dept.id}')">🗑️ Delete</button>
+              <div class="department-actions" style="display: flex; gap: 10px; margin-top: 10px;">
+                <button class="edit-btn" style="background: #1e3c72; color: white; flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;" onclick="editDepartment('${dept.id}')">✏️ Edit</button>
+                <button class="delete-btn" style="background: #dc2626; color: white; flex: 1; padding: 10px; border: none; border-radius: 5px; cursor: pointer; font-weight: bold;" onclick="deleteDepartment('${dept.id}')">🗑️ Delete</button>
               </div>
             ` : ''}
           </div>
@@ -3070,7 +3122,10 @@
               <h4 style="color: #1e3c72; margin: 0 0 10px 0;">${dept.name}</h4>
               <p style="color: #555;">${dept.description}</p>
               ${isAdmin ? `
-                <button onclick="deleteDepartment('${dept.id}')" style="background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; margin-top: 10px; width: 100%; font-weight: bold;">🗑️ Delete Department</button>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                  <button onclick="editDepartment('${dept.id}')" style="background: #1e3c72; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; flex: 1; font-weight: bold;">✏️ Edit</button>
+                  <button onclick="deleteDepartment('${dept.id}')" style="background: #dc2626; color: white; padding: 8px 16px; border: none; border-radius: 5px; cursor: pointer; flex: 1; font-weight: bold;">🗑️ Delete</button>
+                </div>
               ` : ''}
             </div>
           `).join('')}
@@ -3546,12 +3601,6 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a728c9e06bd534c',t:'MTc2NDU5MTczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
-
-
-
-
-
-
 
 
 
