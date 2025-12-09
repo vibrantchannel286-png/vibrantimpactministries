@@ -1238,46 +1238,27 @@
      </div>
      <div class="loading-spinner" id="departmentsLoading"></div><!-- Departments Grid -->
      <div class="events-grid" id="departmentsGrid"></div>
-    </div><!-- SERVICES PAGE -->
+    </div>    <!-- SERVICES PAGE -->
     <div id="services" class="page">
      <h2 class="section-title">Our Services &amp; Programs</h2>
-     <div class="services-grid">
-      <div class="service-card">
-       <h4>🌟 Sunday Glory Service</h4>
-       <p class="time">9:00 AM</p>
-       <p>Our main worship service featuring powerful praise and worship, life-transforming messages, and prophetic ministry. Come experience the glory of God!</p>
-      </div>
-      <div class="service-card">
-       <h4>🙏 Tuesday Deliverance &amp; Counselling</h4>
-       <p class="time">9:00 AM</p>
-       <p>A special service dedicated to deliverance ministry and pastoral counseling. Bring your burdens and receive freedom and guidance.</p>
-      </div>
-      <div class="service-card">
-       <h4>💻 Tuesday Online Prayer</h4>
-       <p class="time">6:00 PM</p>
-       <p>Join us online for focused prayer and intercession. Connect from anywhere as we pray together for breakthroughs and miracles.</p>
-      </div>
-      <div class="service-card">
-       <h4>🎯 Friday Youth Fellowship</h4>
-       <p class="time">4:00 PM</p>
-       <p>A vibrant gathering for young people to fellowship, learn, and grow in their faith. Dynamic worship and relevant teaching for today's youth.</p>
-      </div>
-      <div class="service-card">
-       <h4>📖 Friday Bible Study</h4>
-       <p class="time">6:00 PM</p>
-       <p>Deep dive into the Word of God. Expository teaching that builds your faith and understanding of Scripture.</p>
-      </div>
-      <div class="service-card">
-       <h4>🔥 Last Friday Fire Night</h4>
-       <p class="time">10:00 PM</p>
-       <p>An atmosphere of intense prayer, worship, and prophetic ministry. Experience supernatural breakthroughs and encounters with God.</p>
-      </div>
-      <div class="service-card">
-       <h4>🤝 Saturday Partners Prayer &amp; Fasting</h4>
-       <p class="time">6:00 PM</p>
-       <p>Join our ministry partners for corporate prayer and fasting. Seeking God's face together for revival and kingdom advancement.</p>
-      </div>
+     <!-- User Info & Admin Controls -->
+     <div id="servicesUserSection"></div>
+     <!-- Admin Upload Controls -->
+     <div class="media-controls" id="adminServicesSection">
+      <h3 id="serviceFormTitle">Add Service (Admin Only)</h3>
+      <form class="upload-form" id="serviceForm" onsubmit="saveService(event)">
+       <input type="hidden" id="serviceId" value="">
+       <input type="text" id="serviceTitle" placeholder="Service Title (e.g., Sunday Glory Service) *" required>
+       <input type="text" id="serviceTime" placeholder="Time (e.g., 9:00 AM) *" required>
+       <textarea id="serviceDescription" placeholder="Service Description *" rows="4" required></textarea>
+       <input type="text" id="serviceIcon" placeholder="Icon Emoji (optional, e.g., 🌟)" maxlength="2">
+       <button type="submit" id="serviceSubmitBtn">Add Service</button>
+       <button type="button" id="serviceCancelBtn" onclick="cancelEditService()" style="display: none; background: #6b7280; color: white; margin-top: 10px;">Cancel Edit</button>
+      </form>
      </div>
+     <div class="loading-spinner" id="servicesLoading"></div>
+     <!-- Services Grid -->
+     <div class="services-grid" id="servicesGrid"></div>
     </div><!-- GIVING PAGE -->
      <div id="giving" class="page">
      <h2 class="section-title">Give &amp; Partner With Us</h2>
@@ -1640,6 +1621,7 @@
     let upcomingEvents = [];
     let partnershipRegistrations = [];
     let partnershipListener = null; // For real-time listener
+    let services = [];
     let prayerRequests = [];
     const DEFAULT_GIVING = {
       paystackUrl: 'https://paystack.com/pay/vibrantimpact',
@@ -1708,6 +1690,12 @@
         loadDepartments();
       }
       
+      // Update user section for services page
+      if (pageId === 'services') {
+        updateServicesUserSection();
+        loadServices();
+      }
+      
       // Load account info for account page
       if (pageId === 'account') {
         if (currentUser) {
@@ -1743,9 +1731,11 @@
       updateAuthUI();
       updateMediaUserSection();
       updateDepartmentsUserSection();
+      updateServicesUserSection();
       updateNavButtons();
       loadMediaItems();
       loadDepartments();
+      loadServices();
       if (isAdmin) {
         loadPrayerRequests();
         loadPartnershipRegistrations();
@@ -3435,6 +3425,304 @@
       }
     }
 
+    // Update services user section
+    function updateServicesUserSection() {
+      const servicesUserSection = document.getElementById('servicesUserSection');
+      
+      if (currentUser) {
+        servicesUserSection.innerHTML = `
+          <div class="user-info">
+            <p><strong>Logged in as:</strong> ${currentUser.email}</p>
+            ${isAdmin ? '<p style="color: #FFD700; font-weight: bold;">⭐ ADMIN ACCESS - You can add, edit, delete, and reorder services</p>' : '<p>✅ Viewing services</p>'}
+          </div>
+        `;
+      } else {
+        servicesUserSection.innerHTML = `
+          <div class="user-info">
+            <p>Please <a onclick="navigateTo('auth')" style="color: #1e3c72; cursor: pointer; text-decoration: underline; font-weight: bold;">login</a> as admin to manage services</p>
+          </div>
+        `;
+      }
+      
+      // Show/hide admin services section
+      const adminServicesSection = document.getElementById('adminServicesSection');
+      if (isAdmin) {
+        adminServicesSection.classList.add('show');
+      } else {
+        adminServicesSection.classList.remove('show');
+      }
+    }
+
+    // Load services
+    async function loadServices() {
+      const servicesGrid = document.getElementById('servicesGrid');
+      const loadingSpinner = document.getElementById('servicesLoading');
+      
+      if (loadingSpinner) loadingSpinner.classList.add('show');
+      
+      try {
+        const snapshot = await db.collection('services').orderBy('order', 'asc').get();
+        services = [];
+        
+        snapshot.forEach(doc => {
+          services.push({ id: doc.id, ...doc.data() });
+        });
+        
+        // If no services exist, initialize with default services
+        if (services.length === 0) {
+          await initializeDefaultServices();
+          await loadServices(); // Reload after initialization
+          return;
+        }
+        
+        renderServices();
+      } catch (error) {
+        console.error('Error loading services:', error);
+        if (servicesGrid) {
+          servicesGrid.innerHTML = '<p style="text-align: center; color: #666;">No services available yet. Admins can add services.</p>';
+        }
+      } finally {
+        if (loadingSpinner) loadingSpinner.classList.remove('show');
+      }
+    }
+
+    // Initialize default services (first time only)
+    async function initializeDefaultServices() {
+      const defaultServices = [
+        { title: 'Sunday Glory Service', time: '9:00 AM', description: 'Our main worship service featuring powerful praise and worship, life-transforming messages, and prophetic ministry. Come experience the glory of God!', icon: '🌟', order: 1 },
+        { title: 'Tuesday Deliverance & Counselling', time: '9:00 AM', description: 'A special service dedicated to deliverance ministry and pastoral counseling. Bring your burdens and receive freedom and guidance.', icon: '🙏', order: 2 },
+        { title: 'Tuesday Online Prayer', time: '6:00 PM', description: 'Join us online for focused prayer and intercession. Connect from anywhere as we pray together for breakthroughs and miracles.', icon: '💻', order: 3 },
+        { title: 'Friday Youth Fellowship', time: '4:00 PM', description: 'A vibrant gathering for young people to fellowship, learn, and grow in their faith. Dynamic worship and relevant teaching for today\'s youth.', icon: '🎯', order: 4 },
+        { title: 'Friday Bible Study', time: '6:00 PM', description: 'Deep dive into the Word of God. Expository teaching that builds your faith and understanding of Scripture.', icon: '📖', order: 5 },
+        { title: 'Last Friday Fire Night', time: '10:00 PM', description: 'An atmosphere of intense prayer, worship, and prophetic ministry. Experience supernatural breakthroughs and encounters with God.', icon: '🔥', order: 6 },
+        { title: 'Saturday Partners Prayer & Fasting', time: '6:00 PM', description: 'Join our ministry partners for corporate prayer and fasting. Seeking God\'s face together for revival and kingdom advancement.', icon: '🤝', order: 7 }
+      ];
+
+      for (let i = 0; i < defaultServices.length; i++) {
+        await db.collection('services').add({
+          ...defaultServices[i],
+          createdAt: firebase.firestore.FieldValue.serverTimestamp()
+        });
+      }
+    }
+
+    // Render services
+    function renderServices() {
+      const servicesGrid = document.getElementById('servicesGrid');
+      if (!servicesGrid) return;
+      
+      if (services.length === 0) {
+        servicesGrid.innerHTML = '<p style="text-align: center; color: #666;">No services available yet. Admins can add services.</p>';
+        return;
+      }
+      
+      servicesGrid.innerHTML = services.map((service, index) => `
+        <div class="service-card" data-service-id="${service.id}">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 10px;">
+            <h4>${service.icon || '🌟'} ${service.title}</h4>
+            ${isAdmin ? `
+              <div style="display: flex; gap: 5px; flex-direction: column;">
+                ${index > 0 ? `<button onclick="moveServiceUp('${service.id}')" style="background: #1e3c72; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px;" title="Move Up">⬆️</button>` : '<div style="height: 28px;"></div>'}
+                ${index < services.length - 1 ? `<button onclick="moveServiceDown('${service.id}')" style="background: #1e3c72; color: white; border: none; padding: 4px 8px; border-radius: 4px; cursor: pointer; font-size: 12px;" title="Move Down">⬇️</button>` : '<div style="height: 28px;"></div>'}
+              </div>
+            ` : ''}
+          </div>
+          <p class="time">${service.time}</p>
+          <p>${service.description}</p>
+          ${isAdmin ? `
+            <div style="display: flex; gap: 10px; margin-top: 15px;">
+              <button onclick="editService('${service.id}')" style="background: #1e3c72; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; flex: 1;">✏️ Edit</button>
+              <button onclick="deleteService('${service.id}')" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 5px; cursor: pointer; font-weight: bold; flex: 1;">🗑️ Delete</button>
+            </div>
+          ` : ''}
+        </div>
+      `).join('');
+    }
+
+    // Save service (add or update)
+    async function saveService(event) {
+      event.preventDefault();
+      
+      if (!isAdmin) {
+        showToast('❌ Only admins can manage services.', 'error');
+        return;
+      }
+      
+      const serviceId = document.getElementById('serviceId').value;
+      const title = document.getElementById('serviceTitle').value;
+      const time = document.getElementById('serviceTime').value;
+      const description = document.getElementById('serviceDescription').value;
+      const icon = document.getElementById('serviceIcon').value.trim();
+      
+      const loadingSpinner = document.getElementById('servicesLoading');
+      if (loadingSpinner) loadingSpinner.classList.add('show');
+      
+      try {
+        if (serviceId) {
+          // Update existing service
+          await db.collection('services').doc(serviceId).update({
+            title: title,
+            time: time,
+            description: description,
+            icon: icon || '🌟',
+            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+            updatedBy: currentUser.email
+          });
+          showToast('✅ Service updated successfully!', 'success');
+        } else {
+          // Add new service (add to end)
+          const maxOrder = services.length > 0 ? Math.max(...services.map(s => s.order || 0)) : 0;
+          await db.collection('services').add({
+            title: title,
+            time: time,
+            description: description,
+            icon: icon || '🌟',
+            order: maxOrder + 1,
+            createdBy: currentUser.email,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp()
+          });
+          showToast('✅ Service added successfully!', 'success');
+        }
+        
+        cancelEditService();
+        loadServices();
+      } catch (error) {
+        showToast('❌ Failed to save service: ' + error.message, 'error');
+      } finally {
+        if (loadingSpinner) loadingSpinner.classList.remove('show');
+      }
+    }
+
+    // Edit service
+    function editService(serviceId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can edit services.', 'error');
+        return;
+      }
+      
+      const service = services.find(s => s.id === serviceId);
+      if (!service) {
+        showToast('❌ Service not found.', 'error');
+        return;
+      }
+      
+      // Pre-fill form with service data
+      document.getElementById('serviceId').value = service.id;
+      document.getElementById('serviceTitle').value = service.title || '';
+      document.getElementById('serviceTime').value = service.time || '';
+      document.getElementById('serviceDescription').value = service.description || '';
+      document.getElementById('serviceIcon').value = service.icon || '';
+      
+      // Update form title and button
+      document.getElementById('serviceFormTitle').textContent = 'Edit Service (Admin Only)';
+      document.getElementById('serviceSubmitBtn').textContent = 'Update Service';
+      document.getElementById('serviceCancelBtn').style.display = 'block';
+      
+      // Scroll to form
+      document.getElementById('adminServicesSection').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // Cancel edit and reset form
+    function cancelEditService() {
+      document.getElementById('serviceId').value = '';
+      document.getElementById('serviceForm').reset();
+      document.getElementById('serviceFormTitle').textContent = 'Add Service (Admin Only)';
+      document.getElementById('serviceSubmitBtn').textContent = 'Add Service';
+      document.getElementById('serviceCancelBtn').style.display = 'none';
+    }
+
+    // Delete service
+    async function deleteService(serviceId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can delete services.', 'error');
+        return;
+      }
+      
+      if (!confirm('Are you sure you want to delete this service?')) {
+        return;
+      }
+      
+      try {
+        await db.collection('services').doc(serviceId).delete();
+        
+        // Reorder remaining services
+        const deletedService = services.find(s => s.id === serviceId);
+        if (deletedService) {
+          const deletedOrder = deletedService.order || 0;
+          const servicesToUpdate = services.filter(s => s.id !== serviceId && (s.order || 0) > deletedOrder);
+          
+          for (const service of servicesToUpdate) {
+            await db.collection('services').doc(service.id).update({
+              order: (service.order || 0) - 1
+            });
+          }
+        }
+        
+        showToast('✅ Service deleted successfully!', 'success');
+        loadServices();
+      } catch (error) {
+        showToast('❌ Delete failed: ' + error.message, 'error');
+      }
+    }
+
+    // Move service up
+    async function moveServiceUp(serviceId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can reorder services.', 'error');
+        return;
+      }
+      
+      const currentIndex = services.findIndex(s => s.id === serviceId);
+      if (currentIndex <= 0) return;
+      
+      const currentService = services[currentIndex];
+      const previousService = services[currentIndex - 1];
+      
+      try {
+        // Swap orders
+        await db.collection('services').doc(currentService.id).update({
+          order: previousService.order || currentIndex
+        });
+        await db.collection('services').doc(previousService.id).update({
+          order: currentService.order || currentIndex + 1
+        });
+        
+        showToast('✅ Service moved up!', 'success');
+        loadServices();
+      } catch (error) {
+        showToast('❌ Failed to reorder: ' + error.message, 'error');
+      }
+    }
+
+    // Move service down
+    async function moveServiceDown(serviceId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can reorder services.', 'error');
+        return;
+      }
+      
+      const currentIndex = services.findIndex(s => s.id === serviceId);
+      if (currentIndex < 0 || currentIndex >= services.length - 1) return;
+      
+      const currentService = services[currentIndex];
+      const nextService = services[currentIndex + 1];
+      
+      try {
+        // Swap orders
+        await db.collection('services').doc(currentService.id).update({
+          order: nextService.order || currentIndex + 2
+        });
+        await db.collection('services').doc(nextService.id).update({
+          order: currentService.order || currentIndex + 1
+        });
+        
+        showToast('✅ Service moved down!', 'success');
+        loadServices();
+      } catch (error) {
+        showToast('❌ Failed to reorder: ' + error.message, 'error');
+      }
+    }
+
     // Fire Night Countdown
     function getNextFireNight() {
       // Use custom date if set
@@ -3848,6 +4136,7 @@
       loadHomepageSettings();
       loadGivingSettings();
       loadContactInfo();
+      loadServices();
       if (isAdmin) {
         loadPrayerRequests();
       }
@@ -3873,6 +4162,12 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a728c9e06bd534c',t:'MTc2NDU5MTczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+
+
+
+
+
 
 
 
