@@ -1466,6 +1466,22 @@
      </div>
      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
      <div>
+      <h4>🤝 Partnership Registrations (Admin Only)</h4>
+      <p style="color: #666; font-size: 14px;">View registered partners and send them the WhatsApp group link.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+       <button onclick="loadPartnershipRegistrations()" style="background: #1e3c72; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">🔄 Refresh</button>
+       <button onclick="copyAllEmails()" style="background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">📋 Copy All Emails</button>
+       <button onclick="openEmailClient()" style="background: #FFD700; color: #1e3c72; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">📧 Email All Partners</button>
+      </div>
+      <div style="background: #f9f9f9; padding: 15px; border-radius: 8px; margin-bottom: 15px;">
+       <label style="display: block; margin-bottom: 5px; font-weight: bold;">WhatsApp Group Link (for emailing):</label>
+       <input type="url" id="whatsappLinkForEmail" placeholder="https://chat.whatsapp.com/your-group-link" style="width: 100%; padding: 10px; border: 2px solid #ddd; border-radius: 8px;" onchange="saveWhatsAppLinkForEmail(this.value)">
+       <p style="color: #888; font-size: 12px; margin-top: 5px;">This link will be included when emailing partners.</p>
+      </div>
+      <div id="partnershipRegistrationsList" style="display: grid; gap: 10px;"></div>
+     </div>
+     <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+     <div>
       <h4>💳 Giving &amp; Payment Details</h4>
       <div class="stream-url-inputs">
        <label>Paystack Link:</label>
@@ -1622,6 +1638,8 @@
     let mediaItems = [];
     let departments = [];
     let upcomingEvents = [];
+    let partnershipRegistrations = [];
+    let partnershipListener = null; // For real-time listener
     let prayerRequests = [];
     const DEFAULT_GIVING = {
       paystackUrl: 'https://paystack.com/pay/vibrantimpact',
@@ -1730,6 +1748,15 @@
       loadDepartments();
       if (isAdmin) {
         loadPrayerRequests();
+        loadPartnershipRegistrations();
+        setupPartnershipListener();
+        requestNotificationPermission();
+      } else {
+        // Remove listener when admin logs out
+        if (partnershipListener) {
+          partnershipListener();
+          partnershipListener = null;
+        }
       }
       
       // Show/hide admin settings
@@ -2500,6 +2527,251 @@
         console.error('Delete failed:', error);
         showToast('❌ Failed to delete: ' + error.message, 'error');
       }
+    }
+
+    // Request notification permission
+    async function requestNotificationPermission() {
+      if ('Notification' in window && Notification.permission === 'default') {
+        await Notification.requestPermission();
+      }
+    }
+
+    // Show browser notification
+    function showNotification(title, body, icon = '🔔') {
+      if ('Notification' in window && Notification.permission === 'granted') {
+        new Notification(title, {
+          body: body,
+          icon: icon,
+          badge: icon,
+          tag: 'partnership-registration',
+          requireInteraction: false
+        });
+      }
+    }
+
+    // Load partnership registrations (admin only)
+    async function loadPartnershipRegistrations() {
+      if (!isAdmin) {
+        showToast('❌ Only admins can view partnership registrations.', 'error');
+        return;
+      }
+
+      const listEl = document.getElementById('partnershipRegistrationsList');
+      if (!listEl) return;
+
+      listEl.innerHTML = '<p style="color: #666; text-align: center;">Loading...</p>';
+
+      try {
+        const snapshot = await db.collection('partners').orderBy('submittedAt', 'desc').limit(500).get();
+        partnershipRegistrations = [];
+        snapshot.forEach(doc => {
+          partnershipRegistrations.push({ id: doc.id, ...doc.data() });
+        });
+        renderPartnershipRegistrations();
+        
+        // Load WhatsApp link for emailing
+        const whatsappLink = localStorage.getItem('vimWhatsappLinkForEmail') || '';
+        const whatsappInput = document.getElementById('whatsappLinkForEmail');
+        if (whatsappInput) whatsappInput.value = whatsappLink;
+      } catch (error) {
+        console.error('Error loading partnership registrations:', error);
+        listEl.innerHTML = '<p style="color: #dc2626; text-align: center;">Failed to load registrations.</p>';
+      }
+    }
+
+    function renderPartnershipRegistrations() {
+      const listEl = document.getElementById('partnershipRegistrationsList');
+      if (!listEl) return;
+
+      if (!isAdmin) {
+        listEl.innerHTML = '<p style="color: #dc2626; text-align: center;">Admin access required.</p>';
+        return;
+      }
+
+      if (partnershipRegistrations.length === 0) {
+        listEl.innerHTML = '<p style="color: #666; text-align: center;">No partnership registrations yet.</p>';
+        return;
+      }
+
+      listEl.innerHTML = partnershipRegistrations.map(partner => {
+        const submittedAt = partner.submittedAt?.toDate ? new Date(partner.submittedAt.toDate()) : null;
+        const submittedText = submittedAt ? submittedAt.toLocaleString() : 'Unknown';
+        return `
+          <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 15px;">
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+              <div style="flex: 1;">
+                <p style="margin: 0; font-weight: bold; color: #1e3c72; font-size: 16px;">${partner.name || 'No name'}</p>
+                <p style="margin: 4px 0; color: #555;">📧 ${partner.email || 'No email'}</p>
+                <p style="margin: 4px 0; color: #555;">📱 ${partner.phone || 'No phone'}</p>
+                <p style="margin: 4px 0; color: #888; font-size: 12px;">⏰ ${submittedText}</p>
+                <p style="margin: 4px 0;"><strong>Type:</strong> <span style="color: #1e3c72;">${partner.partnershipType || 'Not specified'}</span></p>
+              </div>
+              <div style="display: flex; flex-direction: column; gap: 8px;">
+                <button onclick="copyEmail('${partner.email || ''}')" style="background: #25D366; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; white-space: nowrap;">📋 Copy Email</button>
+                <button onclick="emailPartner('${partner.email || ''}', '${partner.name || ''}')" style="background: #FFD700; color: #1e3c72; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; white-space: nowrap;">📧 Email</button>
+                <button onclick="deletePartnership('${partner.id}')" style="background: #dc2626; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; white-space: nowrap;">🗑️ Delete</button>
+              </div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Copy email to clipboard
+    function copyEmail(email) {
+      if (!email) {
+        showToast('❌ No email address available.', 'error');
+        return;
+      }
+      navigator.clipboard.writeText(email).then(() => {
+        showToast(`✅ Copied: ${email}`, 'success');
+      }).catch(() => {
+        showToast('❌ Failed to copy email.', 'error');
+      });
+    }
+
+    // Copy all emails to clipboard
+    function copyAllEmails() {
+      if (!isAdmin) {
+        showToast('❌ Only admins can copy emails.', 'error');
+        return;
+      }
+
+      const emails = partnershipRegistrations
+        .map(p => p.email)
+        .filter(email => email && email.trim())
+        .join(', ');
+
+      if (!emails) {
+        showToast('❌ No email addresses found.', 'error');
+        return;
+      }
+
+      navigator.clipboard.writeText(emails).then(() => {
+        showToast(`✅ Copied ${partnershipRegistrations.filter(p => p.email).length} email(s) to clipboard!`, 'success');
+      }).catch(() => {
+        showToast('❌ Failed to copy emails.', 'error');
+      });
+    }
+
+    // Email a single partner
+    function emailPartner(email, name) {
+      if (!email) {
+        showToast('❌ No email address available.', 'error');
+        return;
+      }
+
+      const whatsappLink = localStorage.getItem('vimWhatsappLinkForEmail') || localStorage.getItem('vimWhatsappSocialUrl') || '';
+      const subject = encodeURIComponent('Welcome to Vibrant Impact Ministries - WhatsApp Group Link');
+      const body = encodeURIComponent(
+        `Dear ${name || 'Partner'},\n\n` +
+        `Thank you for registering as a partner with Vibrant Impact Ministries!\n\n` +
+        `We're excited to have you join our community. Please use the link below to join our WhatsApp group:\n\n` +
+        `${whatsappLink || '[WhatsApp link not configured yet]'}\n\n` +
+        `God bless you!\n\n` +
+        `Vibrant Impact Ministries`
+      );
+
+      window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+    }
+
+    // Open email client with all partners
+    function openEmailClient() {
+      if (!isAdmin) {
+        showToast('❌ Only admins can email partners.', 'error');
+        return;
+      }
+
+      const emails = partnershipRegistrations
+        .map(p => p.email)
+        .filter(email => email && email.trim())
+        .join(';');
+
+      if (!emails) {
+        showToast('❌ No email addresses found.', 'error');
+        return;
+      }
+
+      const whatsappLink = localStorage.getItem('vimWhatsappLinkForEmail') || localStorage.getItem('vimWhatsappSocialUrl') || '';
+      const subject = encodeURIComponent('Welcome to Vibrant Impact Ministries - WhatsApp Group Link');
+      const body = encodeURIComponent(
+        `Dear Partners,\n\n` +
+        `Thank you for registering with Vibrant Impact Ministries!\n\n` +
+        `We're excited to have you join our community. Please use the link below to join our WhatsApp group:\n\n` +
+        `${whatsappLink || '[WhatsApp link not configured yet]'}\n\n` +
+        `God bless you!\n\n` +
+        `Vibrant Impact Ministries`
+      );
+
+      window.location.href = `mailto:${emails}?subject=${subject}&body=${body}`;
+    }
+
+    // Save WhatsApp link for emailing
+    function saveWhatsAppLinkForEmail(link) {
+      localStorage.setItem('vimWhatsappLinkForEmail', link);
+      showToast('✅ WhatsApp link saved for emailing!', 'success');
+    }
+
+    // Delete partnership registration
+    async function deletePartnership(partnerId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can delete registrations.', 'error');
+        return;
+      }
+
+      if (!confirm('Are you sure you want to delete this partnership registration?')) {
+        return;
+      }
+
+      try {
+        await db.collection('partners').doc(partnerId).delete();
+        partnershipRegistrations = partnershipRegistrations.filter(p => p.id !== partnerId);
+        renderPartnershipRegistrations();
+        showToast('✅ Registration deleted.', 'success');
+      } catch (error) {
+        console.error('Delete failed:', error);
+        showToast('❌ Failed to delete: ' + error.message, 'error');
+      }
+    }
+
+    // Set up real-time listener for new partnership registrations
+    function setupPartnershipListener() {
+      if (!isAdmin) return;
+
+      // Remove existing listener if any
+      if (partnershipListener) {
+        partnershipListener();
+        partnershipListener = null;
+      }
+
+      // Set up new listener
+      partnershipListener = db.collection('partners')
+        .orderBy('submittedAt', 'desc')
+        .limit(1)
+        .onSnapshot((snapshot) => {
+          snapshot.docChanges().forEach((change) => {
+            if (change.type === 'added') {
+              const newPartner = { id: change.doc.id, ...change.doc.data() };
+              
+              // Show browser notification
+              showNotification(
+                'New Partnership Registration! 🎉',
+                `${newPartner.name || 'Someone'} registered as ${newPartner.partnershipType || 'a partner'}`,
+                '🔔'
+              );
+
+              // Show toast notification
+              showToast(`🔔 New partner: ${newPartner.name || 'Someone'} registered!`, 'success');
+
+              // Reload the list if we're on the admin page
+              if (document.getElementById('partnershipRegistrationsList')) {
+                loadPartnershipRegistrations();
+              }
+            }
+          });
+        }, (error) => {
+          console.error('Partnership listener error:', error);
+        });
     }
 
     // Open giving links with validation
@@ -3601,6 +3873,12 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a728c9e06bd534c',t:'MTc2NDU5MTczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+
+
+
+
+
 
 
 
