@@ -1457,6 +1457,15 @@
       </div>
      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
      <div>
+      <h4>🙏 Prayer Requests (Admin Only)</h4>
+      <p style="color: #666; font-size: 14px;">View and manage submitted prayer requests.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+       <button onclick="loadPrayerRequests()" style="background: #1e3c72; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">🔄 Refresh</button>
+      </div>
+      <div id="prayerRequestsList" style="display: grid; gap: 10px;"></div>
+     </div>
+     <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+     <div>
       <h4>💳 Giving &amp; Payment Details</h4>
       <div class="stream-url-inputs">
        <label>Paystack Link:</label>
@@ -1613,6 +1622,7 @@
     let mediaItems = [];
     let departments = [];
     let upcomingEvents = [];
+    let prayerRequests = [];
     const DEFAULT_GIVING = {
       paystackUrl: 'https://paystack.com/pay/vibrantimpact',
       paypalUrl: 'https://www.paypal.me/Funmzyanie',
@@ -1718,6 +1728,9 @@
       updateNavButtons();
       loadMediaItems();
       loadDepartments();
+      if (isAdmin) {
+        loadPrayerRequests();
+      }
       
       // Show/hide admin settings
       const adminSettings = document.getElementById('adminSettings');
@@ -2412,6 +2425,81 @@
           </a>
         `;
       });
+    }
+
+    // Load prayer requests (admin only)
+    async function loadPrayerRequests() {
+      if (!isAdmin) {
+        showToast('❌ Only admins can view prayer requests.', 'error');
+        return;
+      }
+
+      const listEl = document.getElementById('prayerRequestsList');
+      if (!listEl) return;
+
+      listEl.innerHTML = '<p style="color: #666; text-align: center;">Loading...</p>';
+
+      try {
+        const snapshot = await db.collection('prayerRequests').orderBy('submittedAt', 'desc').limit(100).get();
+        prayerRequests = [];
+        snapshot.forEach(doc => {
+          prayerRequests.push({ id: doc.id, ...doc.data() });
+        });
+        renderPrayerRequests();
+      } catch (error) {
+        console.error('Error loading prayer requests:', error);
+        listEl.innerHTML = '<p style="color: #dc2626; text-align: center;">Failed to load prayer requests.</p>';
+      }
+    }
+
+    function renderPrayerRequests() {
+      const listEl = document.getElementById('prayerRequestsList');
+      if (!listEl) return;
+
+      if (!isAdmin) {
+        listEl.innerHTML = '<p style="color: #dc2626; text-align: center;">Admin access required.</p>';
+        return;
+      }
+
+      if (prayerRequests.length === 0) {
+        listEl.innerHTML = '<p style="color: #666; text-align: center;">No prayer requests yet.</p>';
+        return;
+      }
+
+      listEl.innerHTML = prayerRequests.map(req => {
+        const submittedAt = req.submittedAt?.toDate ? new Date(req.submittedAt.toDate()) : null;
+        const submittedText = submittedAt ? submittedAt.toLocaleString() : 'Unknown';
+        return `
+          <div style="background: white; border: 1px solid #ddd; border-radius: 8px; padding: 12px;">
+            <div style="display: flex; justify-content: space-between; gap: 10px; flex-wrap: wrap;">
+              <div>
+                <p style="margin: 0; font-weight: bold; color: #1e3c72;">${req.name || 'Anonymous'}</p>
+                <p style="margin: 2px 0; color: #555;">${req.email || 'No email'} | ${req.phone || 'No phone'}</p>
+                <p style="margin: 2px 0; color: #888; font-size: 12px;">${submittedText}</p>
+              </div>
+              <button onclick="deletePrayerRequest('${req.id}')" style="background: #dc2626; color: white; border: none; padding: 8px 12px; border-radius: 6px; cursor: pointer; font-weight: bold; height: 36px;">🗑️ Delete</button>
+            </div>
+            <p style="margin-top: 8px; white-space: pre-wrap; color: #333;">${req.request || ''}</p>
+          </div>
+        `;
+      }).join('');
+    }
+
+    async function deletePrayerRequest(requestId) {
+      if (!isAdmin) {
+        showToast('❌ Only admins can delete prayer requests.', 'error');
+        return;
+      }
+
+      try {
+        await db.collection('prayerRequests').doc(requestId).delete();
+        prayerRequests = prayerRequests.filter(r => r.id !== requestId);
+        renderPrayerRequests();
+        showToast('✅ Prayer request deleted.', 'success');
+      } catch (error) {
+        console.error('Delete failed:', error);
+        showToast('❌ Failed to delete: ' + error.message, 'error');
+      }
     }
 
     // Open giving links with validation
@@ -3433,6 +3521,9 @@
       loadHomepageSettings();
       loadGivingSettings();
       loadContactInfo();
+      if (isAdmin) {
+        loadPrayerRequests();
+      }
       
       // Set initial hero background
       const heroSection = document.getElementById('heroSection');
@@ -3455,6 +3546,12 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a728c9e06bd534c',t:'MTc2NDU5MTczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+
+
+
+
+
 
 
 
