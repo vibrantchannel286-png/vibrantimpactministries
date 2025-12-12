@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Vibrant Impact Ministries - VIM</title>
- <meta name="description" content="Vibrant Impact Ministries (VIM) is a Holy Ghost–filled church in Akure, Nigeria, dedicated to raising a people of testimony through the Word, prayer, worship, and the power of the Holy Spirit. Join us for transforming services and impactful programs.">
   <style>
     body {
       box-sizing: border-box;
@@ -1461,6 +1460,17 @@
        <p style="color: #888; font-size: 12px; margin-top: 5px;">This link will be included when emailing partners.</p>
       </div>
       <div id="partnershipRegistrationsList" style="display: grid; gap: 10px;"></div>
+     </div>
+     <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
+     <div>
+      <h4>👥 Registered Members (Admin Only)</h4>
+      <p style="color: #666; font-size: 14px;">View all registered members who have created accounts on the website.</p>
+      <div style="display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 10px;">
+       <button onclick="loadRegisteredMembers()" style="background: #1e3c72; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">🔄 Refresh</button>
+       <button onclick="copyAllMemberEmails()" style="background: #25D366; color: white; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">📋 Copy All Emails</button>
+       <button onclick="openEmailClientForMembers()" style="background: #FFD700; color: #1e3c72; border: none; padding: 10px 16px; border-radius: 6px; cursor: pointer; font-weight: bold;">📧 Email All Members</button>
+      </div>
+      <div id="registeredMembersList" style="display: grid; gap: 10px;"></div>
      </div>
      <hr style="margin: 30px 0; border: none; border-top: 2px solid #FFD700;">
      <div>
@@ -4163,6 +4173,12 @@
   </script>
  <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9a728c9e06bd534c',t:'MTc2NDU5MTczOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
+
+
+
+
+
+
 
 
 
