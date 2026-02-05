@@ -1,0 +1,9 @@
+{
+  "name": "Vibrant Impact Ministries (VIM) Portal",
+  "description": "A comprehensive digital platform for Vibrant Impact Ministries featuring prophetic insights, service updates, media galleries, and ministry partnership tools.",
+  "requestFramePermissions": [
+    "camera",
+    "microphone",
+    "geolocation"
+  ]
+}
