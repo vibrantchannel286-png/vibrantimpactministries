@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Store } from '../services/store';
 
@@ -28,6 +27,12 @@ const ContactPage: React.FC = () => {
     } else {
       setStatus('error');
     }
+  };
+
+  const socialLogos = {
+    FB: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M22 12c0-5.52-4.48-10-10-10S2 6.48 2 12c0 4.84 3.44 8.87 8 9.8V15H8v-3h2V9.5C10 7.57 11.57 6 13.5 6H16v3h-2c-.55 0-1 .45-1 1v2h3v3h-3v6.95c5.05-.5 9-4.76 9-9.95z"/></svg>,
+    YT: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>,
+    WA: <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.414 0 .004 5.411.001 12.049a11.81 11.81 0 0 0 1.602 6.002L0 24l6.163-1.617a11.83 11.83 0 0 0 5.883 1.564h.005c6.634 0 12.044-5.41 12.047-12.049a11.79 11.79 0 0 0-3.483-8.513z"/></svg>
   };
 
   return (
@@ -63,8 +68,15 @@ const ContactPage: React.FC = () => {
                    { id: 'YT', url: settings.youtubeUrl },
                    { id: 'WA', url: settings.whatsappUrl }
                  ].map(social => (
-                   <a key={social.id} href={social.url} target="_blank" className="w-12 h-12 rounded-2xl bg-slate-50 flex items-center justify-center text-vimNavy font-black text-xs hover:bg-vimGold hover:text-white transition-all shadow-sm">
-                     {social.id}
+                   <a 
+                    key={social.id} 
+                    href={social.url} 
+                    target="_blank" 
+                    rel="noopener noreferrer"
+                    className="w-12 h-12 rounded-2xl bg-vimNavy flex items-center justify-center text-white hover:bg-vimGold hover:text-vimNavy transition-all shadow-sm"
+                    title={social.id}
+                   >
+                     {socialLogos[social.id as keyof typeof socialLogos] || social.id}
                    </a>
                  ))}
               </div>
